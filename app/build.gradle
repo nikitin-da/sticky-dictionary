@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.0.1"
+
+    defaultConfig {
+        applicationId "com.example.dmitry.handheld_dictionary"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile ('com.android.support:support-v13:20.0.0') {
+        force = true
+    }
+    compile 'com.android.support:appcompat-v7:21.0.0'
+
+    // https://github.com/nhaarman/ListViewAnimations
+    compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
+    compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0@aar'
+    compile 'com.nhaarman.listviewanimations:lib-core-slh:3.1.0@aar'
+
+    // https://github.com/JakeWharton/butterknife
+    compile 'com.jakewharton:butterknife:6.0.0'
+
+    // https://github.com/pushtorefresh/bamboo-storage
+    compile 'com.pushtorefresh:bamboostorage:1.4.0'
+}
