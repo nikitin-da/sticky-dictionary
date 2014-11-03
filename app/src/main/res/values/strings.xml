@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Handheld-dictionary</string>
+    <string name="app_name">Handheld dictionary</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_add">Add</string>
+    <string name="content_description_add">Add</string>
     <string name="edit_foreign_hint">word</string>
     <string name="edit_translate_hint">translate</string>
     <string name="edit_save_button">Save</string>
 
     <string name="empty_field_warning">please enter some word</string>
+    <string name="action_full_screen">full screen</string>
 
 </resources>

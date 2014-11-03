@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="15dp">
 
     <ListView
@@ -12,4 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/word_list_add"
+        android:layout_width="@dimen/common_image_button_size"
+        android:layout_height="@dimen/common_image_button_size"
+        android:src="@drawable/ic_add"
+        android:contentDescription="@string/content_description_add"
+        android:background="@drawable/action_button_bg"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="1dp"
+        android:stateListAnimator="@anim/fab_anim"
+        android:elevation="4dp"/>
+
+</FrameLayout>

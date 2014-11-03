@@ -4,9 +4,17 @@
 
         <item name="android:actionMenuTextColor">#ffffff</item>
 
-        <item name="colorPrimary">#FFBB33</item>
-        <item name="colorPrimaryDark">#FF8800</item>
-        <item name="colorAccent">#ffbf03</item>
+        <item name="colorPrimary">#33B5E5</item>
+        <item name="colorPrimaryDark">#0099CC</item>
+        <item name="colorAccent">#4DCFFF</item>
+    </style>
+
+    <style name="WordViewPagerIndicator">
+        <item name="fillColor">#0099CC</item>
+        <item name="pageColor">#7733B5E5</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="radius">6dp</item>
+        <item name="centered">true</item>
     </style>
 
 </resources>

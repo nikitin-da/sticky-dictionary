@@ -3,6 +3,7 @@ package com.example.dmitry.handheld_dictionary.ui.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Outline;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +23,8 @@ import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
 import com.example.dmitry.handheld_dictionary.ui.activity.EditActivity;
+import com.example.dmitry.handheld_dictionary.ui.activity.PagerActivity;
+import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.expandablelistitem.ExpandableListItemAdapter;
 
@@ -27,6 +32,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -36,6 +42,7 @@ public class WordListFragment extends BaseFragment {
     private static final int INITIAL_DELAY_MILLIS = 500;
 
     @InjectView(R.id.word_list) ListView mList;
+    @InjectView(R.id.word_list_add) ImageButton mAddButton;
 
     private WordActiveModel mWordActiveModel;
 
@@ -66,6 +73,7 @@ public class WordListFragment extends BaseFragment {
 
         mList.setAdapter(alphaInAnimationAdapter);
 
+        ViewUtil.makeCircle(mAddButton, R.dimen.common_image_button_size);
     }
 
     @Override public void onStart() {
@@ -152,12 +160,16 @@ public class WordListFragment extends BaseFragment {
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add:
-                startActivity(new Intent(getActivity(), EditActivity.class));
+            case R.id.action_pager:
+                startActivity(new Intent(getActivity(), PagerActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @OnClick(R.id.word_list_add) void addNew() {
+        startActivity(new Intent(getActivity(), EditActivity.class));
     }
 
     class TitleHolder {

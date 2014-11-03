@@ -21,6 +21,8 @@
         <activity android:name=".ui.activity.EditActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
+        <activity android:name=".ui.activity.PagerActivity"/>
+
         <provider
             android:name=".storage.AlarmAppContentProvider"
             android:authorities="com.example.dmitry.handheld_dictionary.storage.content_provider"
