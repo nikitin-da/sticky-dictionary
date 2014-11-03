@@ -5,7 +5,7 @@
 
     <dimen name="common_image_button_size">56dp</dimen>
 
-    <dimen name="button_elevation">2dp</dimen>
-    <dimen name="button_press_elevation">4dp</dimen>
+    <dimen name="button_elevation">4dp</dimen>
+    <dimen name="button_pressed_elevation">1dp</dimen>
 
 </resources>

@@ -19,8 +19,7 @@
         android:contentDescription="@string/content_description_add"
         android:background="@drawable/action_button_bg"
         android:layout_gravity="bottom|right"
-        android:layout_margin="1dp"
-        android:stateListAnimator="@anim/fab_anim"
-        android:elevation="4dp"/>
+        android:layout_margin="15dp"
+        android:stateListAnimator="@anim/fab_anim"/>
 
 </FrameLayout>
