@@ -13,7 +13,7 @@
         <item name="fillColor">#0099CC</item>
         <item name="pageColor">#7733B5E5</item>
         <item name="strokeWidth">0dp</item>
-        <item name="radius">6dp</item>
+        <item name="radius">5dp</item>
         <item name="centered">true</item>
     </style>
 
@@ -23,7 +23,10 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:gravity">center</item>
-        <item name="android:padding">15dp</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingRight">30dp</item>
+        <item name="android:paddingTop">@dimen/word_list_padding</item>
+        <item name="android:paddingBottom">@dimen/word_list_padding</item>
     </style>
 
     <style name="WordEditText">

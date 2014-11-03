@@ -8,4 +8,6 @@
     <dimen name="button_elevation">4dp</dimen>
     <dimen name="button_pressed_elevation">1dp</dimen>
 
+    <dimen name="word_list_padding">15dp</dimen>
+
 </resources>
