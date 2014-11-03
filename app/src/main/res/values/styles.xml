@@ -1,8 +1,12 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="android:actionMenuTextColor">#ffffff</item>
+
+        <item name="colorPrimary">#FFBB33</item>
+        <item name="colorPrimaryDark">#FF8800</item>
+        <item name="colorAccent">#ffbf03</item>
     </style>
 
 </resources>

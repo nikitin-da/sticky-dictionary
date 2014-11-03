@@ -35,6 +35,14 @@ dependencies {
     // https://github.com/JakeWharton/butterknife
     compile 'com.jakewharton:butterknife:6.0.0'
 
+    // Dependency Injection library
+    compile 'com.squareup.dagger:dagger:1.2.2'
+
+    // Dependency Injection compile-time processor
+    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
+
     // https://github.com/pushtorefresh/bamboo-storage
     compile 'com.pushtorefresh:bamboostorage:1.4.0'
+
+    compile 'com.nineoldandroids:library:2.4.0'
 }

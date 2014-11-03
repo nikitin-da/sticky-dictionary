@@ -6,9 +6,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:name=".App"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.dmitry.handheld_dictionary.MainActivity"
+            android:name=".ui.activity.WordListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +17,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.activity.EditActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
+        <provider
+            android:name=".storage.AlarmAppContentProvider"
+            android:authorities="com.example.dmitry.handheld_dictionary.storage.content_provider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>
