@@ -6,7 +6,7 @@
 
         <item name="colorPrimary">#33B5E5</item>
         <item name="colorPrimaryDark">#0099CC</item>
-        <item name="colorAccent">#4DCFFF</item>
+        <item name="colorAccent">#0099CC</item>
     </style>
 
     <style name="WordViewPagerIndicator">
@@ -15,6 +15,25 @@
         <item name="strokeWidth">0dp</item>
         <item name="radius">6dp</item>
         <item name="centered">true</item>
+    </style>
+
+    <style name="ListItemText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="WordEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:singleLine">true</item>
     </style>
 
 </resources>

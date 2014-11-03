@@ -2,4 +2,7 @@
 <resources>
     <color name="action_button_bg_pressed">#CC0000</color>
     <color name="action_button_bg_normal">#FF4444</color>
+    <color name="save_button_border">#0099CC</color>
+    <color name="save_button_bg_pressed">#33B5E5</color>
+    <color name="save_button_bg_normal">#0099CC</color>
 </resources>

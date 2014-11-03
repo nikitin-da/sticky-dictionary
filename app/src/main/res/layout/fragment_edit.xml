@@ -9,34 +9,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp"
+        android:padding="50dp"
         android:gravity="center">
 
         <EditText
             android:id="@+id/edit_foreign"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/edit_foreign_hint"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"/>
+            style="@style/WordEditText"
+            android:imeOptions="actionNext"
+            android:hint="@string/edit_foreign_hint"/>
 
         <EditText
             android:id="@+id/edit_translate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/WordEditText"
+            android:imeOptions="actionDone"
             android:hint="@string/edit_translate_hint"
-            android:paddingTop="15dp"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"/>
+            android:layout_marginTop="15dp"/>
 
         <Button
             android:id="@+id/edit_save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/edit_save_button"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:layout_marginTop="25dp"/>
+            android:background="@drawable/save_button_bg"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="25dp"
+            android:stateListAnimator="@anim/fab_anim"/>
 
     </LinearLayout>
 

@@ -3,9 +3,11 @@ package com.example.dmitry.handheld_dictionary.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.example.dmitry.handheld_dictionary.R;
@@ -35,6 +37,22 @@ public class EditFragment extends BaseFragment {
                                        @Nullable Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_edit, container, false);
+    }
+
+    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mTranslate.setOnKeyListener(new View.OnKeyListener() {
+            @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
+                switch (keyCode) {
+                    case EditorInfo.IME_ACTION_DONE:
+                        save();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
     }
 
     @OnClick(R.id.edit_save_button)

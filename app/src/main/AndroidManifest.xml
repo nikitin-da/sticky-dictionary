@@ -19,7 +19,7 @@
         </activity>
 
         <activity android:name=".ui.activity.EditActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
         <activity android:name=".ui.activity.PagerActivity"/>
 
