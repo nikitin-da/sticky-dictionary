@@ -23,14 +23,18 @@ import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
 import com.example.dmitry.handheld_dictionary.ui.activity.EditActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.PagerActivity;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
+import com.nhaarman.listviewanimations.appearance.StickyListHeadersAdapterDecorator;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.expandablelistitem.ExpandableListItemAdapter;
+import com.nhaarman.listviewanimations.util.StickyListHeadersListViewWrapper;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -39,7 +43,7 @@ public class WordListFragment extends BaseFragment {
 
     private static final int INITIAL_DELAY_MILLIS = 500;
 
-    @InjectView(R.id.word_list) ListView mList;
+    @InjectView(R.id.word_list) StickyListHeadersListView mList;
     @InjectView(R.id.word_list_add) ImageButton mAddButton;
 
     private WordActiveModel mWordActiveModel;
@@ -62,14 +66,21 @@ public class WordListFragment extends BaseFragment {
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mList.setFitsSystemWindows(true);
+
         mAdapter = new WordListAdapter(getActivity());
-        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(mAdapter);
-        alphaInAnimationAdapter.setAbsListView(mList);
 
-        assert alphaInAnimationAdapter.getViewAnimator() != null;
-        alphaInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+        AlphaInAnimationAdapter animationAdapter = new AlphaInAnimationAdapter(mAdapter);
+        StickyListHeadersAdapterDecorator stickyListHeadersAdapterDecorator = new StickyListHeadersAdapterDecorator(animationAdapter);
+        stickyListHeadersAdapterDecorator.setListViewWrapper(new StickyListHeadersListViewWrapper(mList));
 
-        mList.setAdapter(alphaInAnimationAdapter);
+        assert animationAdapter.getViewAnimator() != null;
+        animationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+
+        assert stickyListHeadersAdapterDecorator.getViewAnimator() != null;
+        stickyListHeadersAdapterDecorator.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+
+        mList.setAdapter(stickyListHeadersAdapterDecorator);
 
         ViewUtil.makeCircle(mAddButton, R.dimen.common_image_button_size);
     }
@@ -101,7 +112,8 @@ public class WordListFragment extends BaseFragment {
         }
     }
 
-    private class WordListAdapter extends ExpandableListItemAdapter<Word> {
+    private class WordListAdapter extends ExpandableListItemAdapter<Word>
+        implements StickyListHeadersAdapter {
 
         protected WordListAdapter(
                 @NonNull Context context) {
@@ -148,6 +160,22 @@ public class WordListFragment extends BaseFragment {
             holder.fillData(getItem(i));
 
             return translateView;
+        }
+
+        @Override
+        public View getHeaderView(final int position, final View convertView, final ViewGroup parent) {
+            TextView view = (TextView) convertView;
+            if (view == null) {
+                Context context = parent.getContext();
+                view = (TextView) LayoutInflater.from(context).inflate(R.layout.day_header, parent, false);
+            }
+
+            view.setText(getString(R.string.day_header, getHeaderId(position) + 1));
+
+            return view;
+        }
+        @Override public long getHeaderId(int i) {
+            return i / 10;
         }
     }
 

@@ -11,4 +11,6 @@
     <string name="empty_field_warning">please enter some word</string>
     <string name="action_full_screen">full screen</string>
 
+    <string name="day_header">Day %d</string>
+
 </resources>

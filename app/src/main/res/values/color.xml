@@ -5,4 +5,7 @@
     <color name="save_button_border">#0099CC</color>
     <color name="save_button_bg_pressed">#33B5E5</color>
     <color name="save_button_bg_normal">#0099CC</color>
+
+    <color name="holo_red_light_transparent">#aaff4444</color>
+
 </resources>

@@ -58,4 +58,8 @@ dependencies {
     compile 'com.pushtorefresh:bamboostorage:1.4.0'
 
     compile 'com.nineoldandroids:library:2.4.0'
+
+    // https://github.com/emilsjolander/StickyListHeaders
+    compile 'se.emilsjolander:stickylistheaders:2.5.2'
+
 }
