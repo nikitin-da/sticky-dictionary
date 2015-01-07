@@ -4,12 +4,14 @@
     <string name="app_name">Handheld dictionary</string>
     <string name="hello_world">Hello world!</string>
     <string name="content_description_add">Add</string>
-    <string name="edit_foreign_hint">word</string>
-    <string name="edit_translate_hint">translate</string>
+    <string name="edit_foreign_hint">Word</string>
+    <string name="edit_translate_hint">Translate</string>
+    <string name="edit_name_hint">Name</string>
     <string name="edit_save_button">Save</string>
 
     <string name="empty_field_warning">please enter some word</string>
     <string name="action_full_screen">full screen</string>
+    <string name="action_save">Export to file</string>
 
     <string name="day_header">Day %d</string>
 

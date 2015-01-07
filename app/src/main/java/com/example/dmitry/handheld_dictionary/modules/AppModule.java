@@ -3,6 +3,8 @@ package com.example.dmitry.handheld_dictionary.modules;
 import android.content.Context;
 
 import com.example.dmitry.handheld_dictionary.App;
+import com.example.dmitry.handheld_dictionary.model.active.DictionaryActiveModel;
+import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
 import com.example.dmitry.handheld_dictionary.storage.StorageModule;
 
@@ -19,6 +21,8 @@ import dagger.Provides;
                 StorageModule.class
         },
         injects = {
+                DictionaryActiveModel.class,
+                GroupActiveModel.class,
                 WordActiveModel.class
         }
 )

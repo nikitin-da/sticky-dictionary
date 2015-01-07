@@ -14,13 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
-import com.example.dmitry.handheld_dictionary.ui.activity.EditActivity;
+import com.example.dmitry.handheld_dictionary.ui.activity.WordEditActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.PagerActivity;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 import com.nhaarman.listviewanimations.appearance.StickyListHeadersAdapterDecorator;
@@ -128,7 +127,7 @@ public class WordListFragment extends BaseFragment {
             TitleHolder holder;
             if (view == null || !(view.getTag() instanceof TitleHolder)) {
                 Context context = viewGroup.getContext();
-                titleView = LayoutInflater.from(context).inflate(R.layout.title_word, viewGroup, false);
+                titleView = LayoutInflater.from(context).inflate(R.layout.item_title_word, viewGroup, false);
                 holder = new TitleHolder(titleView);
                 titleView.setTag(holder);
             } else {
@@ -149,7 +148,7 @@ public class WordListFragment extends BaseFragment {
             TranslateHolder holder;
             if (view == null || !(view.getTag() instanceof TranslateHolder)) {
                 Context context = viewGroup.getContext();
-                translateView = LayoutInflater.from(context).inflate(R.layout.translate_word, viewGroup, false);
+                translateView = LayoutInflater.from(context).inflate(R.layout.item_translate_word, viewGroup, false);
                 holder = new TranslateHolder(translateView);
                 translateView.setTag(holder);
             } else {
@@ -189,13 +188,20 @@ public class WordListFragment extends BaseFragment {
             case R.id.action_pager:
                 startActivity(new Intent(getActivity(), PagerActivity.class));
                 return true;
+            case R.id.action_export:
+                exportToFile();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    private void exportToFile() {
+
+    }
+
     @OnClick(R.id.word_list_add) void addNew() {
-        startActivity(new Intent(getActivity(), EditActivity.class));
+        startActivity(new Intent(getActivity(), WordEditActivity.class));
     }
 
     class TitleHolder {

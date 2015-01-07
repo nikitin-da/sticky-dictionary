@@ -10,7 +10,7 @@ repositories() {
 }
     android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.1"
+    buildToolsVersion "21.1.1"
 
     defaultConfig {
         applicationId "com.example.dmitry.handheld_dictionary"
@@ -21,7 +21,7 @@ repositories() {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -30,12 +30,14 @@ repositories() {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:support-v4:21.0.2'
 
     compile ('com.android.support:support-v13:21.0.0') {
         force = true
     }
-    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.2'
+
+    compile 'com.android.support:cardview-v7:21.0.+'
 
     // https://github.com/nhaarman/ListViewAnimations
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
@@ -54,6 +56,9 @@ dependencies {
     // https://github.com/JakeWharton/Android-ViewPagerIndicator
     compile 'com.viewpagerindicator:library:2.4.1@aar'
 
+    // https://code.google.com/p/google-gson
+    compile 'com.google.code.gson:gson:2.3.1'
+
     // https://github.com/pushtorefresh/bamboo-storage
     compile 'com.pushtorefresh:bamboostorage:1.4.0'
 
@@ -62,4 +67,9 @@ dependencies {
     // https://github.com/emilsjolander/StickyListHeaders
     compile 'se.emilsjolander:stickylistheaders:2.5.2'
 
+    // https://github.com/dlew/joda-time-android
+    compile 'joda-time:joda-time:2.5'
+
+    // https://github.com/wrapp/floatlabelededittext
+    compile 'com.wrapp.floatlabelededittext:library:0.0.5'
 }

@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import com.pushtorefresh.bamboostorage.ABambooStorableItem;
 import com.pushtorefresh.bamboostorage.BambooStorableTypeMeta;
 
+import java.util.Random;
+
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
@@ -18,6 +20,10 @@ import com.pushtorefresh.bamboostorage.BambooStorableTypeMeta;
 )
 public class Word extends ABambooStorableItem implements Parcelable {
 
+    public static final String WORD_WITH_ID = TableInfo.COLUMN_ID + "= ?";
+    public static final String WORDS_FROM_GROUP = TableInfo.COLUMN_GROUP_ID + "= ?";
+
+    private Integer mGroupId;
     private String foreign;
     private String translate;
 
@@ -25,15 +31,20 @@ public class Word extends ABambooStorableItem implements Parcelable {
     }
 
     public Word(String foreign, String translate) {
+        Random random = new Random();
+        mGroupId = random.nextInt();
+
+        this.foreign = foreign;
+        this.translate = translate;
+    }
+
+    public Word(int groupId, String foreign, String translate) {
+        this.mGroupId = groupId;
         this.foreign = foreign;
         this.translate = translate;
     }
 
     // region getters & setters
-    public long getId() {
-        return getInternalId();
-    }
-
     public String getForeign() {
         return foreign;
     }
@@ -50,6 +61,14 @@ public class Word extends ABambooStorableItem implements Parcelable {
         this.translate = translate;
     }
 
+    public Integer getGroupId() {
+        return mGroupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        mGroupId = groupId;
+    }
+
     // endregion
 
     // region for storage
@@ -58,6 +77,7 @@ public class Word extends ABambooStorableItem implements Parcelable {
     public ContentValues toContentValues(@NonNull Resources resources) {
         final ContentValues cv = new ContentValues();
 
+        cv.put(TableInfo.COLUMN_GROUP_ID, mGroupId);
         cv.put(TableInfo.COLUMN_FOREIGN, foreign);
         cv.put(TableInfo.COLUMN_TRANSLATE, translate);
 
@@ -66,6 +86,7 @@ public class Word extends ABambooStorableItem implements Parcelable {
 
     @Override
     public void fillFromCursor(@NonNull Cursor cursor) {
+        mGroupId = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_GROUP_ID));
         foreign = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_FOREIGN));
         translate = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_TRANSLATE));
     }
@@ -75,11 +96,13 @@ public class Word extends ABambooStorableItem implements Parcelable {
         String TABLE_NAME = "table_word";
 
         String COLUMN_ID = "_id";
+        String COLUMN_GROUP_ID = "_group_id";
         String COLUMN_FOREIGN = "_foreign";
         String COLUMN_TRANSLATE = "_translate";
 
         String CREATE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                COLUMN_GROUP_ID + " INTEGER, " +
                 COLUMN_FOREIGN + " TEXT, " +
                 COLUMN_TRANSLATE + " TEXT);";
     }
@@ -96,12 +119,14 @@ public class Word extends ABambooStorableItem implements Parcelable {
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.mGroupId);
         dest.writeString(this.foreign);
         dest.writeString(this.translate);
         dest.writeLong(this.getInternalId());
     }
 
     private Word(Parcel in) {
+        this.mGroupId = in.readInt();
         this.foreign = in.readString();
         this.translate = in.readString();
         this.setInternalId(in.readLong());

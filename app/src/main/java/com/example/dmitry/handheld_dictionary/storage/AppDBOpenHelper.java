@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.dmitry.handheld_dictionary.model.Dictionary;
+import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.model.Word;
 
 import java.util.Arrays;
@@ -25,6 +27,8 @@ public class AppDBOpenHelper extends SQLiteOpenHelper {
     @Override
     public synchronized void onCreate(SQLiteDatabase db) {
         List<String> createTablesQueries = Arrays.asList(
+                Dictionary.createTableQuery(),
+                Group.createTableQuery(),
                 Word.createTableQuery()
         );
         executeStatements(db, createTablesQueries);

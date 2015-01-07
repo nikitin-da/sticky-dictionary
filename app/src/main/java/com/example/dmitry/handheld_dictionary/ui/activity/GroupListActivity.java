@@ -4,15 +4,11 @@ import android.os.Bundle;
 
 import com.example.dmitry.handheld_dictionary.R;
 
-public class WordListActivity extends BaseActivity {
+public class GroupListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_word_list);
-    }
-
-    @Override protected boolean finishWithAnimation() {
-        return true;
+        setContentView(R.layout.activity_group_list);
     }
 }

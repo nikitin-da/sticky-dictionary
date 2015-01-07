@@ -20,7 +20,7 @@ import butterknife.OnClick;
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
-public class EditFragment extends BaseFragment {
+public class WordEditFragment extends BaseFragment {
 
     @InjectView(R.id.edit_foreign) EditText mForeign;
     @InjectView(R.id.edit_translate) EditText mTranslate;
@@ -36,7 +36,7 @@ public class EditFragment extends BaseFragment {
                                        @Nullable ViewGroup container,
                                        @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_edit, container, false);
+        return inflater.inflate(R.layout.fragment_word_edit, container, false);
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class EditFragment extends BaseFragment {
         });
     }
 
-    @OnClick(R.id.edit_save_button)
+    @OnClick(R.id.word_edit_save_button)
     void save() {
         if (validateField(mForeign) & validateField(mTranslate)) {
             Word word = new Word(mForeign.getText().toString(), mTranslate.getText().toString());

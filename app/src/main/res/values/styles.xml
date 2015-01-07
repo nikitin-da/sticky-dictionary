@@ -5,12 +5,12 @@
         <item name="android:actionMenuTextColor">#ffffff</item>
 
         <item name="colorPrimary">#33B5E5</item>
-        <item name="colorPrimaryDark">#0099CC</item>
-        <item name="colorAccent">#0099CC</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="WordViewPagerIndicator">
-        <item name="fillColor">#0099CC</item>
+        <item name="fillColor">@color/colorAccent</item>
         <item name="pageColor">#7733B5E5</item>
         <item name="strokeWidth">0dp</item>
         <item name="radius">5dp</item>
@@ -29,14 +29,62 @@
         <item name="android:paddingBottom">@dimen/word_list_padding</item>
     </style>
 
-    <style name="WordEditText">
+    <style name="FloatActionButton">
+        <item name="android:layout_width">@dimen/common_image_button_size</item>
+        <item name="android:layout_height">@dimen/common_image_button_size</item>
+        <item name="android:background">@drawable/action_button_bg</item>
+        <item name="android:layout_margin">30dp</item>
+        <item name="android:stateListAnimator">@anim/fab_anim</item>
+    </style>
+
+    <style name="FloatActionButton.Add">
+        <item name="android:src">@drawable/ic_add</item>
+        <item name="android:contentDescription">@string/content_description_add</item>
+        <item name="android:layout_gravity">bottom|right</item>
+    </style>
+
+    <style name="CommonEditStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/fields_text_color</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
         <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="FloatLabelStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fletTextAppearance">@style/FloatTitleTextAppearance</item>
+        <item name="fletPaddingBottom">5dp</item>
+    </style>
+
+    <style name="FloatTitleTextAppearance">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:shadowColor">@color/colorAccent</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <style name="CommonButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/save_button_bg</item>
+        <item name="android:paddingLeft">35dp</item>
+        <item name="android:paddingRight">35dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_marginTop">25dp</item>
+        <item name="android:stateListAnimator">@anim/fab_anim</item>
+    </style>
+
+    <style name="CommonButton.Save">
+        <item name="android:text">@string/edit_save_button</item>
     </style>
 
 </resources>

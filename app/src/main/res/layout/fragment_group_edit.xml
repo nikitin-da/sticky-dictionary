@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="50dp"
+        android:gravity="center">
+
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            style="@style/FloatLabelStyle">
+
+            <EditText
+                android:id="@+id/group_edit_name"
+                style="@style/CommonEditStyle"
+                android:hint="@string/edit_name_hint"
+                android:imeOptions="actionNext"/>
+
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+        <Button
+            android:id="@+id/group_edit_save_button"
+            style="@style/CommonButton.Save"
+            android:editable="false"/>
+
+    </LinearLayout>
+
+</ScrollView>

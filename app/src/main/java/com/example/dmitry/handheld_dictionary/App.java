@@ -1,6 +1,7 @@
 package com.example.dmitry.handheld_dictionary;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.example.dmitry.handheld_dictionary.modules.AppModule;
 import com.example.dmitry.handheld_dictionary.storage.StorageModule;
@@ -32,6 +33,15 @@ public class App extends Application {
                 new StorageModule(),
                 new AppModule(this)
         };
+    }
+
+    /**
+     * Returns application object from context
+     * @param context to get application object
+     * @return application object
+     */
+    public static App get(Context context) {
+        return (App) context.getApplicationContext();
     }
 
 }

@@ -8,7 +8,7 @@ import com.pushtorefresh.bamboostorage.ABambooSQLiteOpenHelperContentProvider;
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
-public class AlarmAppContentProvider extends ABambooSQLiteOpenHelperContentProvider {
+public class AppContentProvider extends ABambooSQLiteOpenHelperContentProvider {
     @NonNull
     @Override
     protected SQLiteOpenHelper provideSQLiteOpenHelper() {

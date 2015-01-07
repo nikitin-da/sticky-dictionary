@@ -14,31 +14,20 @@
 
         <EditText
             android:id="@+id/edit_foreign"
-            style="@style/WordEditText"
+            style="@style/CommonEditStyle"
             android:imeOptions="actionNext"
             android:hint="@string/edit_foreign_hint"/>
 
         <EditText
             android:id="@+id/edit_translate"
-            style="@style/WordEditText"
+            style="@style/CommonEditStyle"
             android:imeOptions="actionDone"
             android:hint="@string/edit_translate_hint"
             android:layout_marginTop="15dp"/>
 
         <Button
-            android:id="@+id/edit_save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_save_button"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:background="@drawable/save_button_bg"
-            android:paddingLeft="35dp"
-            android:paddingRight="35dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_marginTop="25dp"
-            android:stateListAnimator="@anim/fab_anim"/>
+            android:id="@+id/word_edit_save_button"
+            style="@style/CommonButton.Save"/>
 
     </LinearLayout>
 

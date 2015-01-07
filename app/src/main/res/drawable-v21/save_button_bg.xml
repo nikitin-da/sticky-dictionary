@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
         android:color="?android:attr/colorControlHighlight">
-
-    <item android:drawable="@drawable/save_button_bg_normal"/>
-
+    <item>
+        <selector>
+            <item android:state_enabled="false" android:drawable="@drawable/save_button_bg_disabled"/>
+            <item android:drawable="@drawable/save_button_bg_normal"/>
+        </selector>
+    </item>
 </ripple>

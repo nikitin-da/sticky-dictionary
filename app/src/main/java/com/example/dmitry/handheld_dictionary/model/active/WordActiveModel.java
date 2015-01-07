@@ -25,12 +25,27 @@ public class WordActiveModel extends BaseActiveModel {
         return true;
     }
 
-    public Word getWord(long trackId) {
-        return bambooStorage.getByInternalId(Word.class, trackId);
+    public Word getWord(int wordId) {
+        List<Word> words = bambooStorage.getAsList(
+                Word.class,
+                Word.WORD_WITH_ID,
+                new String[] {String.valueOf(wordId)});
+        if (words == null || words.isEmpty()) {
+            return null;
+        } else {
+            return words.get(0);
+        }
     }
 
     public List<Word> getAllWords() {
         return bambooStorage.getAsList(Word.class);
+    }
+
+    public List<Word> getAllFromGroup(int groupId) {
+        return bambooStorage.getAsList(
+                Word.class,
+                Word.WORDS_FROM_GROUP,
+                new String[] {String.valueOf(groupId)});
     }
 
     public void saveWord(Word track) {
