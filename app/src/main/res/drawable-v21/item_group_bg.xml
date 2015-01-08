@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+        android:color="@color/item_group_bg_pressed">
+
+    <item android:drawable="@drawable/item_group_bg_normal"/>
+
+</ripple>

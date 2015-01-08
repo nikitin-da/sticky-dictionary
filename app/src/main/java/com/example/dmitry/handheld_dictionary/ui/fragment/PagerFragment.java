@@ -81,4 +81,8 @@ public class PagerFragment extends BaseFragment {
             return mWords.size();
         }
     }
+
+    @Override public Integer getActionBarTitle() {
+        return R.string.navigation_drawer_item_check;
+    }
 }

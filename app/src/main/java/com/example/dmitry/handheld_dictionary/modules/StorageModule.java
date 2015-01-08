@@ -1,4 +1,4 @@
-package com.example.dmitry.handheld_dictionary.storage;
+package com.example.dmitry.handheld_dictionary.modules;
 
 import android.content.Context;
 

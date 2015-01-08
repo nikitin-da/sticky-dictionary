@@ -5,8 +5,8 @@ import android.content.Context;
 import com.example.dmitry.handheld_dictionary.App;
 import com.example.dmitry.handheld_dictionary.model.active.DictionaryActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
+import com.example.dmitry.handheld_dictionary.model.active.TypefaceActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
-import com.example.dmitry.handheld_dictionary.storage.StorageModule;
 
 import javax.inject.Singleton;
 
@@ -18,12 +18,14 @@ import dagger.Provides;
  */
 @Module(
         includes = {
-                StorageModule.class
+                StorageModule.class,
+                TypefaceCacheModule.class
         },
         injects = {
                 DictionaryActiveModel.class,
                 GroupActiveModel.class,
-                WordActiveModel.class
+                WordActiveModel.class,
+                TypefaceActiveModel.class
         }
 )
 public class AppModule {

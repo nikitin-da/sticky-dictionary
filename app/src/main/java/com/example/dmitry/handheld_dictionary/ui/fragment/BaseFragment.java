@@ -16,4 +16,14 @@ public abstract class BaseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
     }
+
+    /**
+     * You may override this method and return not null string resources id,
+     * that will display as action bar title.
+     *
+     * @return actual title resource id
+     */
+    public Integer getActionBarTitle() {
+        return null;
+    }
 }

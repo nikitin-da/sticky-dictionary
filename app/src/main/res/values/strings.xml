@@ -15,4 +15,17 @@
 
     <string name="day_header">Day %d</string>
 
+    <string name="navigation_drawer_item_all">All words</string>
+    <string name="navigation_drawer_item_group">Groups</string>
+    <string name="navigation_drawer_item_check">Check</string>
+    <string name="navigation_drawer_item_import_export">Import/Export</string>
+
+    <string name="content_description_ic_all">all words</string>
+    <string name="content_description_ic_group">groups</string>
+    <string name="content_description_ic_check">check</string>
+    <string name="content_description_ic_import_export">import/export</string>
+
+    <string name="navigation_drawer_open_drawer_description">Open menu</string>
+    <string name="navigation_drawer_close_drawer_description">Close menu</string>
+
 </resources>

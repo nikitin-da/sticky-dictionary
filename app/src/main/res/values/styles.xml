@@ -1,13 +1,18 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="TranslucentStatusAppTheme">
 
         <item name="android:actionMenuTextColor">#ffffff</item>
 
-        <item name="colorPrimary">#33B5E5</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorAccent</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/common_background</item>
     </style>
+
+    <style name="TranslucentStatusAppTheme" parent="BaseTheme"/>
+
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
 
     <style name="WordViewPagerIndicator">
         <item name="fillColor">@color/colorAccent</item>
@@ -29,13 +34,14 @@
         <item name="android:paddingBottom">@dimen/word_list_padding</item>
     </style>
 
-    <style name="FloatActionButton">
+    <style name="FloatActionButton" parent="Raised">
         <item name="android:layout_width">@dimen/common_image_button_size</item>
         <item name="android:layout_height">@dimen/common_image_button_size</item>
         <item name="android:background">@drawable/action_button_bg</item>
         <item name="android:layout_margin">30dp</item>
-        <item name="android:stateListAnimator">@anim/fab_anim</item>
     </style>
+
+    <style name="Raised"/>
 
     <style name="FloatActionButton.Add">
         <item name="android:src">@drawable/ic_add</item>
@@ -69,7 +75,7 @@
         <item name="android:shadowRadius">3</item>
     </style>
 
-    <style name="CommonButton">
+    <style name="CommonButton" parent="Raised">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/white</item>
@@ -80,11 +86,54 @@
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:layout_marginTop">25dp</item>
-        <item name="android:stateListAnimator">@anim/fab_anim</item>
     </style>
 
     <style name="CommonButton.Save">
         <item name="android:text">@string/edit_save_button</item>
+    </style>
+
+    <style name="NavigationDrawerItemContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/navigation_drawer_item_bg</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="NavigationDrawerItemIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:duplicateParentState">true</item>
+    </style>
+
+    <style name="NavigationDrawerItemText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/navigation_drawer_text</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:shadowColor">@color/navigation_drawer_shadow</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <style name="ToolBarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="theme">@style/AppActionBar</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:shadowColor">@android:color/white</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">3</item>
     </style>
 
 </resources>

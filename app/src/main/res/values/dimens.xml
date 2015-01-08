@@ -10,4 +10,6 @@
 
     <dimen name="word_list_padding">15dp</dimen>
 
+    <dimen name="navigation_drawer_width">290dp</dimen>
+
 </resources>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/navigation_drawer_bg_normal"
+    tools:ignore="Overdraw"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:splitMotionEvents="false">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:src="@drawable/menu_image"
+            android:scaleType="centerCrop"
+            android:background="@color/navigation_drawer_shadow"
+            tools:ignore="ContentDescription"
+            android:elevation="3dp"/>
+
+        <!--Group-->
+        <LinearLayout
+            android:id="@+id/navigation_drawer_item_group"
+            style="@style/NavigationDrawerItemContainer">
+
+            <ImageView
+                style="@style/NavigationDrawerItemIcon"
+                android:src="@drawable/ic_menu_group"
+                android:contentDescription="@string/content_description_ic_group"/>
+
+            <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+                android:id="@+id/navigation_drawer_item_group_title"
+                style="@style/NavigationDrawerItemText"
+                android:text="@string/navigation_drawer_item_group"/>
+
+        </LinearLayout>
+
+        <!--Check-->
+        <LinearLayout
+            android:id="@+id/navigation_drawer_item_check"
+            style="@style/NavigationDrawerItemContainer">
+
+            <ImageView
+                style="@style/NavigationDrawerItemIcon"
+                android:src="@drawable/ic_menu_check"
+                android:contentDescription="@string/content_description_ic_check"/>
+
+            <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+                android:id="@+id/navigation_drawer_item_check_title"
+                style="@style/NavigationDrawerItemText"
+                android:text="@string/navigation_drawer_item_check"/>
+
+        </LinearLayout>
+
+        <!--All-->
+        <LinearLayout
+            android:id="@+id/navigation_drawer_item_all"
+            style="@style/NavigationDrawerItemContainer">
+
+            <ImageView
+                style="@style/NavigationDrawerItemIcon"
+                android:src="@drawable/ic_menu_all"
+                android:contentDescription="@string/content_description_ic_all"/>
+
+            <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+                android:id="@+id/navigation_drawer_item_all_title"
+                style="@style/NavigationDrawerItemText"
+                android:text="@string/navigation_drawer_item_all"/>
+
+        </LinearLayout>
+
+        <!--Import/Export-->
+        <LinearLayout
+            android:id="@+id/navigation_drawer_item_import_export"
+            style="@style/NavigationDrawerItemContainer">
+
+            <ImageView
+                style="@style/NavigationDrawerItemIcon"
+                android:src="@drawable/ic_menu_import_export"
+                android:contentDescription="@string/content_description_ic_import_export"/>
+
+            <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+                android:id="@+id/navigation_drawer_item_import_export_title"
+                style="@style/NavigationDrawerItemText"
+                android:text="@string/navigation_drawer_item_import_export"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    
+</ScrollView>

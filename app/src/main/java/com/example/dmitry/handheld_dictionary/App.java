@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.dmitry.handheld_dictionary.modules.AppModule;
-import com.example.dmitry.handheld_dictionary.storage.StorageModule;
 
 import dagger.ObjectGraph;
 
@@ -17,7 +16,7 @@ public class App extends Application {
 
     @Override public void onCreate() {
         super.onCreate();
-        mObjectGraph = ObjectGraph.create(getModules());
+        mObjectGraph = ObjectGraph.create(new AppModule(this));
     }
 
     /**
@@ -26,13 +25,6 @@ public class App extends Application {
      */
     public void inject(Object o) {
         mObjectGraph.inject(o);
-    }
-
-    private Object[] getModules() {
-        return new Object[] {
-                new StorageModule(),
-                new AppModule(this)
-        };
     }
 
     /**

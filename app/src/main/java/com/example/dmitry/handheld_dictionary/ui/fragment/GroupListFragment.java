@@ -158,4 +158,8 @@ public class GroupListFragment extends BaseFragment {
             }
         }
     }
+
+    @Override public Integer getActionBarTitle() {
+        return R.string.navigation_drawer_item_group;
+    }
 }

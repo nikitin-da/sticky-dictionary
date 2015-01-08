@@ -227,4 +227,8 @@ public class WordListFragment extends BaseFragment {
             translate.setText(word.getTranslate());
         }
     }
+
+    @Override public Integer getActionBarTitle() {
+        return R.string.navigation_drawer_item_all;
+    }
 }

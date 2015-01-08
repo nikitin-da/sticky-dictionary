@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Raised">
+        <item name="android:stateListAnimator">@anim/fab_anim</item>
+    </style>
+
+</resources>
