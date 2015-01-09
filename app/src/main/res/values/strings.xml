@@ -25,4 +25,9 @@
     <string name="navigation_drawer_open_drawer_description">Open menu</string>
     <string name="navigation_drawer_close_drawer_description">Close menu</string>
 
+    <string name="button_import">Import</string>
+    <string name="button_export">Export</string>
+
+    <string name="export_success_message">Dictionary successful exported: %1$s</string>
+
 </resources>

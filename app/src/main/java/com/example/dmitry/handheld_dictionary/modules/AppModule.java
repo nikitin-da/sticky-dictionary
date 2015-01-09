@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.dmitry.handheld_dictionary.App;
 import com.example.dmitry.handheld_dictionary.model.active.DictionaryActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
+import com.example.dmitry.handheld_dictionary.model.active.ImportExportActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.TypefaceActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
 
@@ -19,13 +20,15 @@ import dagger.Provides;
 @Module(
         includes = {
                 StorageModule.class,
-                TypefaceCacheModule.class
+                TypefaceCacheModule.class,
+                GsonModule.class
         },
         injects = {
                 DictionaryActiveModel.class,
                 GroupActiveModel.class,
                 WordActiveModel.class,
-                TypefaceActiveModel.class
+                TypefaceActiveModel.class,
+                ImportExportActiveModel.class
         }
 )
 public class AppModule {

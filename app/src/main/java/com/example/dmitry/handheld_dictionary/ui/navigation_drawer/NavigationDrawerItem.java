@@ -3,6 +3,7 @@ package com.example.dmitry.handheld_dictionary.ui.navigation_drawer;
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.ui.fragment.AllGroupsWordListFragment;
 import com.example.dmitry.handheld_dictionary.ui.fragment.GroupListFragment;
+import com.example.dmitry.handheld_dictionary.ui.fragment.ImportExportFragment;
 import com.example.dmitry.handheld_dictionary.ui.fragment.PagerFragment;
 
 /**
@@ -40,7 +41,7 @@ public enum NavigationDrawerItem {
     IMPORT_EXPORT(
             R.id.navigation_drawer_item_import_export,
             R.id.navigation_drawer_item_import_export_title,
-            AllGroupsWordListFragment.class);
+            ImportExportFragment.class);
 
     /**
      * Container id of the item.

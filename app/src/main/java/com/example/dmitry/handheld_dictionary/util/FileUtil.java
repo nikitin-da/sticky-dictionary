@@ -17,7 +17,7 @@ public final class FileUtil {
 
     public static File getUniqueFile(String defaultPath) {
 
-        String dir = new File(defaultPath).getAbsolutePath();
+        String dir = new File(defaultPath).getParent();
         String fileName = Files.getNameWithoutExtension(defaultPath);
         String fileExt = Files.getFileExtension(defaultPath);
 
@@ -34,7 +34,7 @@ public final class FileUtil {
     }
 
     private static String combineName(String path, String name, String ext) {
-        return path + name + "." + ext;
+        return path + "/" + name + "." + ext;
     }
 
 }

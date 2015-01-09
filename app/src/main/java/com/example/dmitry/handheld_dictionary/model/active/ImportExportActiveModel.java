@@ -4,9 +4,14 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
+import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.util.FileUtil;
+import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -15,12 +20,15 @@ import javax.inject.Inject;
  */
 public class ImportExportActiveModel extends BaseActiveModel {
 
-    private static final String DEFAULT_FILE_NAME = "words.json";
+    private static final String DEFAULT_FILE_NAME = "dictionary.json";
 
-    @Inject WordActiveModel wordActiveModel;
+    @Inject Gson gson;
+
+    private GroupActiveModel mGroupActiveModel;
 
     public ImportExportActiveModel(@NonNull Context context) {
         super(context);
+        mGroupActiveModel = new GroupActiveModel(context);
     }
 
     public void asyncExport(@NonNull TaskListener<ExportResult> listener) {
@@ -31,16 +39,28 @@ public class ImportExportActiveModel extends BaseActiveModel {
         });
     }
 
-    private ExportResult syncExport() {
+    private ExportResult syncExport() throws IOException {
         File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        String defaultFileName = downloadsDir.getAbsolutePath() + "." + DEFAULT_FILE_NAME;
+        String defaultFileName = downloadsDir.getAbsolutePath() + "/" + DEFAULT_FILE_NAME;
         File file = FileUtil.getUniqueFile(defaultFileName);
 
-        return new ExportResult("");
+        final String jsonString = getJsonString();
+
+        FileOutputStream stream = new FileOutputStream(file);
+        try {
+            stream.write(jsonString.getBytes());
+        } finally {
+            stream.close();
+        }
+        return new ExportResult(file.getName());
     }
 
     private String getJsonString() {
-        return "";
+        List<Group> groups = mGroupActiveModel.getAllGroups();
+        return gson.toJson(groups);
     }
 
+    @Override protected boolean shouldInject() {
+        return true;
+    }
 }

@@ -7,6 +7,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.pushtorefresh.bamboostorage.ABambooStorableItem;
 import com.pushtorefresh.bamboostorage.BambooStorableTypeMeta;
 
@@ -32,12 +34,14 @@ public class Group extends ABambooStorableItem implements Parcelable {
     public static final String GROUP_WITH_ID = TableInfo.COLUMN_GROUP_ID + "= ?";
     public static final String GROUPS_FROM_DICTIONARY = TableInfo.COLUMN_GROUP_ID + "= ?";
 
-    private static final DateTimeZone dateTimeZone = DateTimeZone.forTimeZone(TimeZone.getDefault()); // todo check
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
     private int mGroupId;
-    private String mName;
-    private DateTime mDate;
+
+    @Expose @SerializedName("name") private String mName;
+    @Expose @SerializedName("date") private DateTime mDate;
+
+    @Expose @SerializedName("words")
     private final List<Word> mWords = new ArrayList<>();
 
     public Group() {
