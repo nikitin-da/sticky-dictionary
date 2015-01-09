@@ -20,7 +20,7 @@ import javax.inject.Inject;
  */
 public class ImportExportActiveModel extends BaseActiveModel {
 
-    private static final String DEFAULT_FILE_NAME = "dictionary.json";
+    private static final String DEFAULT_FILE_NAME = "dictionary.txt";
 
     @Inject Gson gson;
 
@@ -52,7 +52,7 @@ public class ImportExportActiveModel extends BaseActiveModel {
         } finally {
             stream.close();
         }
-        return new ExportResult(file.getName());
+        return new ExportResult(file);
     }
 
     private String getJsonString() {

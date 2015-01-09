@@ -1,17 +1,21 @@
 package com.example.dmitry.handheld_dictionary.model.active;
 
+import android.support.annotation.NonNull;
+
+import java.io.File;
+
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
 public class ExportResult {
 
-    private final String mFileName;
+    private final File mFile;
 
-    public ExportResult(String fileName) {
-        this.mFileName = fileName;
+    public ExportResult(@NonNull final File file) {
+        this.mFile = file;
     }
 
-    public String getFileName() {
-        return mFileName;
+    public File getFile() {
+        return mFile;
     }
 }

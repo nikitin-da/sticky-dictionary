@@ -9,10 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.dmitry.handheld_dictionary.App;
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.active.ExportResult;
 import com.example.dmitry.handheld_dictionary.model.active.ImportExportActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
+import com.example.dmitry.handheld_dictionary.util.AppNotificationManager;
+
+import javax.inject.Inject;
 
 import butterknife.OnClick;
 
@@ -36,19 +40,24 @@ public class ImportExportFragment extends BaseFragment {
 
     @OnClick(R.id.button_export_file)
     void exportFile() {
-        mImportExportActiveModel.asyncExport(new ExportListener(getActivity()));
+        Context context = getActivity();
+        mImportExportActiveModel.asyncExport(new ExportListener(context));
+        Toast.makeText(context, R.string.start_exporting, Toast.LENGTH_SHORT).show();
     }
 
     @Override public Integer getActionBarTitle() {
         return R.string.navigation_drawer_item_import_export;
     }
 
-    static class ExportListener extends TaskListener<ExportResult> {
+    public static class ExportListener extends TaskListener<ExportResult> {
+
+        @Inject AppNotificationManager appNotificationManager;
 
         private final Context mContext;
 
         ExportListener(@NonNull Context context) {
             mContext = context.getApplicationContext();
+            App.get(context).inject(this);
         }
 
         @Override public void onProblemOccurred(Throwable t) {
@@ -56,7 +65,7 @@ public class ImportExportFragment extends BaseFragment {
         }
 
         @Override public void onDataProcessed(ExportResult exportResult) {
-            showToast(mContext.getString(R.string.export_success_message, exportResult.getFileName()));
+            appNotificationManager.showExportNotification(mContext, exportResult.getFile());
         }
 
         private void showToast(final String message) {

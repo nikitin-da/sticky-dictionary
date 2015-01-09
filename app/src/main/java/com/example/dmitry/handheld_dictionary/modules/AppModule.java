@@ -8,6 +8,8 @@ import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.ImportExportActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.TypefaceActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
+import com.example.dmitry.handheld_dictionary.ui.fragment.ImportExportFragment;
+import com.example.dmitry.handheld_dictionary.util.AppNotificationManager;
 
 import javax.inject.Singleton;
 
@@ -21,14 +23,17 @@ import dagger.Provides;
         includes = {
                 StorageModule.class,
                 TypefaceCacheModule.class,
-                GsonModule.class
+                GsonModule.class,
+                AppNotificationManagerModule.class
         },
         injects = {
                 DictionaryActiveModel.class,
                 GroupActiveModel.class,
                 WordActiveModel.class,
                 TypefaceActiveModel.class,
-                ImportExportActiveModel.class
+                ImportExportActiveModel.class,
+                ImportExportFragment.ExportListener.class,
+                AppNotificationManager.class
         }
 )
 public class AppModule {
