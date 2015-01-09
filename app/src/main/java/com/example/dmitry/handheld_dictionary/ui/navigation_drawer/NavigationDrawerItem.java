@@ -1,9 +1,9 @@
 package com.example.dmitry.handheld_dictionary.ui.navigation_drawer;
 
 import com.example.dmitry.handheld_dictionary.R;
+import com.example.dmitry.handheld_dictionary.ui.fragment.AllGroupsWordListFragment;
 import com.example.dmitry.handheld_dictionary.ui.fragment.GroupListFragment;
 import com.example.dmitry.handheld_dictionary.ui.fragment.PagerFragment;
-import com.example.dmitry.handheld_dictionary.ui.fragment.WordListFragment;
 
 /**
  * Items of navigation drawer, which include appropriate view id's and
@@ -33,14 +33,14 @@ public enum NavigationDrawerItem {
     ALL(
             R.id.navigation_drawer_item_all,
             R.id.navigation_drawer_item_all_title,
-            WordListFragment.class),
+            AllGroupsWordListFragment.class),
     /**
      * Import/Export item.
      */
     IMPORT_EXPORT(
             R.id.navigation_drawer_item_import_export,
             R.id.navigation_drawer_item_import_export_title,
-            WordListFragment.class);
+            AllGroupsWordListFragment.class);
 
     /**
      * Container id of the item.

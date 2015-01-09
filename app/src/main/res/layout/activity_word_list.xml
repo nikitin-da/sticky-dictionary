@@ -1,6 +1,17 @@
-<fragment
-    class="com.example.dmitry.handheld_dictionary.ui.fragment.WordListFragment"
-    android:id="@+id/fragment_word_list"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/activity_toolbar_common"
+        style="@style/ToolBarStyle"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_one_group_word_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

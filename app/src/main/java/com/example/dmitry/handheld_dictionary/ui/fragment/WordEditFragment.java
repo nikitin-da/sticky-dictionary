@@ -22,6 +22,16 @@ import butterknife.OnClick;
  */
 public class WordEditFragment extends BaseFragment {
 
+    public static WordEditFragment newInstance(int groupId) {
+        Bundle arguments = new Bundle(1);
+        arguments.putInt(ARG_GROUP_ID, groupId);
+        WordEditFragment fragment = new WordEditFragment();
+        fragment.setArguments(arguments);
+        return fragment;
+    }
+
+    private static final String ARG_GROUP_ID = "ARG_GROUP_ID";
+
     @InjectView(R.id.edit_foreign) EditText mForeign;
     @InjectView(R.id.edit_translate) EditText mTranslate;
 
@@ -58,7 +68,10 @@ public class WordEditFragment extends BaseFragment {
     @OnClick(R.id.word_edit_save_button)
     void save() {
         if (validateField(mForeign) & validateField(mTranslate)) {
-            Word word = new Word(mForeign.getText().toString(), mTranslate.getText().toString());
+            Word word = new Word(
+                    getArguments().getInt(ARG_GROUP_ID),
+                    mForeign.getText().toString(),
+                    mTranslate.getText().toString());
             mWordActiveModel.saveWord(word);
             getActivity().finish();
         }

@@ -12,4 +12,6 @@
 
     <dimen name="navigation_drawer_width">290dp</dimen>
 
+    <dimen name="item_group_padding">7dp</dimen>
+
 </resources>

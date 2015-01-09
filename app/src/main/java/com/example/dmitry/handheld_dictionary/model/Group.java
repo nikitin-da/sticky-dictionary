@@ -56,10 +56,19 @@ public class Group extends ABambooStorableItem implements Parcelable {
         setDate(dateStr);
     }
 
-    public Group(int groupId, String name, String dateStr) {
+    public Group(int groupId, String name) {
         mGroupId = groupId;
         mName = name;
+    }
+
+    public Group(int groupId, String name, String dateStr) {
+        this(groupId, name);
         setDate(dateStr);
+    }
+
+    public Group(int groupId, String name, DateTime date) {
+        this(groupId, name);
+        mDate = date;
     }
 
     private void fillGroupIdWithRandom() {

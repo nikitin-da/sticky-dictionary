@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#399db1</color>
+    <color name="colorPrimary">@color/common_yellow</color>
     <color name="colorAccent">#26606e</color>
-    <color name="common_background">#7cccdf</color>
+    <color name="common_background">#d6efef</color>
 
     <color name="common_yellow">#f1f56f</color>
 
+    <color name="common_divider">#0099CC</color>
+
     <color name="action_button_bg_normal">@color/common_yellow</color>
     <color name="action_button_bg_pressed">#e0e34d</color>
-    <color name="save_button_border">#0099CC</color>
+    <color name="save_button_border">@color/common_divider</color>
     <color name="save_button_bg_normal">@color/colorAccent</color>
     <color name="save_button_bg_pressed">#33B5E5</color>
     <color name="save_button_bg_disabled">#425a595b</color>
 
-    <color name="holo_red_light_transparent">#aaff4444</color>
+    <color name="item_group_header_bg">#f1f56f</color>
 
     <color name="fields_text_color">@android:color/black</color>
 
@@ -23,7 +25,7 @@
     <color name="navigation_drawer_shadow">#307485</color>
     <color name="navigation_drawer_text">@color/common_yellow</color>
 
-    <color name="item_group_bg_normal">#d6efef</color>
+    <color name="item_group_bg_normal">#80cfe1</color>
     <color name="item_group_bg_pressed">#38a0b6</color>
 
 </resources>

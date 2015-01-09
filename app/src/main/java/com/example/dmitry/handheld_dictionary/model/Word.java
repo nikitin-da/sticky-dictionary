@@ -44,6 +44,10 @@ public class Word extends ABambooStorableItem implements Parcelable {
         this.translate = translate;
     }
 
+    public Word(@NonNull final Word other) {
+        this(other.getGroupId(), other.getForeign(), other.getTranslate());
+    }
+
     // region getters & setters
     public String getForeign() {
         return foreign;

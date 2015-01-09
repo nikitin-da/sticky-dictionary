@@ -13,8 +13,6 @@
     <string name="action_full_screen">full screen</string>
     <string name="action_save">Export to file</string>
 
-    <string name="day_header">Day %d</string>
-
     <string name="navigation_drawer_item_all">All words</string>
     <string name="navigation_drawer_item_group">Groups</string>
     <string name="navigation_drawer_item_check">Check</string>

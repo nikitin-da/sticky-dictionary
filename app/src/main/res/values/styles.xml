@@ -7,7 +7,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorAccent</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/common_background</item>
+        <item name="android:windowBackground">@color/common_yellow</item>
     </style>
 
     <style name="TranslucentStatusAppTheme" parent="BaseTheme"/>
@@ -22,11 +22,26 @@
         <item name="centered">true</item>
     </style>
 
-    <style name="ListItemText">
+    <style name="TextShadow">
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <style name="TextShadow.Black">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:shadowColor">@android:color/black</item>
+    </style>
+
+    <style name="TextShadow.White">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:shadowColor">@android:color/white</item>
+    </style>
+
+    <style name="ListItemText" parent="TextShadow.Black">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@android:color/black</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingLeft">30dp</item>
         <item name="android:paddingRight">30dp</item>
@@ -66,13 +81,10 @@
         <item name="fletPaddingBottom">5dp</item>
     </style>
 
-    <style name="FloatTitleTextAppearance">
+    <style name="FloatTitleTextAppearance" parent="TextShadow">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">18sp</item>
         <item name="android:shadowColor">@color/colorAccent</item>
-        <item name="android:shadowDx">1</item>
-        <item name="android:shadowDy">2</item>
-        <item name="android:shadowRadius">3</item>
     </style>
 
     <style name="CommonButton" parent="Raised">
@@ -108,7 +120,7 @@
         <item name="android:duplicateParentState">true</item>
     </style>
 
-    <style name="NavigationDrawerItemText">
+    <style name="NavigationDrawerItemText" parent="TextShadow">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">15dp</item>
@@ -116,9 +128,6 @@
         <item name="android:textColor">@color/navigation_drawer_text</item>
         <item name="android:duplicateParentState">true</item>
         <item name="android:shadowColor">@color/navigation_drawer_shadow</item>
-        <item name="android:shadowDx">1</item>
-        <item name="android:shadowDy">2</item>
-        <item name="android:shadowRadius">3</item>
     </style>
 
     <style name="ToolBarStyle">
@@ -127,10 +136,12 @@
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="theme">@style/AppActionBar</item>
         <item name="android:background">@color/colorPrimary</item>
+        <item name="android:elevation">3dp</item>
     </style>
 
     <style name="AppActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:shadowColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:shadowColor">@android:color/black</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">3</item>

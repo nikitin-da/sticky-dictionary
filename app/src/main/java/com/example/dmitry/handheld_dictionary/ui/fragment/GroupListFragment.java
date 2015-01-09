@@ -7,8 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +17,17 @@ import android.widget.TextView;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
+import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
 import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.GroupEditActivity;
-import com.example.dmitry.handheld_dictionary.ui.activity.WordListActivity;
+import com.example.dmitry.handheld_dictionary.ui.activity.OneGroupWordListActivity;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -123,11 +121,13 @@ public class GroupListFragment extends BaseFragment {
 
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
-                        final Object object = v.getTag(R.id.tag_key);
+                        final Object key = v.getTag(R.id.tag_key);
                         final Activity activity = getActivity();
-                        if (object instanceof Integer && activity instanceof BaseActivity) {
-                            final Intent intent = new Intent(activity, WordListActivity.class);
+                        if (key instanceof Integer && activity instanceof BaseActivity) {
+                            final Intent intent = new Intent(activity, OneGroupWordListActivity.class);
+                            intent.putExtra(OneGroupWordListActivity.EXTRA_GROUP_ID, (Integer) key);
                             ((BaseActivity) activity).slideActivity(intent);
+
                         }
                     }
                 });
@@ -146,6 +146,7 @@ public class GroupListFragment extends BaseFragment {
         class Holder {
             @InjectView(R.id.group_name) TextView name;
             @InjectView(R.id.group_date) TextView date;
+            @InjectView(R.id.group_words) TextView words;
 
             public Holder(View view) {
                 ButterKnife.inject(this, view);
@@ -155,6 +156,25 @@ public class GroupListFragment extends BaseFragment {
                 name.setText(group.getName());
                 String dateStr = mDateTimeFormatter.print(group.getDate());
                 date.setText(dateStr);
+
+                final List<Word> wordsList = group.getWords();
+                if (!wordsList.isEmpty()) {
+                    String wordsStr = "(";
+                    for (int i = 0; i < wordsList.size() && i < 5; i++) {
+                        final Word word = wordsList.get(i);
+                        wordsStr += word.getForeign() + ", ";
+                    }
+
+                    final int strLength = wordsStr.length();
+                    if (strLength > 2) {
+                        wordsStr = wordsStr.substring(0, strLength - 2); // Last comma with space
+                    }
+                    wordsStr += ")";
+                    words.setText(wordsStr);
+                    words.setVisibility(View.VISIBLE);
+                } else {
+                    words.setVisibility(View.GONE);
+                }
             }
         }
     }
