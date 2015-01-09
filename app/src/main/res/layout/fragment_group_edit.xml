@@ -26,7 +26,7 @@
         <Button
             android:id="@+id/group_edit_save_button"
             style="@style/CommonButton.Save"
-            android:editable="false"/>
+            android:enabled="false"/>
 
     </LinearLayout>
 

@@ -11,9 +11,8 @@
 
     <color name="action_button_bg_normal">@color/common_yellow</color>
     <color name="action_button_bg_pressed">#e0e34d</color>
-    <color name="save_button_border">@color/common_divider</color>
-    <color name="save_button_bg_normal">@color/colorAccent</color>
-    <color name="save_button_bg_pressed">#33B5E5</color>
+    <color name="save_button_bg_normal">#80cfe1</color>
+    <color name="save_button_bg_pressed">#38a0b6</color>
     <color name="save_button_bg_disabled">#425a595b</color>
 
     <color name="item_group_header_bg">#f1f56f</color>

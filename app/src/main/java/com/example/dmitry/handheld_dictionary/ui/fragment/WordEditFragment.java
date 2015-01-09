@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.example.dmitry.handheld_dictionary.R;
+import com.example.dmitry.handheld_dictionary.controller.WordEditFieldsController;
 import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
 
@@ -32,10 +33,11 @@ public class WordEditFragment extends BaseFragment {
 
     private static final String ARG_GROUP_ID = "ARG_GROUP_ID";
 
-    @InjectView(R.id.edit_foreign) EditText mForeign;
-    @InjectView(R.id.edit_translate) EditText mTranslate;
+    @InjectView(R.id.word_edit_translate) EditText mTranslate;
 
     private WordActiveModel mWordActiveModel;
+
+    private WordEditFieldsController mWordEditFieldsController;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,8 @@ public class WordEditFragment extends BaseFragment {
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mWordEditFieldsController = new WordEditFieldsController(view);
+
         mTranslate.setOnKeyListener(new View.OnKeyListener() {
             @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
                 switch (keyCode) {
@@ -67,21 +71,15 @@ public class WordEditFragment extends BaseFragment {
 
     @OnClick(R.id.word_edit_save_button)
     void save() {
-        if (validateField(mForeign) & validateField(mTranslate)) {
+        final String foreign = mWordEditFieldsController.getEnteredForeign();
+        final String translate = mWordEditFieldsController.getEnteredTranslate();
+        if (!TextUtils.isEmpty(foreign) && !TextUtils.isEmpty(translate)) {
             Word word = new Word(
                     getArguments().getInt(ARG_GROUP_ID),
-                    mForeign.getText().toString(),
-                    mTranslate.getText().toString());
+                    foreign,
+                    translate);
             mWordActiveModel.saveWord(word);
             getActivity().finish();
         }
-    }
-
-    private boolean validateField(EditText editText) {
-        if (TextUtils.isEmpty(editText.getText())) {
-            editText.setError(getString(R.string.empty_field_warning));
-            return false;
-        }
-        return true;
     }
 }

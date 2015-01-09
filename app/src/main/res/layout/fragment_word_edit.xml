@@ -12,22 +12,33 @@
         android:padding="50dp"
         android:gravity="center">
 
-        <EditText
-            android:id="@+id/edit_foreign"
-            style="@style/CommonEditStyle"
-            android:imeOptions="actionNext"
-            android:hint="@string/edit_foreign_hint"/>
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            style="@style/FloatLabelStyle">
 
-        <EditText
-            android:id="@+id/edit_translate"
-            style="@style/CommonEditStyle"
-            android:imeOptions="actionDone"
-            android:hint="@string/edit_translate_hint"
-            android:layout_marginTop="15dp"/>
+            <EditText
+                android:id="@+id/word_edit_foreign"
+                style="@style/CommonEditStyle"
+                android:imeOptions="actionNext"
+                android:hint="@string/edit_foreign_hint"/>
+
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            style="@style/FloatLabelStyle">
+
+            <EditText
+                android:id="@+id/word_edit_translate"
+                style="@style/CommonEditStyle"
+                android:imeOptions="actionDone"
+                android:hint="@string/edit_translate_hint"
+                android:layout_marginTop="15dp"/>
+
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
         <Button
             android:id="@+id/word_edit_save_button"
-            style="@style/CommonButton.Save"/>
+            style="@style/CommonButton.Save"
+            android:enabled="false"/>
 
     </LinearLayout>
 
