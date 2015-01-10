@@ -31,6 +31,9 @@
     <string name="export_success_message">Dictionary successful exported: %1$s</string>
 
     <string name="export_success_notification_title">Export completed.</string>
+    <string name="start_importing">Importing…</string>
     <string name="start_exporting">Exporting…</string>
+
+    <string name="choose_file_error">Can\'t choose file, Please install a File Manager.</string>
 
 </resources>

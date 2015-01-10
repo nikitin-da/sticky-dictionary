@@ -60,6 +60,10 @@ public class GroupActiveModel extends BaseActiveModel {
 
     public void saveGroup(Group group) {
         bambooStorage.addOrUpdate(group);
+        List<Word> words = group.getWords();
+        for (Word word : words) {
+            mWordActiveModel.saveWord(word);
+        }
     }
 
     public void removeGroup(Group group) {

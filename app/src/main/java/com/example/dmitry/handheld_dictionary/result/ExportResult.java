@@ -1,4 +1,4 @@
-package com.example.dmitry.handheld_dictionary.model.active;
+package com.example.dmitry.handheld_dictionary.result;
 
 import android.support.annotation.NonNull;
 
