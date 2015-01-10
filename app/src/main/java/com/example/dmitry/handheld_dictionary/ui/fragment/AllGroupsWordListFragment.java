@@ -20,6 +20,7 @@ import com.example.dmitry.handheld_dictionary.ui.adapters.AllGroupsWordListAdapt
 import com.nhaarman.listviewanimations.appearance.StickyListHeadersAdapterDecorator;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.util.StickyListHeadersListViewWrapper;
+import com.pushtorefresh.javac_warning_annotation.Warning;
 
 import java.util.List;
 import butterknife.InjectView;
@@ -84,9 +85,10 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
         }.execute();
     }
 
+    @Warning("Add empty and error states")
     private void fillData(List<Group> groups) {
         Activity activity = getActivity();
-        if (activity != null && groups != null) { // TODO: add other states
+        if (activity != null && groups != null) {
             mAdapter.setData(groups);
         }
     }

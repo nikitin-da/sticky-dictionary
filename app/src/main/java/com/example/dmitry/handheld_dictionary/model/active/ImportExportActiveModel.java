@@ -103,7 +103,7 @@ public class ImportExportActiveModel extends BaseActiveModel {
         for (Group group : groups) {
             List<Word> words = group.getWords();
             for (Word word : words) {
-                word.setGroupId(group.getGroupId());
+                word.setGroupId(group.getId());
             }
             mGroupActiveModel.saveGroup(group);
         }

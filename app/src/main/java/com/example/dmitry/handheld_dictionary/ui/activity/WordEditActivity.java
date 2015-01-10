@@ -27,7 +27,7 @@ public class WordEditActivity extends BaseActivity {
 
         final Intent intent = getIntent();
         if (savedInstanceState == null && intent.hasExtra(EXTRA_GROUP_ID)) {
-            final Integer groupId = intent.getIntExtra(EXTRA_GROUP_ID, -1);
+            final Long groupId = intent.getLongExtra(EXTRA_GROUP_ID, -1);
             final Fragment fragment = WordEditFragment.newInstance(groupId);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_word_edit, fragment).commit();

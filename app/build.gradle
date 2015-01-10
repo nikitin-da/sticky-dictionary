@@ -25,10 +25,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // region Google's
 
     compile 'com.android.support:support-v4:21.0.3'
 
@@ -39,10 +44,11 @@ dependencies {
 
     compile 'com.google.guava:guava:18.0'
 
-    // https://github.com/nhaarman/ListViewAnimations
-    compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
-    compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0@aar'
-    compile 'com.nhaarman.listviewanimations:lib-core-slh:3.1.0@aar'
+    // https://code.google.com/p/google-gson
+    compile 'com.google.code.gson:gson:2.3.1'
+    // endregion
+
+    // region Jake's
 
     // https://github.com/JakeWharton/butterknife
     compile 'com.jakewharton:butterknife:6.0.0'
@@ -55,12 +61,17 @@ dependencies {
 
     // https://github.com/JakeWharton/Android-ViewPagerIndicator
     compile 'com.viewpagerindicator:library:2.4.1@aar'
+    // endregion
 
-    // https://code.google.com/p/google-gson
-    compile 'com.google.code.gson:gson:2.3.1'
+
+    // region Artem's
 
     // https://github.com/pushtorefresh/bamboo-storage
     compile 'com.pushtorefresh:bamboostorage:1.4.0'
+
+    // https://github.com/pushtorefresh/javac-warning-annotation
+    compile 'com.pushtorefresh:javac-warning-annotation:1.0.0'
+    // endregion
 
     compile 'com.nineoldandroids:library:2.4.0'
 
@@ -72,4 +83,9 @@ dependencies {
 
     // https://github.com/wrapp/floatlabelededittext
     compile 'com.wrapp.floatlabelededittext:library:0.0.5'
+
+    // https://github.com/nhaarman/ListViewAnimations
+    compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
+    compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0@aar'
+    compile 'com.nhaarman.listviewanimations:lib-core-slh:3.1.0@aar'
 }

@@ -1,9 +1,5 @@
 package com.example.dmitry.handheld_dictionary.util;
 
-import android.graphics.Path;
-import android.net.Uri;
-import android.os.Environment;
-
 import com.google.common.io.Files;
 
 import java.io.File;

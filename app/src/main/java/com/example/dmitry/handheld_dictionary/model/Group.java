@@ -7,20 +7,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.example.dmitry.handheld_dictionary.util.RandomUtil;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.pushtorefresh.bamboostorage.ABambooStorableItem;
 import com.pushtorefresh.bamboostorage.BambooStorableTypeMeta;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.TimeZone;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -32,11 +31,11 @@ import java.util.TimeZone;
 public class Group extends ABambooStorableItem implements Parcelable {
 
     public static final String GROUP_WITH_ID = TableInfo.COLUMN_GROUP_ID + "= ?";
-    public static final String GROUPS_FROM_DICTIONARY = TableInfo.COLUMN_GROUP_ID + "= ?";
+    public static final String GROUPS_FROM_DICTIONARY = TableInfo.COLUMN_DICTIONARY_ID + "= ?";
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
-    private int mGroupId;
+    @Expose @SerializedName("group_id") private Long mId;
 
     @Expose @SerializedName("name") private String mName;
     @Expose @SerializedName("date") private DateTime mDate;
@@ -45,39 +44,37 @@ public class Group extends ABambooStorableItem implements Parcelable {
     private final List<Word> mWords = new ArrayList<>();
 
     public Group() {
-        fillGroupIdWithRandom();
     }
 
     public Group(String name) {
-        fillGroupIdWithRandom();
+        generateId();
         mName = name;
         mDate = DateTime.now();
     }
 
     public Group(String name, String dateStr) {
-        fillGroupIdWithRandom();
+        generateId();
         mName = name;
         setDate(dateStr);
     }
 
-    public Group(int groupId, String name) {
-        mGroupId = groupId;
+    public Group(long id, String name) {
+        mId = id;
         mName = name;
     }
 
-    public Group(int groupId, String name, String dateStr) {
-        this(groupId, name);
+    public Group(int id, String name, String dateStr) {
+        this(id, name);
         setDate(dateStr);
     }
 
-    public Group(int groupId, String name, DateTime date) {
-        this(groupId, name);
+    public Group(int id, String name, DateTime date) {
+        this(id, name);
         mDate = date;
     }
 
-    private void fillGroupIdWithRandom() {
-        Random random = new Random();
-        mGroupId = random.nextInt();
+    private void generateId() {
+        mId = RandomUtil.nextPositiveLong();
     }
 
     public void setDate(String dateStr) {
@@ -94,8 +91,8 @@ public class Group extends ABambooStorableItem implements Parcelable {
 
     // region getters & setters
 
-    public int getGroupId() {
-        return mGroupId;
+    public Long getId() {
+        return mId;
     }
 
     public String getName() {
@@ -131,7 +128,7 @@ public class Group extends ABambooStorableItem implements Parcelable {
     public ContentValues toContentValues(@NonNull Resources resources) {
         final ContentValues cv = new ContentValues();
 
-        cv.put(TableInfo.COLUMN_GROUP_ID, mGroupId);
+        cv.put(TableInfo.COLUMN_GROUP_ID, mId);
         cv.put(TableInfo.COLUMN_NAME, mName);
         cv.put(TableInfo.COLUMN_DATE, DATE_FORMATTER.print(mDate));
 
@@ -140,7 +137,7 @@ public class Group extends ABambooStorableItem implements Parcelable {
 
     @Override
     public void fillFromCursor(@NonNull Cursor cursor) {
-        mGroupId = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_GROUP_ID));
+        mId = cursor.getLong(cursor.getColumnIndex(TableInfo.COLUMN_GROUP_ID));
         mName = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_NAME));
         String dateStr = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_DATE));
         setDate(dateStr);
@@ -152,12 +149,14 @@ public class Group extends ABambooStorableItem implements Parcelable {
 
         String COLUMN_ID = "_id";
         String COLUMN_GROUP_ID = "_group_id";
+        String COLUMN_DICTIONARY_ID = "_dictionary_id";
         String COLUMN_NAME = "_name";
         String COLUMN_DATE = "_date";
 
         String CREATE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY, " +
                 COLUMN_GROUP_ID + " INTEGER, " +
+                COLUMN_DICTIONARY_ID + " INTEGER, " +
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_DATE + " TEXT);";
     }
@@ -174,7 +173,7 @@ public class Group extends ABambooStorableItem implements Parcelable {
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.mGroupId);
+        dest.writeLong(this.mId);
         dest.writeString(this.mName);
         dest.writeSerializable(this.mDate);
         dest.writeTypedList(mWords);
@@ -182,7 +181,7 @@ public class Group extends ABambooStorableItem implements Parcelable {
     }
 
     private Group(Parcel in) {
-        this.mGroupId = in.readInt();
+        this.mId = in.readLong();
         this.mName = in.readString();
         this.mDate = (DateTime) in.readSerializable();
         in.readTypedList(mWords, Word.CREATOR);

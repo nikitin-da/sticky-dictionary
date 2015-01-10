@@ -36,4 +36,7 @@
 
     <string name="choose_file_error">Can\'t choose file, Please install a File Manager.</string>
 
+    <string name="unsupported_file_format">Import Failed: Unsupported file format</string>
+    <string name="file_not_exist">Import Failed: File doesn\'t exist</string>
+
 </resources>

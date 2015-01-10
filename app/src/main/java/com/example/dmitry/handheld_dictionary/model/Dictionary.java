@@ -7,11 +7,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.example.dmitry.handheld_dictionary.util.RandomUtil;
 import com.pushtorefresh.bamboostorage.ABambooStorableItem;
 import com.pushtorefresh.bamboostorage.BambooStorableTypeMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -23,31 +25,34 @@ public class Dictionary extends ABambooStorableItem implements Parcelable {
 
     public static final String DICTIONARY_WITH_ID = TableInfo.COLUMN_DICTIONARY_ID + "= ?";
 
-    private int mDictionaryId;
+    private Long mId;
     private final List<Group> mGroups = new ArrayList<>();
 
     public Dictionary() {
     }
 
-    public Dictionary(int dictionaryId, List<Group> groups) {
-        this.mDictionaryId = dictionaryId;
+    public Dictionary(List<Group> groups) {
+        generateId();
         this.mGroups.addAll(groups);
     }
 
+    public Dictionary(Long id, List<Group> groups) {
+        this.mId = id;
+        this.mGroups.addAll(groups);
+    }
+
+    private void generateId() {
+        mId = RandomUtil.nextPositiveLong();
+    }
+
     // region getters & setters
-    public long getId() {
-        return getInternalId();
+
+    public Long getId() {
+        return mId;
     }
 
-
-    // endregion
-
-    public int getDictionaryId() {
-        return mDictionaryId;
-    }
-
-    public void setDictionaryId(int dictionaryId) {
-        mDictionaryId = dictionaryId;
+    public void setId(Long id) {
+        mId = id;
     }
 
     public List<Group> getGroups() {
@@ -58,19 +63,21 @@ public class Dictionary extends ABambooStorableItem implements Parcelable {
         mGroups.clear();
         mGroups.addAll(groups);
     }
+    // endregion
+
     // region for storage
 
     @NonNull
     @Override
     public ContentValues toContentValues(@NonNull Resources resources) {
         final ContentValues cv = new ContentValues();
-        cv.put(TableInfo.COLUMN_DICTIONARY_ID, mDictionaryId);
+        cv.put(TableInfo.COLUMN_DICTIONARY_ID, mId);
         return cv;
     }
 
     @Override
     public void fillFromCursor(@NonNull Cursor cursor) {
-        mDictionaryId = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_DICTIONARY_ID));
+        mId = cursor.getLong(cursor.getColumnIndex(TableInfo.COLUMN_DICTIONARY_ID));
     }
 
     public interface TableInfo {
@@ -93,20 +100,18 @@ public class Dictionary extends ABambooStorableItem implements Parcelable {
     // region parcelable
 
 
-    // endregion
-
     @Override public int describeContents() {
         return 0;
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.mDictionaryId);
+        dest.writeLong(this.mId);
         dest.writeTypedList(mGroups);
         dest.writeLong(this.getInternalId());
     }
 
     private Dictionary(Parcel in) {
-        this.mDictionaryId = in.readInt();
+        this.mId = in.readLong();
         in.readTypedList(mGroups, Group.CREATOR);
         this.setInternalId(in.readLong());
     }
@@ -120,4 +125,5 @@ public class Dictionary extends ABambooStorableItem implements Parcelable {
             return new Dictionary[size];
         }
     };
+    // endregion
 }

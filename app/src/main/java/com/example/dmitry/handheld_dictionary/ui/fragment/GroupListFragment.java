@@ -123,9 +123,9 @@ public class GroupListFragment extends BaseFragment {
                     @Override public void onClick(View v) {
                         final Object key = v.getTag(R.id.tag_key);
                         final Activity activity = getActivity();
-                        if (key instanceof Integer && activity instanceof BaseActivity) {
+                        if (key instanceof Long && activity instanceof BaseActivity) {
                             final Intent intent = new Intent(activity, OneGroupWordListActivity.class);
-                            intent.putExtra(OneGroupWordListActivity.EXTRA_GROUP_ID, (Integer) key);
+                            intent.putExtra(OneGroupWordListActivity.EXTRA_GROUP_ID, (Long) key);
                             ((BaseActivity) activity).slideActivity(intent);
 
                         }
@@ -137,7 +137,7 @@ public class GroupListFragment extends BaseFragment {
             }
 
             final Group group = getItem(position);
-            view.setTag(R.id.tag_key, group.getGroupId());
+            view.setTag(R.id.tag_key, group.getId());
             holder.fillData(group);
 
             return view;

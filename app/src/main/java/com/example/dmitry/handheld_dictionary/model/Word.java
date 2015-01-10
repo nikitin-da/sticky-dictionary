@@ -7,6 +7,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.example.dmitry.handheld_dictionary.util.RandomUtil;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.pushtorefresh.bamboostorage.ABambooStorableItem;
@@ -22,36 +23,55 @@ import java.util.Random;
 )
 public class Word extends ABambooStorableItem implements Parcelable {
 
-    public static final String WORD_WITH_ID = TableInfo.COLUMN_ID + "= ?";
+    public static final String WORD_WITH_ID = TableInfo.COLUMN_WORD_ID + "= ?";
     public static final String WORDS_FROM_GROUP = TableInfo.COLUMN_GROUP_ID + "= ?";
 
-    private Integer mGroupId;
+    @Expose @SerializedName("word_id") private Long mId;
 
-    @Expose @SerializedName("date") private String mForeign;
+    private Long mGroupId;
+
+    @Expose @SerializedName("foreign") private String mForeign;
     @Expose @SerializedName("translate") private String mTranslate;
 
     public Word() {
     }
 
     public Word(String foreign, String translate) {
-        Random random = new Random();
-        mGroupId = random.nextInt();
-
+        generateId();
         this.mForeign = foreign;
         this.mTranslate = translate;
     }
 
-    public Word(int groupId, String foreign, String translate) {
+    public Word(long groupId, String foreign, String translate) {
+        this(foreign, translate);
+        this.mGroupId = groupId;
+    }
+
+    public Word(long id, long groupId, String foreign, String translate) {
+        this.mId = id;
         this.mGroupId = groupId;
         this.mForeign = foreign;
         this.mTranslate = translate;
     }
 
+    private void generateId() {
+        mId = RandomUtil.nextPositiveLong();
+    }
+
     public Word(@NonNull final Word other) {
-        this(other.getGroupId(), other.getForeign(), other.getTranslate());
+        this(other.getId(), other.getGroupId(), other.getForeign(), other.getTranslate());
     }
 
     // region getters & setters
+
+    public Long getId() {
+        return mId;
+    }
+
+    public void setId(Long id) {
+        mId = id;
+    }
+
     public String getForeign() {
         return mForeign;
     }
@@ -68,11 +88,11 @@ public class Word extends ABambooStorableItem implements Parcelable {
         this.mTranslate = translate;
     }
 
-    public Integer getGroupId() {
+    public Long getGroupId() {
         return mGroupId;
     }
 
-    public void setGroupId(Integer groupId) {
+    public void setGroupId(Long groupId) {
         mGroupId = groupId;
     }
 
@@ -84,6 +104,7 @@ public class Word extends ABambooStorableItem implements Parcelable {
     public ContentValues toContentValues(@NonNull Resources resources) {
         final ContentValues cv = new ContentValues();
 
+        cv.put(TableInfo.COLUMN_WORD_ID, mId);
         cv.put(TableInfo.COLUMN_GROUP_ID, mGroupId);
         cv.put(TableInfo.COLUMN_FOREIGN, mForeign);
         cv.put(TableInfo.COLUMN_TRANSLATE, mTranslate);
@@ -93,7 +114,8 @@ public class Word extends ABambooStorableItem implements Parcelable {
 
     @Override
     public void fillFromCursor(@NonNull Cursor cursor) {
-        mGroupId = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_GROUP_ID));
+        mId = cursor.getLong(cursor.getColumnIndex(TableInfo.COLUMN_WORD_ID));
+        mGroupId = cursor.getLong(cursor.getColumnIndex(TableInfo.COLUMN_GROUP_ID));
         mForeign = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_FOREIGN));
         mTranslate = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_TRANSLATE));
     }
@@ -103,12 +125,14 @@ public class Word extends ABambooStorableItem implements Parcelable {
         String TABLE_NAME = "table_word";
 
         String COLUMN_ID = "_id";
+        String COLUMN_WORD_ID = "_word_id";
         String COLUMN_GROUP_ID = "_group_id";
         String COLUMN_FOREIGN = "_foreign";
         String COLUMN_TRANSLATE = "_translate";
 
         String CREATE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                COLUMN_WORD_ID + " INTEGER, " +
                 COLUMN_GROUP_ID + " INTEGER, " +
                 COLUMN_FOREIGN + " TEXT, " +
                 COLUMN_TRANSLATE + " TEXT);";
@@ -126,17 +150,19 @@ public class Word extends ABambooStorableItem implements Parcelable {
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.mGroupId);
+        dest.writeLong(this.getInternalId());
+        dest.writeLong(this.mId);
+        dest.writeLong(this.mGroupId);
         dest.writeString(this.mForeign);
         dest.writeString(this.mTranslate);
-        dest.writeLong(this.getInternalId());
     }
 
     private Word(Parcel in) {
-        this.mGroupId = in.readInt();
+        this.setInternalId(in.readLong());
+        this.mId = in.readLong();
+        this.mGroupId = in.readLong();
         this.mForeign = in.readString();
         this.mTranslate = in.readString();
-        this.setInternalId(in.readLong());
     }
 
     public static final Creator<Word> CREATOR = new Creator<Word>() {

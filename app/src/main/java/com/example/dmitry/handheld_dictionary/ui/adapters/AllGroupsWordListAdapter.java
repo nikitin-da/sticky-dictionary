@@ -74,9 +74,12 @@ public class AllGroupsWordListAdapter extends BaseWordListAdapter<Group, WordIte
 
     @Nullable private Group getGroupForPosition(int position) {
         WordItem item = getItem(position);
-        for (Group group : mGroups) {
-            if (item.getGroupId() == group.getGroupId()) {
-                return group;
+        Long groupId = item.getGroupId();
+        if (groupId != null) {
+            for (Group group : mGroups) {
+                if (groupId.equals(group.getId())) {
+                    return group;
+                }
             }
         }
         return null;

@@ -25,7 +25,7 @@ public class WordActiveModel extends BaseActiveModel {
         return true;
     }
 
-    public Word getWord(int wordId) {
+    public Word getWord(long wordId) {
         List<Word> words = bambooStorage.getAsList(
                 Word.class,
                 Word.WORD_WITH_ID,
@@ -41,19 +41,26 @@ public class WordActiveModel extends BaseActiveModel {
         return bambooStorage.getAsList(Word.class);
     }
 
-    public List<Word> getAllFromGroup(int groupId) {
+    public List<Word> getAllFromGroup(long groupId) {
         return bambooStorage.getAsList(
                 Word.class,
                 Word.WORDS_FROM_GROUP,
                 new String[] {String.valueOf(groupId)});
     }
 
-    public void saveWord(Word track) {
-        bambooStorage.addOrUpdate(track);
+    public void saveWord(Word word) {
+        Word exist = getWord(word.getId());
+        if (exist != null) {
+            word.setInternalId(exist.getInternalId());
+        }
+        bambooStorage.addOrUpdate(word);
     }
 
-    public void removeWord(Word track) {
-        bambooStorage.remove(track);
+    public void removeWord(Word word) {
+        bambooStorage.remove(
+                Word.class,
+                Word.WORD_WITH_ID,
+                new String[] {String.valueOf(word.getId())});
     }
 
     public void removeAllWords() {

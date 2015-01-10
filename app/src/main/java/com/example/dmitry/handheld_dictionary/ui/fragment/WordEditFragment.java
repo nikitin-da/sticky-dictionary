@@ -23,9 +23,9 @@ import butterknife.OnClick;
  */
 public class WordEditFragment extends BaseFragment {
 
-    public static WordEditFragment newInstance(int groupId) {
+    public static WordEditFragment newInstance(Long groupId) {
         Bundle arguments = new Bundle(1);
-        arguments.putInt(ARG_GROUP_ID, groupId);
+        arguments.putLong(ARG_GROUP_ID, groupId);
         WordEditFragment fragment = new WordEditFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -75,7 +75,7 @@ public class WordEditFragment extends BaseFragment {
         final String translate = mWordEditFieldsController.getEnteredTranslate();
         if (!TextUtils.isEmpty(foreign) && !TextUtils.isEmpty(translate)) {
             Word word = new Word(
-                    getArguments().getInt(ARG_GROUP_ID),
+                    getArguments().getLong(ARG_GROUP_ID),
                     foreign,
                     translate);
             mWordActiveModel.saveWord(word);

@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.example.dmitry.handheld_dictionary.App;
@@ -22,6 +23,9 @@ import com.example.dmitry.handheld_dictionary.result.ImportResult;
 import com.example.dmitry.handheld_dictionary.util.AppNotificationManager;
 import com.example.dmitry.handheld_dictionary.util.IntentFactory;
 import com.example.dmitry.handheld_dictionary.util.Loggi;
+import com.google.common.io.Files;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -35,6 +39,9 @@ public class ImportExportFragment extends BaseFragment {
     private static final int RQS_IMPORT_FILE = 100;
 
     private ImportExportActiveModel mImportExportActiveModel;
+
+    private static final String EXPECTED_MIME_TYPE =
+            MimeTypeMap.getSingleton().getMimeTypeFromExtension(ImportExportActiveModel.FILE_EXTENSION);
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +73,26 @@ public class ImportExportFragment extends BaseFragment {
         switch (requestCode) {
             case RQS_IMPORT_FILE:
                 if (resultCode == Activity.RESULT_OK) {
+
                     Uri uri = data.getData();
-                    // TODO: check for null
-                    importFile(uri);
+
+                    boolean success = true;
+                    int errorMessage = 0;
+
+                    if (uri == null ||
+                            !EXPECTED_MIME_TYPE.equalsIgnoreCase(Files.getFileExtension(uri.getPath()))) {
+                        success = false;
+                        errorMessage = R.string.unsupported_file_format;
+                    } else if (!(new File(uri.getPath())).exists()) {
+                        success = false;
+                        errorMessage = R.string.file_not_exist;
+                    }
+
+                    if (success) {
+                        importFile(uri);
+                    } else {
+                        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
         }

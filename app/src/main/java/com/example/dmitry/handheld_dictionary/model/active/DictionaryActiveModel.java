@@ -29,7 +29,7 @@ public class DictionaryActiveModel extends BaseActiveModel {
         return true;
     }
 
-    public Dictionary getDictionary(int dictionaryId) {
+    public Dictionary getDictionary(long dictionaryId) {
         List<Dictionary> dictionaries = bambooStorage.getAsList(
                 Dictionary.class,
                 Dictionary.DICTIONARY_WITH_ID,
@@ -52,15 +52,26 @@ public class DictionaryActiveModel extends BaseActiveModel {
     }
 
     public void saveDictionary(Dictionary dictionary) {
+        Dictionary exist = getDictionary(dictionary.getId());
+        if (exist != null) {
+            dictionary.setId(exist.getId());
+        }
         bambooStorage.addOrUpdate(dictionary);
     }
 
     public void removeDictionary(Dictionary dictionary) {
-        bambooStorage.remove(dictionary);
+        bambooStorage.remove(
+                Dictionary.class,
+                Dictionary.DICTIONARY_WITH_ID,
+                new String[]{String.valueOf(dictionary.getId())});
+    }
+
+    public void removeAllGroups() {
+        bambooStorage.removeAllOfType(Dictionary.class);
     }
 
     private void loadGroups(Dictionary dictionary) {
-        List<Group> groups = mGroupActiveModel.getAllFromDictionary(dictionary.getDictionaryId());
+        List<Group> groups = mGroupActiveModel.getAllFromDictionary(dictionary.getId());
         dictionary.setGroups(groups);
     }
 }

@@ -31,9 +31,9 @@ import butterknife.OnClick;
  */
 public class OneGroupWordListFragment extends BaseWordListFragment {
 
-    public static OneGroupWordListFragment newInstance(int groupId) {
+    public static OneGroupWordListFragment newInstance(Long groupId) {
         Bundle arguments = new Bundle(1);
-        arguments.putInt(ARG_GROUP_ID, groupId);
+        arguments.putLong(ARG_GROUP_ID, groupId);
         OneGroupWordListFragment fragment = new OneGroupWordListFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -46,7 +46,7 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
 
     private WordActiveModel mWordActiveModel;
 
-    private Integer mGroupId;
+    private Long mGroupId;
 
     private OneGroupWordListAdapter mAdapter;
 
@@ -54,7 +54,7 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
         super.onCreate(savedInstanceState);
         mWordActiveModel = new WordActiveModel(getActivity());
 
-        mGroupId = getArguments().getInt(ARG_GROUP_ID);
+        mGroupId = getArguments().getLong(ARG_GROUP_ID);
         mAdapter = new OneGroupWordListAdapter(getActivity());
     }
 

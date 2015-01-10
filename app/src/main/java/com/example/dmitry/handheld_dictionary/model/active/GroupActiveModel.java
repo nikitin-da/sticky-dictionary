@@ -29,7 +29,7 @@ public class GroupActiveModel extends BaseActiveModel {
         return true;
     }
 
-    public Group getGroup(int groupId) {
+    public Group getGroup(long groupId) {
         List<Group> groups = bambooStorage.getAsList(
                 Group.class,
                 Group.GROUP_WITH_ID,
@@ -43,7 +43,7 @@ public class GroupActiveModel extends BaseActiveModel {
         }
     }
 
-    public List<Group> getAllFromDictionary(int dictionaryId) {
+    public List<Group> getAllFromDictionary(long dictionaryId) {
         return bambooStorage.getAsList(
                 Group.class,
                 Group.GROUPS_FROM_DICTIONARY,
@@ -59,7 +59,14 @@ public class GroupActiveModel extends BaseActiveModel {
     }
 
     public void saveGroup(Group group) {
+
+        Group exist = getGroup(group.getId());
+        if (exist != null) {
+            group.setInternalId(exist.getInternalId());
+        }
+
         bambooStorage.addOrUpdate(group);
+
         List<Word> words = group.getWords();
         for (Word word : words) {
             mWordActiveModel.saveWord(word);
@@ -67,11 +74,24 @@ public class GroupActiveModel extends BaseActiveModel {
     }
 
     public void removeGroup(Group group) {
-        bambooStorage.remove(group);
+
+        bambooStorage.remove(
+                Word.class,
+                Word.WORDS_FROM_GROUP,
+                new String[] {String.valueOf(group.getId())});
+
+        bambooStorage.remove(
+                Group.class,
+                Group.GROUP_WITH_ID,
+                new String[] {String.valueOf(group.getId())});
+    }
+
+    public void removeAllGroups() {
+        bambooStorage.removeAllOfType(Group.class);
     }
 
     private void loadWords(Group group) {
-        List<Word> words = mWordActiveModel.getAllFromGroup(group.getGroupId());
+        List<Word> words = mWordActiveModel.getAllFromGroup(group.getId());
         group.setWords(words);
     }
 }

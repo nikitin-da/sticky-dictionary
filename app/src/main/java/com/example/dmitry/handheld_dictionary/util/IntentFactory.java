@@ -36,7 +36,11 @@ public final class IntentFactory {
     public static Intent newChooseFileIntent() {
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/" + ImportExportActiveModel.FILE_EXTENSION);
+
+        MimeTypeMap myMime = MimeTypeMap.getSingleton();
+        String mimeType = myMime.getMimeTypeFromExtension(ImportExportActiveModel.FILE_EXTENSION);
+        intent.setType(mimeType);
+
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         return intent;
