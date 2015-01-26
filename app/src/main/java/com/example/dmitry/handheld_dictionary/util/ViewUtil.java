@@ -7,9 +7,6 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 
-import com.example.dmitry.handheld_dictionary.BuildConfig;
-import com.example.dmitry.handheld_dictionary.R;
-
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
@@ -31,6 +28,15 @@ public final class ViewUtil {
             };
 
             view.setOutlineProvider(viewOutlineProvider);
+        }
+    }
+
+    public static void setVisibility(View view, boolean visible) {
+
+        int targetVisibility = visible ? View.VISIBLE : View.GONE;
+
+        if (targetVisibility != view.getVisibility()) {
+            view.setVisibility(targetVisibility);
         }
     }
 }

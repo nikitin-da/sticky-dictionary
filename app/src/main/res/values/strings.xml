@@ -38,5 +38,8 @@
 
     <string name="unsupported_file_format">Import Failed: Unsupported file format</string>
     <string name="file_not_exist">Import Failed: File doesn\'t exist</string>
+    <string name="content_description_options">options</string>
+    <string name="nothing_selected">Select any groups to check</string>
+    <string name="begin_button">Begin</string>
 
 </resources>

@@ -7,6 +7,7 @@ import com.example.dmitry.handheld_dictionary.model.Word;
 import com.pushtorefresh.bamboostorage.BambooStorage;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -37,15 +38,53 @@ public class WordActiveModel extends BaseActiveModel {
         }
     }
 
-    public List<Word> getAllWords() {
+    public List<Word> syncGetAllWords() {
         return bambooStorage.getAsList(Word.class);
     }
 
-    public List<Word> getAllFromGroup(long groupId) {
+    public List<Word> syncGetAllFromGroup(long groupId) {
         return bambooStorage.getAsList(
                 Word.class,
                 Word.WORDS_FROM_GROUP,
                 new String[] {String.valueOf(groupId)});
+    }
+
+    public List<Word> syncGetAllFromGroups(Set<Long> groupIdSet) {
+
+        String where = null;
+        String[] args = new String[groupIdSet.size()];
+
+        int position = 0;
+        for (Long id : groupIdSet) {
+            if (where == null) {
+                where = Word.WORDS_FROM_GROUP;
+            } else {
+                where += " OR " + Word.WORDS_FROM_GROUP;
+            }
+            args[position++] = String.valueOf(id);
+        }
+
+        return bambooStorage.getAsList(
+                Word.class,
+                where,
+                args);
+    }
+
+    public void asyncGetAllWords(@NonNull TaskListener<List<Word>> listener) {
+        executeTask(new Task<List<Word>>(listener) {
+            @Override protected List<Word> doWork() throws Throwable {
+                return syncGetAllWords();
+            }
+        });
+    }
+
+    public void asyncGetAllFromGroups(final Set<Long> groupIdSet,
+                                      @NonNull TaskListener<List<Word>> listener) {
+        executeTask(new Task<List<Word>>(listener) {
+            @Override protected List<Word> doWork() throws Throwable {
+                return syncGetAllFromGroups(groupIdSet);
+            }
+        });
     }
 
     public void saveWord(Word word) {

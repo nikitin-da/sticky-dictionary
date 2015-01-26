@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/group_list"
+    <include
+        android:id="@+id/group_list_header"
+        layout="@layout/checked_list_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="@dimen/item_group_padding"
-        android:divider="@null"
-        android:padding="@dimen/item_group_padding"/>
+        android:layout_height="wrap_content"/>
 
-    <ImageButton
-        android:id="@+id/group_list_add"
-        style="@style/FloatActionButton.Add"
-        tools:ignore="ContentDescription"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <ListView
+            android:id="@+id/group_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="@dimen/item_group_padding"
+            android:padding="@dimen/item_group_padding"/>
+
+        <ImageButton
+            android:id="@+id/group_list_add"
+            style="@style/FloatActionButton.Add"
+            tools:ignore="ContentDescription"/>
+
+    </FrameLayout>
+
+</LinearLayout>

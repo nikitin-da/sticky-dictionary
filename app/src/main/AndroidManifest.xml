@@ -32,7 +32,8 @@
         <activity android:name=".ui.activity.GroupEditActivity"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
-        <activity android:name=".ui.activity.PagerActivity"/>
+        <activity android:name=".ui.activity.PagerActivity"
+            android:label="@string/navigation_drawer_item_check"/>
 
         <provider
             android:name=".storage.AppContentProvider"

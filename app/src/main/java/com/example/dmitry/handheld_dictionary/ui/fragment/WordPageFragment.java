@@ -5,12 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Word;
+import com.example.dmitry.handheld_dictionary.util.AnimUtil;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -55,30 +54,10 @@ public class WordPageFragment extends BaseFragment {
     }
 
     @OnClick(R.id.word_page_container) void showTranslate() {
-
-        Animation animation;
-
         if (mTranslate.getVisibility() == View.INVISIBLE) {
-
-            mTranslate.setVisibility(View.VISIBLE);
-            animation = AnimationUtils.loadAnimation(getActivity(), R.anim.page_translate_show);
-
+            AnimUtil.showWithAlphaAnim(getActivity(), mTranslate);
         } else {
-
-            animation = AnimationUtils.loadAnimation(getActivity(), R.anim.page_translate_hide);
-
-            animation.setAnimationListener(new Animation.AnimationListener() {
-
-                @Override public void onAnimationStart(Animation animation) {
-                }
-                @Override public void onAnimationEnd(Animation animation) {
-                    mTranslate.setVisibility(View.INVISIBLE);
-                }
-                @Override public void onAnimationRepeat(Animation animation) {
-                }
-            });
-
+            AnimUtil.hideWithAlphaAnim(getActivity(), mTranslate);
         }
-        mTranslate.startAnimation(animation);
     }
 }

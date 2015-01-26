@@ -68,7 +68,7 @@ public class ImportExportActiveModel extends BaseActiveModel {
     }
 
     private String getJsonString() {
-        List<Group> groups = mGroupActiveModel.getAllGroups();
+        List<Group> groups = mGroupActiveModel.syncGetAllGroups(true);
         return gson.toJson(groups);
     }
     //endregion

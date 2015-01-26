@@ -75,7 +75,7 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
         new AsyncTask<Void, Void, List<Group>>() {
 
             @Override protected List<Group> doInBackground(Void... params) {
-                return mGroupActiveModel.getAllGroups();
+                return mGroupActiveModel.syncGetAllGroups(true);
             }
 
             @Override protected void onPostExecute(List<Group> groups) {

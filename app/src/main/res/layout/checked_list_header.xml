@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+        android:id="@+id/checked_list_header_nothing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextShadow.Black"
+        android:textSize="20sp"
+        android:text="@string/nothing_selected"
+        android:layout_gravity="center"
+        android:padding="17dp"/>
+
+    <Button
+        android:id="@+id/checked_list_header_begin_button"
+        style="@style/CommonButton"
+        android:text="@string/begin_button"
+        android:layout_gravity="center"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"/>
+
+</FrameLayout>

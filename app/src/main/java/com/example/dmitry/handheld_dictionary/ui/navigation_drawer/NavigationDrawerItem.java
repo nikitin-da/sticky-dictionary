@@ -2,9 +2,9 @@ package com.example.dmitry.handheld_dictionary.ui.navigation_drawer;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.ui.fragment.AllGroupsWordListFragment;
+import com.example.dmitry.handheld_dictionary.ui.fragment.CheckableGroupListFragment;
 import com.example.dmitry.handheld_dictionary.ui.fragment.GroupListFragment;
 import com.example.dmitry.handheld_dictionary.ui.fragment.ImportExportFragment;
-import com.example.dmitry.handheld_dictionary.ui.fragment.PagerFragment;
 
 /**
  * Items of navigation drawer, which include appropriate view id's and
@@ -27,7 +27,7 @@ public enum NavigationDrawerItem {
     CHECK(
             R.id.navigation_drawer_item_check,
             R.id.navigation_drawer_item_check_title,
-            PagerFragment.class),
+            CheckableGroupListFragment.class),
     /**
      * All item.
      */

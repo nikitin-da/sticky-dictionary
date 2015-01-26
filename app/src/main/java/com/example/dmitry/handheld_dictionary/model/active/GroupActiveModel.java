@@ -8,6 +8,7 @@ import com.example.dmitry.handheld_dictionary.model.Word;
 import com.pushtorefresh.bamboostorage.BambooStorage;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -29,18 +30,64 @@ public class GroupActiveModel extends BaseActiveModel {
         return true;
     }
 
-    public Group getGroup(long groupId) {
-        List<Group> groups = bambooStorage.getAsList(
+    public Group syncGetGroup(long groupId) {
+        Group group = bambooStorage.getFirst(
                 Group.class,
                 Group.GROUP_WITH_ID,
-                new String[] {String.valueOf(groupId)});
-        if (groups == null || groups.isEmpty()) {
-            return null;
-        } else {
-            Group group = groups.get(0);
+                new String[] {String.valueOf(groupId)},
+                null);
+
+        if (group != null) {
             loadWords(group);
-            return group;
         }
+        return group;
+    }
+
+    public List<Group> syncGetGroups(Set<Long> groupIdSet, boolean fullModels) {
+
+        String where = null;
+        String[] args = new String[groupIdSet.size()];
+
+        int position = 0;
+        for (Long id : groupIdSet) {
+            if (where == null) {
+                where = Group.GROUP_WITH_ID;
+            } else {
+                where += " OR " + Group.GROUP_WITH_ID;
+            }
+            args[position++] = String.valueOf(id);
+        }
+
+        List<Group> groups = bambooStorage.getAsList(
+                Group.class,
+                where,
+                args);
+
+        if (fullModels) {
+            for (Group group : groups) {
+                loadWords(group);
+            }
+        }
+        return groups;
+    }
+
+    public void asyncGetAllGroups(final boolean fullModels,
+                                  @NonNull TaskListener<List<Group>> listener) {
+        executeTask(new Task<List<Group>>(listener) {
+            @Override protected List<Group> doWork() throws Throwable {
+                return syncGetAllGroups(fullModels);
+            }
+        });
+    }
+
+    public void asyncGetGroups(final Set<Long> groupIdSet,
+                               final boolean fullModels,
+                               @NonNull TaskListener<List<Group>> listener) {
+        executeTask(new Task<List<Group>>(listener) {
+            @Override protected List<Group> doWork() throws Throwable {
+                return syncGetGroups(groupIdSet, fullModels);
+            }
+        });
     }
 
     public List<Group> getAllFromDictionary(long dictionaryId) {
@@ -50,17 +97,19 @@ public class GroupActiveModel extends BaseActiveModel {
                 new String[] {String.valueOf(dictionaryId)});
     }
 
-    public List<Group> getAllGroups() {
+    public List<Group> syncGetAllGroups(boolean fullModel) {
         List<Group> groups = bambooStorage.getAsList(Group.class);
-        for (Group group : groups) {
-            loadWords(group);
+        if (fullModel) {
+            for (Group group : groups) {
+                loadWords(group);
+            }
         }
         return groups;
     }
 
     public void saveGroup(Group group) {
 
-        Group exist = getGroup(group.getId());
+        Group exist = syncGetGroup(group.getId());
         if (exist != null) {
             group.setInternalId(exist.getInternalId());
         }
@@ -91,7 +140,7 @@ public class GroupActiveModel extends BaseActiveModel {
     }
 
     private void loadWords(Group group) {
-        List<Word> words = mWordActiveModel.getAllFromGroup(group.getId());
+        List<Word> words = mWordActiveModel.syncGetAllFromGroup(group.getId());
         group.setWords(words);
     }
 }

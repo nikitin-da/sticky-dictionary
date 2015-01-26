@@ -15,12 +15,9 @@ import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
 import com.example.dmitry.handheld_dictionary.ui.activity.WordEditActivity;
-import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.OneGroupWordListAdapter;
-import com.example.dmitry.handheld_dictionary.ui.adapters.WordItem;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -75,7 +72,7 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
         new AsyncTask<Void, Void, List<Word>>() {
 
             @Override protected List<Word> doInBackground(Void... params) {
-                return mWordActiveModel.getAllFromGroup(mGroupId);
+                return mWordActiveModel.syncGetAllFromGroup(mGroupId);
             }
 
             @Override protected void onPostExecute(List<Word> words) {
