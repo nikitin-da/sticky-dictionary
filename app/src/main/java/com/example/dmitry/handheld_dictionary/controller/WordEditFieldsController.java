@@ -38,4 +38,12 @@ public class WordEditFieldsController extends BaseFieldsController {
     @NonNull public String getEnteredTranslate() {
         return translate.getText().toString();
     }
+
+    public void setForeign(@NonNull final String foreignText) {
+        foreign.setText(foreignText);
+    }
+
+    public void setTranslate(@NonNull final String translateText) {
+        translate.setText(translateText);
+    }
 }

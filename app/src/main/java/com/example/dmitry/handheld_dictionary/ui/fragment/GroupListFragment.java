@@ -16,7 +16,7 @@ import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
 import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
-import com.example.dmitry.handheld_dictionary.ui.activity.GroupEditActivity;
+import com.example.dmitry.handheld_dictionary.ui.activity.GroupSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.GroupListAdapter;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 
@@ -62,7 +62,7 @@ public class GroupListFragment extends BaseFragment {
     }
 
     @OnClick(R.id.group_list_add) void addNew() {
-        startActivity(new Intent(getActivity(), GroupEditActivity.class));
+        startActivity(new Intent(getActivity(), GroupSubmitActivity.class));
     }
 
     private void loadGroups() {

@@ -31,4 +31,8 @@ public class GroupEditFieldsController extends BaseFieldsController {
     @NonNull public String getEnteredName() {
         return name.getText().toString();
     }
+
+    public void setName(@NonNull final String nameText) {
+        name.setText(nameText);
+    }
 }

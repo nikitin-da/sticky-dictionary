@@ -42,4 +42,10 @@
     <string name="nothing_selected">Select any groups to check</string>
     <string name="begin_button">Begin</string>
 
+    <string name="group_create_title">Add group</string>
+    <string name="group_edit_title">Edit group</string>
+
+    <string name="word_create_title">Add word</string>
+    <string name="word_edit_title">Edit word</string>
+
 </resources>

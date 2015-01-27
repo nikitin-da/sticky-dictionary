@@ -1,6 +1,7 @@
 package com.example.dmitry.handheld_dictionary.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Word;
+import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
 import com.nhaarman.listviewanimations.itemmanipulation.expandablelistitem.ExpandableListItemAdapter;
 
 import java.util.List;
@@ -19,7 +21,7 @@ import java.util.List;
 public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
         extends ExpandableListItemAdapter<ItemType> {
 
-    @NonNull protected final Context context;
+    protected final Context context;
 
     public BaseWordListAdapter(
             @NonNull Context context) {
@@ -64,10 +66,21 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
             holder = (TranslateHolder) translateView.getTag();
         }
 
-        holder.fillData(getItem(i));
+        holder.fillData(getItem(i), mContextClickListener);
 
         return translateView;
     }
+
+    private View.OnClickListener mContextClickListener = new View.OnClickListener() {
+        @Override public void onClick(View v) {
+            if (v.getTag() instanceof Word) {
+                Word word = (Word) v.getTag();
+                Intent intent = new Intent(context, WordSubmitActivity.class);
+                intent.putExtra(WordSubmitActivity.EXTRA_WORD, word);
+                context.startActivity(intent);
+            }
+        }
+    };
 
     public abstract void setData(final List<RawType> data);
 }

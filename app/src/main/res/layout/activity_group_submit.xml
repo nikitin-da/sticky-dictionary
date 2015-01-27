@@ -10,9 +10,8 @@
         android:id="@+id/activity_toolbar_common"
         style="@style/ToolBarStyle"/>
 
-    <fragment
+    <FrameLayout
         android:id="@+id/fragment_group_edit"
-        class="com.example.dmitry.handheld_dictionary.ui.fragment.GroupEditFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

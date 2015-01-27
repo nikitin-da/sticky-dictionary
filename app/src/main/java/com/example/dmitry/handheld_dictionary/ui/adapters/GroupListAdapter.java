@@ -7,13 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
+import com.example.dmitry.handheld_dictionary.ui.activity.GroupSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.OneGroupWordListActivity;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 
@@ -24,7 +25,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnCheckedChanged;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -72,7 +72,7 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter {
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    final Object key = v.getTag(R.id.tag_key);
+                    final Object key = v.getTag(R.id.tag_content);
                     if (key instanceof Long) {
                         if (mCheckable) {
                             boolean checked = toggleItemChecked((Long) key);
@@ -91,7 +91,7 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter {
         }
 
         final Group group = getItem(position);
-        view.setTag(R.id.tag_key, group.getId());
+        view.setTag(R.id.tag_content, group.getId());
         holder.fillData(group);
 
         if (mCheckable) {
@@ -106,10 +106,12 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter {
         @InjectView(R.id.group_date) TextView date;
         @InjectView(R.id.group_words) TextView words;
         @InjectView(R.id.group_checkbox) CheckBox checkBox;
+        @InjectView(R.id.group_context_button) ImageButton contextButton;
 
         public Holder(View view, boolean checkable) {
             ButterKnife.inject(this, view);
             ViewUtil.setVisibility(checkBox, checkable);
+            contextButton.setOnClickListener(mContextClickListener);
         }
 
         public void fillData(Group group) {
@@ -135,10 +137,22 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter {
             } else {
                 words.setVisibility(View.GONE);
             }
+            contextButton.setTag(group);
         }
 
         public void setChecked(boolean checked) {
             checkBox.setChecked(checked);
         }
     }
+
+    private final View.OnClickListener mContextClickListener = new View.OnClickListener() {
+        @Override public void onClick(View v) {
+            if (v.getTag() instanceof Group) {
+                Group group = (Group) v.getTag();
+                Intent intent = new Intent(mActivity, GroupSubmitActivity.class);
+                intent.putExtra(GroupSubmitActivity.EXTRA_GROUP, group);
+                mActivity.startActivity(intent);
+            }
+        }
+    };
 }
