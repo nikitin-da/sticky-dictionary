@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<com.daimajia.swipe.SwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/title"
-    style="@style/ListItemText"/>
+    android:id="@+id/word_swipe_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Bottom View Start-->
+    <LinearLayout
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#66ddff00"
+        android:weightSum="1">
+
+    </LinearLayout>
+
+    <!-- Surface View Start -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/ListItemText"/>
+
+    </FrameLayout>
+
+</com.daimajia.swipe.SwipeLayout>
+

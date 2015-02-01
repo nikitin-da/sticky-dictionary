@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/common_background">
 
     <include
         android:id="@+id/group_list_header"
@@ -22,8 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
-            android:dividerHeight="@dimen/item_group_padding"
-            android:padding="@dimen/item_group_padding"/>
+            android:dividerHeight="0dp"/>
 
         <ImageButton
             android:id="@+id/group_list_add"

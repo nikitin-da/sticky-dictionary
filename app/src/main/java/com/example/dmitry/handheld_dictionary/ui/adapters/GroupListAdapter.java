@@ -1,15 +1,23 @@
 package com.example.dmitry.handheld_dictionary.ui.adapters;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.implments.SwipeItemMangerImpl;
+import com.daimajia.swipe.interfaces.SwipeAdapterInterface;
+import com.daimajia.swipe.interfaces.SwipeItemMangerInterface;
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.model.Word;
@@ -29,7 +37,10 @@ import butterknife.InjectView;
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
-public class GroupListAdapter extends BaseMultiChoiceAdapter {
+public class GroupListAdapter extends BaseMultiChoiceAdapter
+        implements SwipeItemMangerInterface, SwipeAdapterInterface {
+
+    private SwipeItemMangerImpl mSwipeItemManger = new SwipeItemMangerImpl(this);
 
     private final DateTimeFormatter mDateTimeFormatter = DateTimeFormat.forPattern("dd MMM yyyy");
 
@@ -58,7 +69,7 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter {
         return position;
     }
 
-    @Override public View getView(int position, View convertView, ViewGroup parent) {
+    @Override public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View view;
         final Holder holder;
         if (convertView == null || !(convertView.getTag(R.id.tag_holder) instanceof Holder)) {
@@ -70,28 +81,15 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter {
             holder = new Holder(view, mCheckable);
             view.setTag(R.id.tag_holder, holder);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    final Object key = v.getTag(R.id.tag_content);
-                    if (key instanceof Long) {
-                        if (mCheckable) {
-                            boolean checked = toggleItemChecked((Long) key);
-                            holder.setChecked(checked);
-                        } else {
-                            final Intent intent = new Intent(mActivity, OneGroupWordListActivity.class);
-                            intent.putExtra(OneGroupWordListActivity.EXTRA_GROUP_ID, (Long) key);
-                            mActivity.slideActivity(intent);
-                        }
-                    }
-                }
-            });
+            mSwipeItemManger.initialize(view, position);
         } else {
             view = convertView;
             holder = (Holder) view.getTag(R.id.tag_holder);
+
+            mSwipeItemManger.updateConvertView(view, position);
         }
 
         final Group group = getItem(position);
-        view.setTag(R.id.tag_content, group.getId());
         holder.fillData(group);
 
         if (mCheckable) {
@@ -112,6 +110,22 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter {
             ButterKnife.inject(this, view);
             ViewUtil.setVisibility(checkBox, checkable);
             contextButton.setOnClickListener(mContextClickListener);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                setUpdateHotspotListener(view);
+            }
+        }
+
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        private void setUpdateHotspotListener(View view) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, @NonNull MotionEvent event) {
+                    RippleDrawable drawable = (RippleDrawable) v.findViewById(R.id.group_item_layout).getBackground();
+                    drawable.setHotspot(event.getX(),event.getY());
+                    return false;
+                }
+            });
         }
 
         public void fillData(Group group) {
@@ -145,8 +159,26 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter {
         }
     }
 
+    public void onItemClick(final int position, View view) {
+        final Group group = getItem(position);
+        if (group != null && group.getId() != null) {
+            long id = group.getId();
+            if (mCheckable) {
+                boolean checked = toggleItemChecked(id);
+
+                final CheckBox checkBox = (CheckBox) view.findViewById(R.id.group_checkbox);
+                checkBox.setChecked(checked);
+
+            } else {
+                final Intent intent = new Intent(mActivity, OneGroupWordListActivity.class);
+                intent.putExtra(OneGroupWordListActivity.EXTRA_GROUP_ID, id);
+                mActivity.slideActivity(intent);
+            }
+        }
+    }
+
     private final View.OnClickListener mContextClickListener = new View.OnClickListener() {
-        @Override public void onClick(View v) {
+        @Override public void onClick(@NonNull View v) {
             if (v.getTag() instanceof Group) {
                 Group group = (Group) v.getTag();
                 Intent intent = new Intent(mActivity, GroupSubmitActivity.class);
@@ -155,4 +187,56 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter {
             }
         }
     };
+
+    // region Update layout
+
+    @Override public int getSwipeLayoutResourceId(int i) {
+        return R.id.group_swipe_layout;
+    }
+
+    @Override
+    public void openItem(int position) {
+        mSwipeItemManger.openItem(position);
+    }
+
+    @Override
+    public void closeItem(int position) {
+        mSwipeItemManger.closeItem(position);
+    }
+
+    @Override
+    public void closeAllExcept(SwipeLayout layout) {
+        mSwipeItemManger.closeAllExcept(layout);
+    }
+
+    @Override
+    public List<Integer> getOpenItems() {
+        return mSwipeItemManger.getOpenItems();
+    }
+
+    @Override
+    public List<SwipeLayout> getOpenLayouts() {
+        return mSwipeItemManger.getOpenLayouts();
+    }
+
+    @Override
+    public void removeShownLayouts(SwipeLayout layout) {
+        mSwipeItemManger.removeShownLayouts(layout);
+    }
+
+    @Override
+    public boolean isOpen(int position) {
+        return mSwipeItemManger.isOpen(position);
+    }
+
+    @Override
+    public SwipeItemMangerImpl.Mode getMode() {
+        return mSwipeItemManger.getMode();
+    }
+
+    @Override
+    public void setMode(SwipeItemMangerImpl.Mode mode) {
+        mSwipeItemManger.setMode(mode);
+    }
+    // endregion
 }

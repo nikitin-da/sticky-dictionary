@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.dmitry.handheld_dictionary.HelloKotlinOnAndroid;
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.ui.fragment.BaseFragment;
 import com.example.dmitry.handheld_dictionary.ui.navigation_drawer.NavigationDrawerFragment;
@@ -40,6 +41,8 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new HelloKotlinOnAndroid().yo(this, "Kotlin is here");
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         mActionBarDrawerToggle = new AppActionBarDrawerToggle(

@@ -1,93 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.daimajia.swipe.SwipeLayout
+    android:id="@+id/group_swipe_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/item_group_bg"
-    android:orientation="vertical"
-    android:stateListAnimator="@anim/fab_anim">
+    android:layout_height="wrap_content">
 
+    <!-- Bottom View Start-->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
-            android:id="@+id/group_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/TextShadow.Black"
-            android:gravity="left"
-            android:padding="10dp"
-            android:textSize="15sp"
-            app:typefaceFromAssets="fonts/Roboto-Thin.ttf"
-            tools:text="1 янв. 2015"/>
-
-        <ImageButton
-            android:id="@+id/group_context_button"
-            android:layout_width="@dimen/small_image_button_size"
-            android:layout_height="@dimen/small_image_button_size"
-            android:background="@drawable/transparent_button_bg"
-            android:src="@drawable/ic_context_menu"
-            android:scaleType="fitCenter"
-            android:padding="15dp"
-            android:contentDescription="@string/content_description_options"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/item_group_padding"
+            android:layout_marginTop="@dimen/item_group_padding"
+            android:background="#66ddff00"/>
 
     </LinearLayout>
 
-    <LinearLayout
+    <!-- Surface View Start -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:duplicateParentState="true">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:id="@+id/group_item_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/item_group_padding"
+            android:background="@drawable/item_group_bg"
             android:orientation="vertical"
-            android:duplicateParentState="true">
+            android:stateListAnimator="@anim/fab_anim">
 
-            <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
-                android:id="@+id/group_name"
-                style="@style/TextShadow.Black"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="20sp"
-                tools:text="Group Name"/>
+                android:orientation="horizontal">
 
-            <com.example.dmitry.handheld_dictionary.ui.view.EllipsizingTextView
-                android:id="@+id/group_words"
+                <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+                    android:id="@+id/group_date"
+                    style="@style/TextShadow.Black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    app:typefaceFromAssets="fonts/Roboto-Thin.ttf"
+                    tools:text="1 янв. 2015"/>
+
+                <ImageButton
+                    android:id="@+id/group_context_button"
+                    android:layout_width="@dimen/small_image_button_size"
+                    android:layout_height="@dimen/small_image_button_size"
+                    android:background="@drawable/transparent_button_bg"
+                    android:contentDescription="@string/content_description_options"
+                    android:padding="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_context_menu"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="2"
-                android:paddingTop="10dp"
-                android:textColor="@android:color/black"
-                android:textSize="15sp"
-                app:typefaceFromAssets="fonts/Roboto-MediumItalic.ttf"
-                tools:text="(test1, test2)"/>
+                android:duplicateParentState="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:duplicateParentState="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+                        android:id="@+id/group_name"
+                        style="@style/TextShadow.Black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        tools:text="Group Name"/>
+
+                    <com.example.dmitry.handheld_dictionary.ui.view.EllipsizingTextView
+                        android:id="@+id/group_words"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:paddingTop="10dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp"
+                        app:typefaceFromAssets="fonts/Roboto-MediumItalic.ttf"
+                        tools:text="(test1, test2)"/>
+
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/group_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:duplicateParentState="true"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/group_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:duplicateParentState="true"
-            android:clickable="false"/>
+    </FrameLayout>
 
-    </LinearLayout>
-
-</LinearLayout>
+</com.daimajia.swipe.SwipeLayout>

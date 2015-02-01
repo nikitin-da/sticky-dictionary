@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.implments.SwipeItemMangerImpl;
+import com.daimajia.swipe.interfaces.SwipeAdapterInterface;
+import com.daimajia.swipe.interfaces.SwipeItemMangerInterface;
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
@@ -19,7 +23,10 @@ import java.util.List;
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
 public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
-        extends ExpandableListItemAdapter<ItemType> {
+        extends ExpandableListItemAdapter<ItemType>
+        implements SwipeItemMangerInterface, SwipeAdapterInterface {
+
+    private SwipeItemMangerImpl mSwipeItemManger = new SwipeItemMangerImpl(this);
 
     protected final Context context;
 
@@ -35,14 +42,25 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
 
         View titleView;
         ForeignHolder holder;
-        if (view == null || !(view.getTag() instanceof ForeignHolder)) {
+        if (view == null
+                || !(view.getTag(R.id.tag_holder) instanceof ForeignHolder)
+
+                || !SwipeLayout.Status.Close.equals(((ForeignHolder) view.getTag(R.id.tag_holder)).swipeLayout.getOpenStatus())) {
+            /**
+             * Not reuse opened items,
+             * because {@link com.daimajia.swipe.implments.SwipeItemMangerImpl} recycling
+             * doesn't work correct with com.nhaarman.listviewanimations library.
+             */
+
             Context context = viewGroup.getContext();
             titleView = LayoutInflater.from(context).inflate(R.layout.item_title_word, viewGroup, false);
             holder = new ForeignHolder(titleView);
-            titleView.setTag(holder);
+            titleView.setTag(R.id.tag_holder, holder);
+            mSwipeItemManger.initialize(titleView, i);
         } else {
             titleView = view;
-            holder = (ForeignHolder) titleView.getTag();
+            holder = (ForeignHolder) titleView.getTag(R.id.tag_holder);
+            mSwipeItemManger.updateConvertView(titleView, i);
         }
 
         holder.fillData(getItem(i));
@@ -82,5 +100,61 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
         }
     };
 
+    @Override public long getItemId(int position) {
+        return position;
+    }
+
     public abstract void setData(final List<RawType> data);
+
+    // region Swipe layout
+
+    @Override public int getSwipeLayoutResourceId(int i) {
+        return R.id.word_swipe_layout;
+    }
+
+    @Override
+    public void openItem(int position) {
+        mSwipeItemManger.openItem(position);
+    }
+
+    @Override
+    public void closeItem(int position) {
+        mSwipeItemManger.closeItem(position);
+    }
+
+    @Override
+    public void closeAllExcept(SwipeLayout layout) {
+        mSwipeItemManger.closeAllExcept(layout);
+    }
+
+    @Override
+    public List<Integer> getOpenItems() {
+        return mSwipeItemManger.getOpenItems();
+    }
+
+    @Override
+    public List<SwipeLayout> getOpenLayouts() {
+        return mSwipeItemManger.getOpenLayouts();
+    }
+
+    @Override
+    public void removeShownLayouts(SwipeLayout layout) {
+        mSwipeItemManger.removeShownLayouts(layout);
+    }
+
+    @Override
+    public boolean isOpen(int position) {
+        return mSwipeItemManger.isOpen(position);
+    }
+
+    @Override
+    public SwipeItemMangerImpl.Mode getMode() {
+        return mSwipeItemManger.getMode();
+    }
+
+    @Override
+    public void setMode(SwipeItemMangerImpl.Mode mode) {
+        mSwipeItemManger.setMode(mode);
+    }
+    // endregion
 }
