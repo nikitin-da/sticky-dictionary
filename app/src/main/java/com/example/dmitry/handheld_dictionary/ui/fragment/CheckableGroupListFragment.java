@@ -12,6 +12,8 @@ import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.PagerActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.BaseMultiChoiceAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.GroupListAdapter;
+import com.example.dmitry.handheld_dictionary.ui.anim.Anchor;
+import com.example.dmitry.handheld_dictionary.ui.anim.Gravity;
 import com.example.dmitry.handheld_dictionary.util.AnimUtil;
 
 import java.util.List;
@@ -75,7 +77,7 @@ public class CheckableGroupListFragment extends GroupListFragment
     @Override public void setUIStateNothingChecked() {
         Context context = getActivity();
         AnimUtil.showWithAlphaAnim(context, mNothingSelectedView);
-        AnimUtil.hideWithRippleAnimation(context, mBeginButton);
+        AnimUtil.hideWithRippleAnimation(context, mBeginButton, new Anchor(Gravity.CENTER, Gravity.BEGIN));
     }
 
     @Override public void setUIStateHasChecked() {

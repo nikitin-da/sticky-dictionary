@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
 import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.OneGroupWordListAdapter;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
+import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 
 import java.util.List;
 
@@ -65,17 +67,24 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ViewUtil.makeCircle(mAddButton, R.dimen.common_image_button_size);
-        mListView.setAdapter(mAdapter);
+
+        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(mAdapter);
+        alphaInAnimationAdapter.setAbsListView(mListView);
+
+        assert alphaInAnimationAdapter.getViewAnimator() != null;
+        alphaInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+
+        mListView.setAdapter(alphaInAnimationAdapter);
     }
 
     @Override protected void loadWords() {
         new AsyncTask<Void, Void, List<Word>>() {
 
-            @Override protected List<Word> doInBackground(Void... params) {
+            @Override protected List<Word> doInBackground(@NonNull Void... params) {
                 return mWordActiveModel.syncGetAllFromGroup(mGroupId);
             }
 
-            @Override protected void onPostExecute(List<Word> words) {
+            @Override protected void onPostExecute(@NonNull List<Word> words) {
                 super.onPostExecute(words);
                 fillData(words);
             }

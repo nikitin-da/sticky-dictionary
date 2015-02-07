@@ -9,6 +9,8 @@ import com.example.dmitry.handheld_dictionary.R;
  */
 public abstract class BaseWordListFragment extends BaseFragment {
 
+    protected static final int INITIAL_DELAY_MILLIS = 500;
+
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);

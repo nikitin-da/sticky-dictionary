@@ -25,6 +25,8 @@ import com.example.dmitry.handheld_dictionary.util.IntentFactory;
 import com.example.dmitry.handheld_dictionary.util.Loggi;
 import com.google.common.io.Files;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 
 import javax.inject.Inject;
@@ -79,8 +81,7 @@ public class ImportExportFragment extends BaseFragment {
                     boolean success = true;
                     int errorMessage = 0;
 
-                    if (uri == null ||
-                            !EXPECTED_MIME_TYPE.equalsIgnoreCase(Files.getFileExtension(uri.getPath()))) {
+                    if (uri == null || !isMimeTypeAllowed(uri)) {
                         success = false;
                         errorMessage = R.string.unsupported_file_format;
                     } else if (!(new File(uri.getPath())).exists()) {
@@ -97,6 +98,12 @@ public class ImportExportFragment extends BaseFragment {
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private boolean isMimeTypeAllowed(@NotNull final Uri uri) {
+        final String resultExtension = Files.getFileExtension(uri.getPath());
+        final String resultMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(resultExtension);
+        return EXPECTED_MIME_TYPE.equalsIgnoreCase(resultMimeType);
     }
 
     private void importFile(@NonNull final Uri uri) {

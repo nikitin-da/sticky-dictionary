@@ -8,21 +8,33 @@
     android:layout_height="wrap_content">
 
     <!-- Bottom View Start-->
-    <LinearLayout
-        android:id="@+id/bottom_wrapper"
-        android:layout_width="160dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
-        <View
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/item_group_padding"
             android:layout_marginTop="@dimen/item_group_padding"
-            android:background="#66ddff00"/>
+            android:background="@drawable/item_group_context_bg"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/group_item_edit"
+                style="@style/GroupContextButton"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="@string/content_description_edit"/>
+
+            <ImageButton
+                android:id="@+id/group_item_remove"
+                style="@style/GroupContextButton"
+                android:src="@drawable/ic_remove"
+                android:contentDescription="@string/content_description_edit"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 
     <!-- Surface View Start -->
     <FrameLayout
@@ -33,7 +45,8 @@
             android:id="@+id/group_item_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/item_group_padding"
+            android:layout_marginBottom="@dimen/item_group_padding"
+            android:layout_marginTop="@dimen/item_group_padding"
             android:background="@drawable/item_group_bg"
             android:orientation="vertical"
             android:stateListAnimator="@anim/fab_anim">
@@ -54,16 +67,6 @@
                     android:textSize="15sp"
                     app:typefaceFromAssets="fonts/Roboto-Thin.ttf"
                     tools:text="1 янв. 2015"/>
-
-                <ImageButton
-                    android:id="@+id/group_context_button"
-                    android:layout_width="@dimen/small_image_button_size"
-                    android:layout_height="@dimen/small_image_button_size"
-                    android:background="@drawable/transparent_button_bg"
-                    android:contentDescription="@string/content_description_options"
-                    android:padding="15dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_context_menu"/>
 
             </LinearLayout>
 

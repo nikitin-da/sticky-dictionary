@@ -152,4 +152,13 @@
         <item name="android:shadowRadius">3</item>
     </style>
 
+    <style name="GroupContextButton">
+        <item name="android:layout_width">@dimen/small_image_button_size</item>
+        <item name="android:layout_height">@dimen/small_image_button_size</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">@drawable/common_button_bg</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
 </resources>

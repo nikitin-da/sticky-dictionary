@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
+import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
 import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.GroupSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.GroupListAdapter;
@@ -31,7 +32,7 @@ import butterknife.OnClick;
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
-public class GroupListFragment extends BaseFragment {
+public class GroupListFragment extends BaseFragment implements GroupListAdapter.GroupActionsListener {
 
     private static final String STATE_LIST = "STATE_LIST";
 
@@ -89,7 +90,7 @@ public class GroupListFragment extends BaseFragment {
         startActivity(new Intent(getActivity(), GroupSubmitActivity.class));
     }
 
-    private void loadGroups() {
+    protected void loadGroups() {
         new AsyncTask<Void, Void, List<Group>>() {
 
             @Override protected List<Group> doInBackground(@NotNull Void... params) {
@@ -107,6 +108,7 @@ public class GroupListFragment extends BaseFragment {
         final Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
             final GroupListAdapter adapter = createAdapter((BaseActivity) activity, groups);
+            adapter.setGroupActionsListener(this);
             mListView.setAdapter(adapter);
 
             if (mListViewState != null) {
@@ -156,5 +158,20 @@ public class GroupListFragment extends BaseFragment {
 
     @Override public Integer getActionBarTitle() {
         return R.string.navigation_drawer_item_group;
+    }
+
+    @Override public void removeGroup(final Long id, final Runnable listener) {
+        mGroupActiveModel.asyncRemoveGroup(id, new TaskListener<Void>() {
+            @Override public void onProblemOccurred(Throwable t) {
+            }
+
+            @Override public void onDataProcessed(Void aVoid) {
+                listener.run();
+            }
+        });
+    }
+
+    @Override public void update() {
+        loadGroups();
     }
 }

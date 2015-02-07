@@ -23,7 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
-            android:dividerHeight="0dp"/>
+            android:dividerHeight="0dp"
+            android:padding="@dimen/item_group_padding"
+            android:clipToPadding="false"
+            android:scrollbarStyle="outsideOverlay"/>
 
         <ImageButton
             android:id="@+id/group_list_add"

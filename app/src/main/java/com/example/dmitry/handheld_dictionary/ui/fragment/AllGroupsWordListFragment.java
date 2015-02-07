@@ -32,8 +32,6 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  */
 public class AllGroupsWordListFragment extends BaseWordListFragment {
 
-    private static final int INITIAL_DELAY_MILLIS = 500;
-
     @InjectView(R.id.all_groups_word_list) StickyListHeadersListView mListView;
 
     private AllGroupsWordListAdapter mAdapter;

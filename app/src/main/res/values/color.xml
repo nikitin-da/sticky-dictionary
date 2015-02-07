@@ -31,4 +31,9 @@
     <color name="item_group_bg_normal">#80cfe1</color>
     <color name="item_group_bg_pressed">#38a0b6</color>
 
+    <color name="item_group_context_bg">#66ddff00</color>
+
+    <color name="common_button_normal_bg">@android:color/transparent</color>
+    <color name="common_button_pressed_bg">#66000000</color>
+
 </resources>

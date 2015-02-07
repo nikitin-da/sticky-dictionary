@@ -20,6 +20,7 @@ public class ForeignHolder {
 
     public ForeignHolder(View view) {
         ButterKnife.inject(this, view);
+        swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
     }
 
     public void fillData(Word word) {

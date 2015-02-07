@@ -84,7 +84,7 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
             holder = (TranslateHolder) translateView.getTag();
         }
 
-        holder.fillData(getItem(i), mContextClickListener);
+        holder.fillData(getItem(i));
 
         return translateView;
     }

@@ -24,6 +24,10 @@ import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.GroupSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.OneGroupWordListActivity;
+import com.example.dmitry.handheld_dictionary.ui.anim.Anchor;
+import com.example.dmitry.handheld_dictionary.ui.anim.AnimatorAdapterListener;
+import com.example.dmitry.handheld_dictionary.ui.anim.Gravity;
+import com.example.dmitry.handheld_dictionary.util.AnimUtil;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 
 import org.joda.time.format.DateTimeFormat;
@@ -49,6 +53,8 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
     private final List<Group> mGroups;
 
     private final boolean mCheckable;
+
+    private GroupActionsListener mGroupActionsListener;
 
     public GroupListAdapter(
             @NonNull BaseActivity activity, @NonNull List<Group> groups, boolean checkable) {
@@ -100,20 +106,27 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
     }
 
     class Holder {
+        private View mView;
         @InjectView(R.id.group_name) TextView name;
         @InjectView(R.id.group_date) TextView date;
         @InjectView(R.id.group_words) TextView words;
         @InjectView(R.id.group_checkbox) CheckBox checkBox;
-        @InjectView(R.id.group_context_button) ImageButton contextButton;
+        @InjectView(R.id.group_item_edit) ImageButton editButton;
+        @InjectView(R.id.group_item_remove) ImageButton removeButton;
+        @InjectView(R.id.group_swipe_layout) SwipeLayout swipeLayout;
 
         public Holder(View view, boolean checkable) {
+            mView = view;
             ButterKnife.inject(this, view);
             ViewUtil.setVisibility(checkBox, checkable);
-            contextButton.setOnClickListener(mContextClickListener);
+            editButton.setOnClickListener(mEditClickListener);
+            removeButton.setOnClickListener(mRemoveClickListener);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 setUpdateHotspotListener(view);
             }
+
+            swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         }
 
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -122,7 +135,7 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
                 @Override
                 public boolean onTouch(View v, @NonNull MotionEvent event) {
                     RippleDrawable drawable = (RippleDrawable) v.findViewById(R.id.group_item_layout).getBackground();
-                    drawable.setHotspot(event.getX(),event.getY());
+                    drawable.setHotspot(event.getX(), event.getY());
                     return false;
                 }
             });
@@ -151,7 +164,9 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
             } else {
                 words.setVisibility(View.GONE);
             }
-            contextButton.setTag(group);
+            editButton.setTag(group.getId());
+            removeButton.setTag(R.id.tag_id, group.getId());
+            removeButton.setTag(R.id.tag_view, mView);
         }
 
         public void setChecked(boolean checked) {
@@ -177,16 +192,56 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
         }
     }
 
-    private final View.OnClickListener mContextClickListener = new View.OnClickListener() {
+    private final View.OnClickListener mEditClickListener = new View.OnClickListener() {
         @Override public void onClick(@NonNull View v) {
-            if (v.getTag() instanceof Group) {
-                Group group = (Group) v.getTag();
+            if (v.getTag() instanceof Long) {
+                Long id = (Long) v.getTag();
                 Intent intent = new Intent(mActivity, GroupSubmitActivity.class);
-                intent.putExtra(GroupSubmitActivity.EXTRA_GROUP, group);
+                intent.putExtra(GroupSubmitActivity.EXTRA_GROUP, id);
                 mActivity.startActivity(intent);
             }
         }
     };
+
+    private final View.OnClickListener mRemoveClickListener = new View.OnClickListener() {
+        @Override public void onClick(@NonNull View v) {
+            if ((v.getTag(R.id.tag_id) instanceof Long)
+                    && (v.getTag(R.id.tag_view) instanceof View)
+                    && mGroupActionsListener != null) {
+
+                Long id = (Long) v.getTag(R.id.tag_id);
+                final View itemView = (View) v.getTag(R.id.tag_view);
+
+                mGroupActionsListener.removeGroup(id, new Runnable() {
+                    @Override public void run() {
+
+                        AnimUtil.hideWithRippleAnimation(
+                                mActivity,
+                                itemView,
+                                new Anchor(Gravity.END, Gravity.END),
+                                new AnimatorAdapterListener() {
+                                    @Override public void onAnimationEnd(
+                                            @NonNull android.animation.Animator animation) {
+                                        super.onAnimationEnd(animation);
+                                        mGroupActionsListener.update();
+                                    }
+                                }
+                        );
+                    }
+                });
+            }
+        }
+    };
+
+    public interface GroupActionsListener {
+        public void removeGroup(Long id, final Runnable listener);
+
+        public void update();
+    }
+
+    public void setGroupActionsListener(GroupActionsListener groupActionsListener) {
+        mGroupActionsListener = groupActionsListener;
+    }
 
     // region Update layout
 

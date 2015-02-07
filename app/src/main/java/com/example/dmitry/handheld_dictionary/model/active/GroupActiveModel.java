@@ -122,17 +122,30 @@ public class GroupActiveModel extends BaseActiveModel {
         }
     }
 
-    public void removeGroup(Group group) {
+    public void asyncRemoveGroup(@NonNull final Long id, @NonNull TaskListener<Void> listener) {
+        executeTask(new Task<Void>(listener) {
+            @Override protected Void doWork() throws Throwable {
+                syncRemoveGroup(id);
+                return null;
+            }
+        });
+    }
+
+    public void syncRemoveGroup(Group group) {
+        syncRemoveGroup(group.getId());
+    }
+
+    public void syncRemoveGroup(final Long id) {
 
         bambooStorage.remove(
                 Word.class,
                 Word.WORDS_FROM_GROUP,
-                new String[] {String.valueOf(group.getId())});
+                new String[] {String.valueOf(id)});
 
         bambooStorage.remove(
                 Group.class,
                 Group.GROUP_WITH_ID,
-                new String[] {String.valueOf(group.getId())});
+                new String[] {String.valueOf(id)});
     }
 
     public void removeAllGroups() {

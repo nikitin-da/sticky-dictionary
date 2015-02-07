@@ -12,17 +12,5 @@
         android:paddingLeft="@dimen/small_image_button_size"
         android:paddingRight="@dimen/small_image_button_size"/>
 
-    <ImageButton
-        android:id="@+id/word_context_button"
-        android:layout_width="@dimen/small_image_button_size"
-        android:layout_height="@dimen/small_image_button_size"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/transparent_button_bg"
-        android:src="@drawable/ic_context_menu"
-        android:scaleType="fitCenter"
-        android:padding="15dp"
-        android:contentDescription="@string/content_description_options"/>
-
 </RelativeLayout>
 
