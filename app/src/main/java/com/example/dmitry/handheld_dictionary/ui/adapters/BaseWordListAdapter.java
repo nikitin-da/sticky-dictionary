@@ -28,6 +28,8 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
 
     private SwipeItemMangerImpl mSwipeItemManger = new SwipeItemMangerImpl(this);
 
+    private ForeignHolder.WordActionsListener mWordActionsListener;
+
     protected final Context context;
 
     public BaseWordListAdapter(
@@ -54,7 +56,7 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
 
             Context context = viewGroup.getContext();
             titleView = LayoutInflater.from(context).inflate(R.layout.item_title_word, viewGroup, false);
-            holder = new ForeignHolder(titleView);
+            holder = new ForeignHolder(titleView, mWordActionsListener);
             titleView.setTag(R.id.tag_holder, holder);
             mSwipeItemManger.initialize(titleView, i);
         } else {
@@ -89,22 +91,15 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
         return translateView;
     }
 
-    private View.OnClickListener mContextClickListener = new View.OnClickListener() {
-        @Override public void onClick(View v) {
-            if (v.getTag() instanceof Word) {
-                Word word = (Word) v.getTag();
-                Intent intent = new Intent(context, WordSubmitActivity.class);
-                intent.putExtra(WordSubmitActivity.EXTRA_WORD, word);
-                context.startActivity(intent);
-            }
-        }
-    };
-
     @Override public long getItemId(int position) {
         return position;
     }
 
     public abstract void setData(final List<RawType> data);
+
+    public void setWordActionsListener(ForeignHolder.WordActionsListener wordActionsListener) {
+        mWordActionsListener = wordActionsListener;
+    }
 
     // region Swipe layout
 

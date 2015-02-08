@@ -22,23 +22,22 @@ public class WordEditFragment extends BaseWordSubmitFragment {
     }
 
     private static final String ARG_WORD = "ARG_WORD";
+    private Word mWord;
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Word word = getArguments().getParcelable(ARG_WORD);
-        if (word != null) {
-            wordEditFieldsController.setForeign(word.getForeign());
-            wordEditFieldsController.setTranslate(word.getTranslate());
+        mWord = getArguments().getParcelable(ARG_WORD);
+        if (mWord != null) {
+            wordEditFieldsController.setForeign(mWord.getForeign());
+            wordEditFieldsController.setTranslate(mWord.getTranslate());
         }
     }
 
     @Override protected void submitWord(@NonNull String foreign, @NonNull String translate) {
-        Word word = new Word(
-                getArguments().getLong(ARG_WORD),
-                foreign,
-                translate);
-        wordActiveModel.saveWord(word);
+        mWord.setForeign(foreign);
+        mWord.setTranslate(translate);
+        wordActiveModel.saveWord(mWord);
         getActivity().finish();
     }
 

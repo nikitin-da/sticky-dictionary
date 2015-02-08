@@ -95,11 +95,24 @@ public class WordActiveModel extends BaseActiveModel {
         bambooStorage.addOrUpdate(word);
     }
 
-    public void removeWord(Word word) {
+    public void asyncRemoveWord(@NonNull final Long id, @NonNull TaskListener<Void> listener) {
+        executeTask(new Task<Void>(listener) {
+            @Override protected Void doWork() throws Throwable {
+                syncRemoveWord(id);
+                return null;
+            }
+        });
+    }
+
+    public void syncRemoveWord(Word word) {
+        syncRemoveWord(word.getId());
+    }
+
+    public void syncRemoveWord(final long id) {
         bambooStorage.remove(
                 Word.class,
                 Word.WORD_WITH_ID,
-                new String[] {String.valueOf(word.getId())});
+                new String[] {String.valueOf(id)});
     }
 
     public void removeAllWords() {

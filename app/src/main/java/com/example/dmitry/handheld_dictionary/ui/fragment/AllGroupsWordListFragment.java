@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
-import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
 import com.example.dmitry.handheld_dictionary.ui.activity.PagerActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.AllGroupsWordListAdapter;
+import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
 import com.nhaarman.listviewanimations.appearance.StickyListHeadersAdapterDecorator;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.util.StickyListHeadersListViewWrapper;
@@ -34,15 +34,6 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
 
     @InjectView(R.id.all_groups_word_list) StickyListHeadersListView mListView;
 
-    private AllGroupsWordListAdapter mAdapter;
-
-    private GroupActiveModel mGroupActiveModel;
-
-    @Override public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mGroupActiveModel = new GroupActiveModel(getActivity());
-    }
-
     @Override public View onCreateView(LayoutInflater inflater,
                                        @Nullable ViewGroup container,
                                        @Nullable Bundle savedInstanceState) {
@@ -55,9 +46,7 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
 
         mListView.setFitsSystemWindows(true);
 
-        mAdapter = new AllGroupsWordListAdapter(getActivity());
-
-        AlphaInAnimationAdapter animationAdapter = new AlphaInAnimationAdapter(mAdapter);
+        AlphaInAnimationAdapter animationAdapter = new AlphaInAnimationAdapter(adapter);
         StickyListHeadersAdapterDecorator stickyListHeadersAdapterDecorator = new StickyListHeadersAdapterDecorator(animationAdapter);
         stickyListHeadersAdapterDecorator.setListViewWrapper(new StickyListHeadersListViewWrapper(mListView));
 
@@ -74,7 +63,7 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
         new AsyncTask<Void, Void, List<Group>>() {
 
             @Override protected List<Group> doInBackground(@NonNull Void... params) {
-                return mGroupActiveModel.syncGetAllGroups(true);
+                return groupActiveModel.syncGetAllGroups(true);
             }
 
             @Override protected void onPostExecute(@NonNull List<Group> groups) {
@@ -88,7 +77,7 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
     private void fillData(List<Group> groups) {
         Activity activity = getActivity();
         if (activity != null && groups != null) {
-            mAdapter.setData(groups);
+            ((AllGroupsWordListAdapter) adapter).setData(groups);
         }
     }
 
@@ -107,5 +96,9 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override protected BaseWordListAdapter createAdapter() {
+        return new AllGroupsWordListAdapter(getActivity());
     }
 }

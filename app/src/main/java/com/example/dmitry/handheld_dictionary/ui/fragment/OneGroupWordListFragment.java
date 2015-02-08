@@ -13,14 +13,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.dmitry.handheld_dictionary.R;
-import com.example.dmitry.handheld_dictionary.model.Word;
-import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
+import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
+import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.OneGroupWordListAdapter;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
-
-import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -43,18 +41,12 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
     @InjectView(R.id.one_group_word_list) ListView mListView;
     @InjectView(R.id.word_list_add) ImageButton mAddButton;
 
-    private WordActiveModel mWordActiveModel;
-
     private Long mGroupId;
-
-    private OneGroupWordListAdapter mAdapter;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mWordActiveModel = new WordActiveModel(getActivity());
 
         mGroupId = getArguments().getLong(ARG_GROUP_ID);
-        mAdapter = new OneGroupWordListAdapter(getActivity());
     }
 
     @Override public View onCreateView(LayoutInflater inflater,
@@ -68,7 +60,7 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
         super.onViewCreated(view, savedInstanceState);
         ViewUtil.makeCircle(mAddButton, R.dimen.common_image_button_size);
 
-        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(mAdapter);
+        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(adapter);
         alphaInAnimationAdapter.setAbsListView(mListView);
 
         assert alphaInAnimationAdapter.getViewAnimator() != null;
@@ -78,23 +70,28 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
     }
 
     @Override protected void loadWords() {
-        new AsyncTask<Void, Void, List<Word>>() {
+        new AsyncTask<Void, Void, Group>() {
 
-            @Override protected List<Word> doInBackground(@NonNull Void... params) {
-                return mWordActiveModel.syncGetAllFromGroup(mGroupId);
+            @Override protected Group doInBackground(@NonNull Void... params) {
+                return groupActiveModel.syncGetGroup(mGroupId, true);
             }
 
-            @Override protected void onPostExecute(@NonNull List<Word> words) {
-                super.onPostExecute(words);
-                fillData(words);
+            @Override protected void onPostExecute(@NonNull Group group) {
+                super.onPostExecute(group);
+                fillData(group);
             }
         }.execute();
     }
 
-    private void fillData(List<Word> words) {
+    @Override protected BaseWordListAdapter createAdapter() {
+        return new OneGroupWordListAdapter(getActivity());
+    }
+
+    private void fillData(Group group) {
         Activity activity = getActivity();
-        if (activity != null && words != null) {
-            mAdapter.setData(words);
+        if (activity != null && group != null) {
+            ((OneGroupWordListAdapter) adapter).setData(group.getWords());
+            setActionBarTitle(group.getName());
         }
     }
 

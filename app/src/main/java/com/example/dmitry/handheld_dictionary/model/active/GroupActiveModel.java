@@ -30,14 +30,14 @@ public class GroupActiveModel extends BaseActiveModel {
         return true;
     }
 
-    public Group syncGetGroup(long groupId) {
+    public Group syncGetGroup(long groupId, boolean fullModels) {
         Group group = bambooStorage.getFirst(
                 Group.class,
                 Group.GROUP_WITH_ID,
                 new String[] {String.valueOf(groupId)},
                 null);
 
-        if (group != null) {
+        if (group != null && fullModels) {
             loadWords(group);
         }
         return group;
@@ -109,7 +109,7 @@ public class GroupActiveModel extends BaseActiveModel {
 
     public void saveGroup(Group group) {
 
-        Group exist = syncGetGroup(group.getId());
+        Group exist = syncGetGroup(group.getId(), false);
         if (exist != null) {
             group.setInternalId(exist.getInternalId());
         }
