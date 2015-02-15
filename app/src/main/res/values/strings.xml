@@ -9,7 +9,6 @@
     <string name="edit_name_hint">Name</string>
     <string name="edit_save_button">Save</string>
 
-    <string name="action_full_screen">full screen</string>
     <string name="action_save">Export to file</string>
 
     <string name="navigation_drawer_item_all">All words</string>

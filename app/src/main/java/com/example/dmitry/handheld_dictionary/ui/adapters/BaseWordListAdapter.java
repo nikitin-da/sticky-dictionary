@@ -1,9 +1,9 @@
 package com.example.dmitry.handheld_dictionary.ui.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,6 @@ import com.daimajia.swipe.interfaces.SwipeAdapterInterface;
 import com.daimajia.swipe.interfaces.SwipeItemMangerInterface;
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Word;
-import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
 import com.nhaarman.listviewanimations.itemmanipulation.expandablelistitem.ExpandableListItemAdapter;
 
 import java.util.List;
@@ -32,10 +31,26 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
 
     protected final Context context;
 
+    private final SparseArray<View> mViews = new SparseArray<>();
+
     public BaseWordListAdapter(
             @NonNull Context context) {
         super(context);
         this.context = context;
+    }
+
+    @NonNull @Override public View getView(int position,
+                                           @Nullable View convertView, @NonNull ViewGroup parent) {
+        final View view = super.getView(position, convertView, parent);
+
+        mViews.put(position, view);
+
+        if (view.getVisibility() == View.GONE) {
+            // reuse after animation =(
+            view.setVisibility(View.VISIBLE);
+        }
+
+        return view;
     }
 
     @NonNull @Override public View getTitleView(int i,
@@ -65,7 +80,7 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
             mSwipeItemManger.updateConvertView(titleView, i);
         }
 
-        holder.fillData(getItem(i));
+        holder.fillData(getItem(i), i);
 
         return titleView;
     }
@@ -99,6 +114,10 @@ public abstract class BaseWordListAdapter<RawType, ItemType extends Word>
 
     public void setWordActionsListener(ForeignHolder.WordActionsListener wordActionsListener) {
         mWordActionsListener = wordActionsListener;
+    }
+
+    public View getViewAtPosition(final int position) {
+        return mViews.get(position);
     }
 
     // region Swipe layout

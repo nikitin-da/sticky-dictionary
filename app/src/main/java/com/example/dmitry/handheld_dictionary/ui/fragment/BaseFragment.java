@@ -23,6 +23,18 @@ public abstract class BaseFragment extends Fragment {
         view.setBackgroundResource(R.color.common_background);
     }
 
+    @Override public void onStart() {
+        super.onStart();
+        ActionBarActivity activity = (ActionBarActivity) getActivity();
+        if (activity != null) {
+            ActionBar actionBar = activity.getSupportActionBar();
+            final Integer titleResId = getActionBarTitle();
+            if (actionBar != null && titleResId != null) {
+                actionBar.setTitle(titleResId);
+            }
+        }
+    }
+
     /**
      * You may override this method and return not null string resources id,
      * that will display as action bar title.

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.animation.Animation;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Word;
@@ -15,6 +16,8 @@ import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
 import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.ForeignHolder;
+import com.example.dmitry.handheld_dictionary.ui.anim.AnimationAdapterListener;
+import com.example.dmitry.handheld_dictionary.ui.anim.ResizeAnimation;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -62,18 +65,33 @@ public abstract class BaseWordListFragment extends BaseFragment implements Forei
         }
     }
 
-    @Override public void remove(long id, final Runnable listener) {
+    @Override public void remove(final long id, final int position, @Nullable final Runnable listener) {
         wordActiveModel.asyncRemoveWord(id, new TaskListener<Void>() {
             @Override public void onProblemOccurred(Throwable t) {
             }
 
             @Override public void onDataProcessed(Void aVoid) {
-                listener.run();
+
+                View view = adapter.getViewAtPosition(position);
+
+                ResizeAnimation animation = new ResizeAnimation(
+                        view,
+                        ResizeAnimation.ResizeType.VERTICAL,
+                        false,
+                        getResources().getInteger(android.R.integer.config_mediumAnimTime));
+
+                animation.setAnimationListener(new AnimationAdapterListener() {
+                    @Override public void onAnimationEnd(Animation animation) {
+                        super.onAnimationEnd(animation);
+                        if (listener != null) {
+                            listener.run();
+                        }
+                        loadWords();
+                    }
+                });
+
+                view.startAnimation(animation);
             }
         });
-    }
-
-    @Override public void update() {
-        loadWords();
     }
 }
