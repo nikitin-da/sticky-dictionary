@@ -42,6 +42,10 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     @InjectView(R.id.group_list_add) ImageButton mAddButton;
     @InjectView(R.id.group_list_header) View mHeader;
 
+    @InjectView(R.id.group_list_content) View contentView;
+    @InjectView(R.id.group_list_error) View errorView;
+    @InjectView(R.id.group_list_empty) View emptyView;
+
     private GroupActiveModel mGroupActiveModel;
 
     @Override public void onAttach(Activity activity) {
@@ -86,23 +90,54 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
         }
     }
 
+    private void setUIStateShowContent() {
+        ViewUtil.setVisibility(contentView, true);
+        ViewUtil.setVisibility(errorView, false);
+        ViewUtil.setVisibility(emptyView, false);
+        ViewUtil.setVisibility(mAddButton, true);
+    }
+
+    private void setUIStateError() {
+        ViewUtil.setVisibility(contentView, false);
+        ViewUtil.setVisibility(errorView, true);
+        ViewUtil.setVisibility(emptyView, false);
+        ViewUtil.setVisibility(mAddButton, false);
+    }
+
+    private void setUIStateEmpty() {
+        ViewUtil.setVisibility(contentView, false);
+        ViewUtil.setVisibility(errorView, false);
+        ViewUtil.setVisibility(emptyView, true);
+        ViewUtil.setVisibility(mAddButton, true);
+    }
+
+    @OnClick(R.id.group_list_retry) void retry() {
+        loadGroups();
+    }
+
     @OnClick(R.id.group_list_add) void addNew() {
         startActivity(new Intent(getActivity(), GroupSubmitActivity.class));
     }
 
     protected void loadGroups() {
-        new AsyncTask<Void, Void, List<Group>>() {
+        setUIStateShowContent();
+        mGroupActiveModel.asyncGetAllGroups(true, mGroupsListener);
+    }
 
-            @Override protected List<Group> doInBackground(@NotNull Void... params) {
-                return mGroupActiveModel.syncGetAllGroups(true);
-            }
+    private final TaskListener<List<Group>> mGroupsListener = new TaskListener<List<Group>>() {
+        @Override public void onProblemOccurred(Throwable t) {
+            setUIStateError();
+        }
 
-            @Override protected void onPostExecute(@NotNull List<Group> groups) {
-                super.onPostExecute(groups);
+        @Override public void onDataProcessed(List<Group> groups) {
+            if (groups.isEmpty()) {
+                setUIStateEmpty();
+            } else {
+                setUIStateShowContent();
                 fillData(groups);
             }
-        }.execute();
-    }
+        }
+    };
 
     private void fillData(List<Group> groups) {
         final Activity activity = getActivity();
