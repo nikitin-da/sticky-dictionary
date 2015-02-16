@@ -2,9 +2,7 @@ package com.example.dmitry.handheld_dictionary.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +12,7 @@ import android.widget.ListView;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
+import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
 import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.OneGroupWordListAdapter;
@@ -40,6 +39,9 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
 
     @InjectView(R.id.one_group_word_list) ListView mListView;
     @InjectView(R.id.word_list_add) ImageButton mAddButton;
+
+    @InjectView(R.id.one_group_word_list_error) View errorView;
+    @InjectView(R.id.one_group_word_list_empty) View emptyView;
 
     private Long mGroupId;
 
@@ -70,18 +72,24 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
     }
 
     @Override protected void loadWords() {
-        new AsyncTask<Void, Void, Group>() {
+        setUIStateShowContent();
+        groupActiveModel.asyncGetGroup(mGroupId, true, mGroupListener);
+    }
 
-            @Override protected Group doInBackground(@NonNull Void... params) {
-                return groupActiveModel.syncGetGroup(mGroupId, true);
-            }
+    private final TaskListener<Group> mGroupListener = new TaskListener<Group>() {
+        @Override public void onProblemOccurred(Throwable t) {
+            setUIStateError();
+        }
 
-            @Override protected void onPostExecute(@NonNull Group group) {
-                super.onPostExecute(group);
+        @Override public void onDataProcessed(Group group) {
+            if (group.getWords().isEmpty()) {
+                setUIStateEmpty();
+            } else {
+                setUIStateShowContent();
                 fillData(group);
             }
-        }.execute();
-    }
+        }
+    };
 
     @Override protected BaseWordListAdapter createAdapter() {
         return new OneGroupWordListAdapter(getActivity());
@@ -99,5 +107,33 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
         final Intent intent = new Intent(getActivity(), WordSubmitActivity.class);
         intent.putExtra(WordSubmitActivity.EXTRA_GROUP_ID, mGroupId);
         startActivity(intent);
+    }
+
+    @Override
+    protected void setUIStateShowContent() {
+        ViewUtil.setVisibility(mListView, true);
+        ViewUtil.setVisibility(errorView, false);
+        ViewUtil.setVisibility(emptyView, false);
+        ViewUtil.setVisibility(mAddButton, true);
+    }
+
+    @Override
+    protected void setUIStateError() {
+        ViewUtil.setVisibility(mListView, false);
+        ViewUtil.setVisibility(errorView, true);
+        ViewUtil.setVisibility(emptyView, false);
+        ViewUtil.setVisibility(mAddButton, false);
+    }
+
+    @Override
+    protected void setUIStateEmpty() {
+        ViewUtil.setVisibility(mListView, false);
+        ViewUtil.setVisibility(errorView, false);
+        ViewUtil.setVisibility(emptyView, true);
+        ViewUtil.setVisibility(mAddButton, true);
+    }
+
+    @OnClick(R.id.one_group_word_list_retry) void retry() {
+        loadWords();
     }
 }

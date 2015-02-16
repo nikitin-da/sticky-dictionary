@@ -50,6 +50,7 @@ public abstract class BaseWordListFragment extends BaseFragment implements Forei
     }
 
     protected abstract void loadWords();
+
     protected abstract BaseWordListAdapter createAdapter();
 
     @Override public Integer getActionBarTitle() {
@@ -65,7 +66,8 @@ public abstract class BaseWordListFragment extends BaseFragment implements Forei
         }
     }
 
-    @Override public void remove(final long id, final int position, @Nullable final Runnable listener) {
+    @Override public void remove(final long id, final int position,
+                                 @Nullable final Runnable listener) {
         wordActiveModel.asyncRemoveWord(id, new TaskListener<Void>() {
             @Override public void onProblemOccurred(Throwable t) {
             }
@@ -94,4 +96,10 @@ public abstract class BaseWordListFragment extends BaseFragment implements Forei
             }
         });
     }
+
+    protected abstract void setUIStateShowContent();
+
+    protected abstract void setUIStateError();
+
+    protected abstract void setUIStateEmpty();
 }

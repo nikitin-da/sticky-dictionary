@@ -14,6 +14,35 @@
         android:divider="@drawable/list_divider"
         android:dividerHeight="1dp"/>
 
+    <FrameLayout
+        android:id="@+id/one_group_word_list_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+            style="@style/ServiceText"
+            android:text="@string/empty_list"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/one_group_word_list_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+            style="@style/ServiceText"
+            android:text="@string/common_error"/>
+
+        <Button
+            android:id="@+id/one_group_word_list_retry"
+            style="@style/CommonButton"
+            android:text="@string/try_again"/>
+
+    </LinearLayout>
+
     <ImageButton
         android:id="@+id/word_list_add"
         style="@style/FloatActionButton.Add"

@@ -43,6 +43,15 @@ public class GroupActiveModel extends BaseActiveModel {
         return group;
     }
 
+    public void asyncGetGroup(final long groupId, final boolean fullModels,
+                                  @NonNull TaskListener<Group> listener) {
+        executeTask(new Task<Group>(listener) {
+            @Override protected Group doWork() throws Throwable {
+                return syncGetGroup(groupId, fullModels);
+            }
+        });
+    }
+
     public List<Group> syncGetGroups(Set<Long> groupIdSet, boolean fullModels) {
 
         String where = null;

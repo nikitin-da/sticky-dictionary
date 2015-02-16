@@ -48,7 +48,7 @@
     <string name="content_description_edit">Edit</string>
     <string name="content_description_remove">Remove</string>
 
-    <string name="empty_group_list">Nothing to see here =( Try to add!</string>
+    <string name="empty_list">Nothing to see here =( Try to add!</string>
     <string name="common_error">An error has occurred =( Please, try again.</string>
 
     <string name="try_again">Try again</string>

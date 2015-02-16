@@ -18,7 +18,7 @@
 
         <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
             style="@style/ServiceText"
-            android:text="@string/empty_group_list"/>
+            android:text="@string/empty_list"/>
 
     </FrameLayout>
 

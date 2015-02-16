@@ -1,9 +1,7 @@
 package com.example.dmitry.handheld_dictionary.ui.fragment;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +9,19 @@ import android.view.ViewGroup;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
+import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
 import com.example.dmitry.handheld_dictionary.ui.adapters.AllGroupsWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
+import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 import com.nhaarman.listviewanimations.appearance.StickyListHeadersAdapterDecorator;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.util.StickyListHeadersListViewWrapper;
 import com.pushtorefresh.javac_warning_annotation.Warning;
 
 import java.util.List;
+
 import butterknife.InjectView;
+import butterknife.OnClick;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
@@ -28,6 +30,9 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 public class AllGroupsWordListFragment extends BaseWordListFragment {
 
     @InjectView(R.id.all_groups_word_list) StickyListHeadersListView mListView;
+
+    @InjectView(R.id.all_groups_word_list_error) View errorView;
+    @InjectView(R.id.all_groups_word_list_empty) View emptyView;
 
     @Override public View onCreateView(LayoutInflater inflater,
                                        @Nullable ViewGroup container,
@@ -55,18 +60,37 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
     }
 
     @Override protected void loadWords() {
-        new AsyncTask<Void, Void, List<Group>>() {
+        setUIStateShowContent();
+        groupActiveModel.asyncGetAllGroups(true, mGroupsListener);
+    }
 
-            @Override protected List<Group> doInBackground(@NonNull Void... params) {
-                return groupActiveModel.syncGetAllGroups(true);
+    private final TaskListener<List<Group>> mGroupsListener = new TaskListener<List<Group>>() {
+        @Override public void onProblemOccurred(Throwable t) {
+            setUIStateError();
+        }
+
+        @Override public void onDataProcessed(List<Group> groups) {
+            boolean empty = groups.isEmpty();
+            if (!empty) {
+                boolean hasWords = false;
+                for (Group group : groups) {
+                    if (!group.getWords().isEmpty()) {
+                        hasWords = true;
+                        break;
+                    }
+                }
+                if (!hasWords) {
+                    empty = true;
+                }
             }
-
-            @Override protected void onPostExecute(@NonNull List<Group> groups) {
-                super.onPostExecute(groups);
+            if (empty) {
+                setUIStateEmpty();
+            } else {
+                setUIStateShowContent();
                 fillData(groups);
             }
-        }.execute();
-    }
+        }
+    };
 
     @Warning("Add empty and error states")
     private void fillData(List<Group> groups) {
@@ -78,5 +102,30 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
 
     @Override protected BaseWordListAdapter createAdapter() {
         return new AllGroupsWordListAdapter(getActivity());
+    }
+
+    @Override
+    protected void setUIStateShowContent() {
+        ViewUtil.setVisibility(mListView, true);
+        ViewUtil.setVisibility(errorView, false);
+        ViewUtil.setVisibility(emptyView, false);
+    }
+
+    @Override
+    protected void setUIStateError() {
+        ViewUtil.setVisibility(mListView, false);
+        ViewUtil.setVisibility(errorView, true);
+        ViewUtil.setVisibility(emptyView, false);
+    }
+
+    @Override
+    protected void setUIStateEmpty() {
+        ViewUtil.setVisibility(mListView, false);
+        ViewUtil.setVisibility(errorView, false);
+        ViewUtil.setVisibility(emptyView, true);
+    }
+
+    @OnClick(R.id.all_groups_word_list_retry) void retry() {
+        loadWords();
     }
 }
