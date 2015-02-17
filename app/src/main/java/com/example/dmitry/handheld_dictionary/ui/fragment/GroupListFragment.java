@@ -48,6 +48,8 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
 
     private GroupActiveModel mGroupActiveModel;
 
+    private List<Group> mGroups;
+
     @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
         mGroupActiveModel = new GroupActiveModel(getActivity());
@@ -80,7 +82,9 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
         if (mListViewState == null) {
             mListViewState = mListView.onSaveInstanceState();
         }
-        loadGroups();
+        if (mGroups == null) {
+            loadGroups();
+        }
     }
 
     @Override public void onSaveInstanceState(Bundle outState) {
@@ -134,6 +138,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
                 setUIStateEmpty();
             } else {
                 setUIStateShowContent();
+                mGroups = groups;
                 fillData(groups);
             }
         }

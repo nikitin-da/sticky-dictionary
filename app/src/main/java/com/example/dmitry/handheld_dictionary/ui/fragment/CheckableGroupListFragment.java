@@ -39,10 +39,10 @@ public class CheckableGroupListFragment extends GroupListFragment
     }
 
     @Override public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         if (mAdapter != null) {
             mAdapter.onSaveInstanceState(outState);
         }
+        super.onSaveInstanceState(outState);
     }
 
     @Override protected boolean isCheckable() {
@@ -75,15 +75,19 @@ public class CheckableGroupListFragment extends GroupListFragment
     }
 
     @Override public void setUIStateNothingChecked() {
-        Context context = getActivity();
-        AnimUtil.showWithAlphaAnim(context, mNothingSelectedView);
-        AnimUtil.hideWithRippleAnimation(context, mBeginButton, new Anchor(Gravity.CENTER, Gravity.BEGIN));
+        if (mBeginButton.getVisibility() == View.VISIBLE) {
+            Context context = getActivity();
+            AnimUtil.showWithAlphaAnim(context, mNothingSelectedView);
+            AnimUtil.hideWithRippleAnimation(context, mBeginButton, new Anchor(Gravity.CENTER, Gravity.BEGIN));
+        }
     }
 
     @Override public void setUIStateHasChecked() {
-        Context context = getActivity();
-        AnimUtil.hideWithAlphaAnim(context, mNothingSelectedView);
-        AnimUtil.showWithRippleAnimation(context, mBeginButton);
+        if (mBeginButton.getVisibility() == View.GONE) {
+            Context context = getActivity();
+            AnimUtil.hideWithAlphaAnim(context, mNothingSelectedView);
+            AnimUtil.showWithRippleAnimation(context, mBeginButton);
+        }
     }
 
     @Override public Integer getActionBarTitle() {

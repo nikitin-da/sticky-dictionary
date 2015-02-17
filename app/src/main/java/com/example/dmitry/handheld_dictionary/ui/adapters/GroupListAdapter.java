@@ -34,6 +34,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
+import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -103,6 +104,16 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
         }
 
         return view;
+    }
+
+    @Override
+    protected boolean isSomethingChecked(Set<Long> checkedItems) {
+        for (Group group : mGroups) {
+            if (checkedItems.contains(group.getId()) && !group.getWords().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     class Holder {

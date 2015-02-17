@@ -13,6 +13,7 @@
         android:textSize="20sp"
         android:text="@string/nothing_selected"
         android:layout_gravity="center"
+        android:gravity="center"
         android:padding="17dp"/>
 
     <Button

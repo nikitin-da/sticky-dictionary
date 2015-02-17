@@ -42,12 +42,12 @@ public abstract class BaseMultiChoiceAdapter extends BaseAdapter {
 
         if (wasChecked) {
             mCheckedItems.remove(id);
-            if (getCheckedItemCount() == 0) {
+            if (!isSomethingChecked(mCheckedItems)) {
                 setUIStateNothingChecked();
             }
         } else {
             mCheckedItems.add(id);
-            if (getCheckedItemCount() == 1) {
+            if (isSomethingChecked(mCheckedItems)) {
                 setUIStateHasChecked();
             }
         }
@@ -61,9 +61,7 @@ public abstract class BaseMultiChoiceAdapter extends BaseAdapter {
         return new HashSet<Long>(mCheckedItems);
     }
 
-    public int getCheckedItemCount() {
-        return mCheckedItems.size();
-    }
+    protected abstract boolean isSomethingChecked(Set<Long> checkedItems);
 
     public boolean isChecked(long id) {
         return mCheckedItems.contains(id);

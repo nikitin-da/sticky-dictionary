@@ -22,6 +22,7 @@ import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
+import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.Collections;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Random;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -45,6 +47,9 @@ public class PagerFragment extends BaseFragment {
 
     @InjectView(R.id.view_pager) ViewPager mViewPager;
     @InjectView(R.id.pager_indicator) CirclePageIndicator mPagerIndicator;
+
+    @InjectView(R.id.pager_content) View contentView;
+    @InjectView(R.id.pager_error) View errorView;
 
     private HashSet<Long> mGroups;
 
@@ -80,6 +85,11 @@ public class PagerFragment extends BaseFragment {
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadWords();
+    }
+
+    private void loadWords() {
+        setUIStateShowContent();
 
         if (mGroups != null) {
             mWordActiveModel.asyncGetAllFromGroups(mGroups, mWordsListener);
@@ -149,6 +159,21 @@ public class PagerFragment extends BaseFragment {
         }
     }
 
+    protected void setUIStateShowContent() {
+        ViewUtil.setVisibility(contentView, true);
+        ViewUtil.setVisibility(errorView, false);
+    }
+
+    protected void setUIStateError() {
+        ViewUtil.setVisibility(contentView, false);
+        ViewUtil.setVisibility(errorView, true);
+    }
+
+    @OnClick(R.id.pager_retry)
+    void retry() {
+        loadWords();
+    }
+
     private class WordsAdapter extends FragmentStatePagerAdapter {
 
         private final List<Word> mWords;
@@ -174,10 +199,11 @@ public class PagerFragment extends BaseFragment {
     private final TaskListener<List<Word>> mWordsListener = new TaskListener<List<Word>>() {
 
         @Override public void onProblemOccurred(Throwable t) {
-
+            setUIStateError();
         }
 
         @Override public void onDataProcessed(List<Word> words) {
+            setUIStateShowContent();
             mWords = words;
             fillData(words);
         }
