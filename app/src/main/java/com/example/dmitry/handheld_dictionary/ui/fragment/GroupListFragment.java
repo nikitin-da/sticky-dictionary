@@ -2,7 +2,6 @@ package com.example.dmitry.handheld_dictionary.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -39,7 +38,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     private Parcelable mListViewState;
 
     @InjectView(R.id.group_list) ListView mListView;
-    @InjectView(R.id.group_list_add) ImageButton mAddButton;
+    @InjectView(R.id.group_list_add) ImageButton addButton;
     @InjectView(R.id.group_list_header) View mHeader;
 
     @InjectView(R.id.group_list_content) View contentView;
@@ -49,6 +48,8 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     private GroupActiveModel mGroupActiveModel;
 
     private List<Group> mGroups;
+
+    protected GroupListAdapter adapter;
 
     @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -67,8 +68,8 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
                                        @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_group_list, container, false);
-        mAddButton = (ImageButton) view.findViewById(R.id.group_list_add);
-        ViewUtil.makeCircle(mAddButton, R.dimen.common_image_button_size);
+        addButton = (ImageButton) view.findViewById(R.id.group_list_add);
+        ViewUtil.makeCircle(addButton, R.dimen.common_image_button_size);
         return view;
     }
 
@@ -94,25 +95,25 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
         }
     }
 
-    private void setUIStateShowContent() {
+    protected void setUIStateShowContent() {
         ViewUtil.setVisibility(contentView, true);
         ViewUtil.setVisibility(errorView, false);
         ViewUtil.setVisibility(emptyView, false);
-        ViewUtil.setVisibility(mAddButton, true);
+        ViewUtil.setVisibility(addButton, true);
     }
 
-    private void setUIStateError() {
+    protected void setUIStateError() {
         ViewUtil.setVisibility(contentView, false);
         ViewUtil.setVisibility(errorView, true);
         ViewUtil.setVisibility(emptyView, false);
-        ViewUtil.setVisibility(mAddButton, false);
+        ViewUtil.setVisibility(addButton, false);
     }
 
-    private void setUIStateEmpty() {
+    protected void setUIStateEmpty() {
         ViewUtil.setVisibility(contentView, false);
         ViewUtil.setVisibility(errorView, false);
         ViewUtil.setVisibility(emptyView, true);
-        ViewUtil.setVisibility(mAddButton, true);
+        ViewUtil.setVisibility(addButton, true);
     }
 
     @OnClick(R.id.group_list_retry) void retry() {
@@ -147,7 +148,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     private void fillData(List<Group> groups) {
         final Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
-            final GroupListAdapter adapter = createAdapter((BaseActivity) activity, groups);
+            adapter = createAdapter((BaseActivity) activity, groups);
             adapter.setGroupActionsListener(this);
             mListView.setAdapter(adapter);
 
@@ -170,10 +171,14 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
                     } else {
                         itemView = getViewByPosition(position, mListView);
                     }
-                    adapter.onItemClick(position, itemView);
+                    GroupListFragment.this.onItemClick(position, itemView);
                 }
             });
         }
+    }
+
+    protected void onItemClick(final int position, View itemView) {
+        adapter.onItemClick(position, itemView);
     }
 
     private View getViewByPosition(int pos, ListView listView) {

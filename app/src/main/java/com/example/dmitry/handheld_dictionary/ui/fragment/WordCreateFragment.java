@@ -1,5 +1,6 @@
 package com.example.dmitry.handheld_dictionary.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -27,8 +28,9 @@ public class WordCreateFragment extends BaseWordSubmitFragment {
                 foreign,
                 translate);
         wordActiveModel.saveWord(word);
-        getActivity().finish();
-
+        final Activity activity = getActivity();
+        activity.setResult(Activity.RESULT_OK);
+        activity.finish();
     }
 
     @Override public Integer getActionBarTitle() {

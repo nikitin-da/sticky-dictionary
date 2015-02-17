@@ -5,15 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.util.Loggi;
+
+import java.util.List;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -62,6 +65,15 @@ public abstract class BaseActivity extends ActionBarActivity {
         ActivityCompat.startActivity(this, intent, options.toBundle());
     }
 
+    public void slideActivityForResult(final Intent intent, final int requestCode) {
+        final ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                R.anim.activity_slide_in_right,
+                android.R.anim.fade_out
+        );
+        ActivityCompat.startActivityForResult(this, intent, requestCode, options.toBundle());
+    }
+
     protected boolean finishWithAnimation() {
         return false;
     }
@@ -90,5 +102,48 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     public Toolbar getToolbar() {
         return toolbar;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (notifyAllFragmentsAboutActivityResult()) {
+            List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+            if (fragments == null) {
+                return;
+            }
+
+            for (Fragment fragment : fragments) {
+                if (fragment == null) {
+                    continue;
+                }
+
+                fragment.onActivityResult(requestCode, resultCode, data);
+
+                FragmentManager childFragmentManager = fragment.getChildFragmentManager();
+
+                if (childFragmentManager == null) {
+                    continue;
+                }
+
+                List<Fragment> childFragments = childFragmentManager.getFragments();
+
+                if (childFragments == null) {
+                    continue;
+                }
+
+                for (Fragment childFragment : childFragments) {
+                    if (childFragment != null) {
+                        childFragment.onActivityResult(requestCode, resultCode, data);
+                    }
+                }
+            }
+        }
+    }
+
+    protected boolean notifyAllFragmentsAboutActivityResult() {
+        return false;
     }
 }

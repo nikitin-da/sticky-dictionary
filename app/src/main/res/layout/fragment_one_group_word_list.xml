@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/word_list_add"
+        android:id="@+id/one_group_word_list_add"
         style="@style/FloatActionButton.Add"
         tools:ignore="ContentDescription"/>
 

@@ -38,7 +38,7 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
     private static final String ARG_GROUP_ID = "ARG_GROUP_ID";
 
     @InjectView(R.id.one_group_word_list) ListView mListView;
-    @InjectView(R.id.word_list_add) ImageButton mAddButton;
+    @InjectView(R.id.one_group_word_list_add) ImageButton mAddButton;
 
     @InjectView(R.id.one_group_word_list_error) View errorView;
     @InjectView(R.id.one_group_word_list_empty) View emptyView;
@@ -103,7 +103,7 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
         }
     }
 
-    @OnClick(R.id.word_list_add) void addNew() {
+    @OnClick(R.id.one_group_word_list_add) void addNew() {
         final Intent intent = new Intent(getActivity(), WordSubmitActivity.class);
         intent.putExtra(WordSubmitActivity.EXTRA_GROUP_ID, mGroupId);
         startActivity(intent);

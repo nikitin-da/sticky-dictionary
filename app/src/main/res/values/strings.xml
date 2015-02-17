@@ -61,4 +61,6 @@
     <string name="swap_done_suffix_translate_showing">showing</string>
     <string name="swap_done_suffix_translate_hiding">hiding</string>
 
+    <string name="select_group">Select group</string>
+
 </resources>

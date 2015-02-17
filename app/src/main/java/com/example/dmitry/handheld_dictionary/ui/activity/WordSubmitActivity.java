@@ -23,6 +23,8 @@ public class WordSubmitActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_submit);
 
+        setResult(RESULT_CANCELED);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
