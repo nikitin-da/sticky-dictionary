@@ -52,6 +52,13 @@
     <string name="common_error">An error has occurred =( Please, try again.</string>
 
     <string name="try_again">Try again</string>
+    <string name="pager_shuffle">Shuffle</string>
+    <string name="pager_swap">Swap</string>
 
+    <string name="shuffled">Shuffled</string>
+    
+    <string name="swap_done_prefix">Translate is</string>
+    <string name="swap_done_suffix_translate_showing">showing</string>
+    <string name="swap_done_suffix_translate_hiding">hiding</string>
 
 </resources>

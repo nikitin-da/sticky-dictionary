@@ -19,25 +19,30 @@ import butterknife.OnClick;
  */
 public class WordPageFragment extends BaseFragment {
 
-    public static WordPageFragment newInstance(final Word word) {
+    public static WordPageFragment newInstance(final Word word, final boolean reverse) {
         WordPageFragment fragment = new WordPageFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(ARG_WORD, word);
+        arguments.putBoolean(ARG_REVERSE, reverse);
         fragment.setArguments(arguments);
         return fragment;
     }
 
     private static final String ARG_WORD = "ARG_WORD";
+    private static final String ARG_REVERSE = "ARG_REVERSE";
 
     @InjectView(R.id.word_page_foreign) TextView mForeign;
     @InjectView(R.id.word_page_translate) TextView mTranslate;
 
     private Word mWord;
+    private boolean mReverse;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mWord = getArguments().getParcelable(ARG_WORD);
+        final Bundle arguments = getArguments();
+        mWord = arguments.getParcelable(ARG_WORD);
+        mReverse = arguments.getBoolean(ARG_REVERSE, false);
     }
 
     @Override public View onCreateView(LayoutInflater inflater,
@@ -49,8 +54,15 @@ public class WordPageFragment extends BaseFragment {
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mForeign.setText(mWord.getForeign());
-        mTranslate.setText(mWord.getTranslate());
+        final String foreign = mWord.getForeign();
+        final String translate = mWord.getTranslate();
+        if (mReverse) {
+            mForeign.setText(translate);
+            mTranslate.setText(foreign);
+        } else {
+            mForeign.setText(foreign);
+            mTranslate.setText(translate);
+        }
     }
 
     @OnClick(R.id.word_page_container) void showTranslate() {

@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.example.dmitry.handheld_dictionary.R;
+import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 
 import butterknife.ButterKnife;
 
@@ -52,6 +53,14 @@ public abstract class BaseFragment extends Fragment {
             if (actionBar != null) {
                 actionBar.setTitle(title);
             }
+        }
+    }
+
+    public void invalidateOptionsMenu() {
+
+        final Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            ((BaseActivity) activity).supportInvalidateOptionsMenu();
         }
     }
 }
