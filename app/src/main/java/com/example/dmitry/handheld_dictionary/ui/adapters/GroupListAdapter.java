@@ -1,5 +1,23 @@
 package com.example.dmitry.handheld_dictionary.ui.adapters;
 
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.implments.SwipeItemMangerImpl;
+import com.daimajia.swipe.interfaces.SwipeAdapterInterface;
+import com.daimajia.swipe.interfaces.SwipeItemMangerInterface;
+import com.example.dmitry.handheld_dictionary.R;
+import com.example.dmitry.handheld_dictionary.model.Group;
+import com.example.dmitry.handheld_dictionary.model.Word;
+import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
+import com.example.dmitry.handheld_dictionary.ui.activity.OneGroupWordListActivity;
+import com.example.dmitry.handheld_dictionary.ui.anim.Anchor;
+import com.example.dmitry.handheld_dictionary.ui.anim.AnimatorAdapterListener;
+import com.example.dmitry.handheld_dictionary.ui.anim.Gravity;
+import com.example.dmitry.handheld_dictionary.util.AnimUtil;
+import com.example.dmitry.handheld_dictionary.util.ViewUtil;
+
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -13,25 +31,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.implments.SwipeItemMangerImpl;
-import com.daimajia.swipe.interfaces.SwipeAdapterInterface;
-import com.daimajia.swipe.interfaces.SwipeItemMangerInterface;
-import com.example.dmitry.handheld_dictionary.R;
-import com.example.dmitry.handheld_dictionary.model.Group;
-import com.example.dmitry.handheld_dictionary.model.Word;
-import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
-import com.example.dmitry.handheld_dictionary.ui.activity.GroupSubmitActivity;
-import com.example.dmitry.handheld_dictionary.ui.activity.OneGroupWordListActivity;
-import com.example.dmitry.handheld_dictionary.ui.anim.Anchor;
-import com.example.dmitry.handheld_dictionary.ui.anim.AnimatorAdapterListener;
-import com.example.dmitry.handheld_dictionary.ui.anim.Gravity;
-import com.example.dmitry.handheld_dictionary.util.AnimUtil;
-import com.example.dmitry.handheld_dictionary.util.ViewUtil;
-
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Set;
@@ -175,7 +174,7 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
             } else {
                 words.setVisibility(View.GONE);
             }
-            editButton.setTag(group.getId());
+            editButton.setTag(group);
             removeButton.setTag(R.id.tag_id, group.getId());
             removeButton.setTag(R.id.tag_view, mView);
         }
@@ -205,11 +204,9 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
 
     private final View.OnClickListener mEditClickListener = new View.OnClickListener() {
         @Override public void onClick(@NonNull View v) {
-            if (v.getTag() instanceof Long) {
-                Long id = (Long) v.getTag();
-                Intent intent = new Intent(mActivity, GroupSubmitActivity.class);
-                intent.putExtra(GroupSubmitActivity.EXTRA_GROUP, id);
-                mActivity.startActivity(intent);
+            if (v.getTag() instanceof Group && mGroupActionsListener != null) {
+                final Group group = (Group) v.getTag();
+                mGroupActionsListener.editGroup(group);
             }
         }
     };
@@ -245,6 +242,7 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
     };
 
     public interface GroupActionsListener {
+        public void editGroup(@NonNull final Group group);
         public void removeGroup(Long id, final Runnable listener);
 
         public void update();

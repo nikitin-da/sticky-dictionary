@@ -246,4 +246,9 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
                 .replace(R.id.main_content, fragment)
                 .commit();
     }
+
+    @Override
+    protected boolean notifyAllFragmentsAboutActivityResult() {
+        return true;
+    }
 }

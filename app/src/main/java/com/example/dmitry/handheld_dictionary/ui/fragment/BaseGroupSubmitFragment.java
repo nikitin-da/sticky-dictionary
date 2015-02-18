@@ -1,5 +1,10 @@
 package com.example.dmitry.handheld_dictionary.ui.fragment;
 
+import com.example.dmitry.handheld_dictionary.R;
+import com.example.dmitry.handheld_dictionary.controller.GroupEditFieldsController;
+import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
+import com.example.dmitry.handheld_dictionary.ui.activity.GroupSubmitActivity;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,10 +17,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.example.dmitry.handheld_dictionary.R;
-import com.example.dmitry.handheld_dictionary.controller.GroupEditFieldsController;
-import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -67,7 +68,11 @@ public abstract class BaseGroupSubmitFragment extends BaseFragment {
         String name = groupEditFieldsController.getEnteredName();
         if (!TextUtils.isEmpty(name)) {
             submit(name);
-            getActivity().finish();
+            final Activity activity = getActivity();
+            if (activity != null) {
+                activity.setResult(GroupSubmitActivity.RESULT_UPDATED);
+                activity.finish();
+            }
         }
     }
 

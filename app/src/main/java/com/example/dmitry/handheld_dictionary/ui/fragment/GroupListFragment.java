@@ -1,17 +1,5 @@
 package com.example.dmitry.handheld_dictionary.ui.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
-import android.widget.ListView;
-
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
@@ -23,6 +11,19 @@ import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 
 import org.jetbrains.annotations.NotNull;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ListView;
+
 import java.util.List;
 
 import butterknife.InjectView;
@@ -32,6 +33,8 @@ import butterknife.OnClick;
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
 public class GroupListFragment extends BaseFragment implements GroupListAdapter.GroupActionsListener {
+
+    private static final int RQS_EDIT = 300;
 
     private static final String STATE_LIST = "STATE_LIST";
 
@@ -205,6 +208,16 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
         return R.string.navigation_drawer_item_group;
     }
 
+    @Override
+    public void editGroup(@NonNull final Group group) {
+        final Activity activity = getActivity();
+        if (activity != null) {
+            Intent intent = new Intent(activity, GroupSubmitActivity.class);
+            intent.putExtra(GroupSubmitActivity.EXTRA_GROUP, group);
+            activity.startActivityForResult(intent, RQS_EDIT);
+        }
+    }
+
     @Override public void removeGroup(final Long id, final Runnable listener) {
         mGroupActiveModel.asyncRemoveGroup(id, new TaskListener<Void>() {
             @Override public void onProblemOccurred(Throwable t) {
@@ -218,5 +231,12 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
 
     @Override public void update() {
         loadGroups();
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        if (requestCode == RQS_EDIT && resultCode == GroupSubmitActivity.RESULT_UPDATED) {
+            loadGroups();
+        }
     }
 }
