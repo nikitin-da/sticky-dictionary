@@ -34,7 +34,8 @@ import butterknife.OnClick;
  */
 public class GroupListFragment extends BaseFragment implements GroupListAdapter.GroupActionsListener {
 
-    private static final int RQS_EDIT = 300;
+    private static final int RQS_CREATE = 300;
+    private static final int RQS_EDIT = 400;
 
     private static final String STATE_LIST = "STATE_LIST";
 
@@ -124,7 +125,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     }
 
     @OnClick(R.id.group_list_add) void addNew() {
-        startActivity(new Intent(getActivity(), GroupSubmitActivity.class));
+        startActivityForResult(new Intent(getActivity(), GroupSubmitActivity.class), RQS_CREATE);
     }
 
     protected void loadGroups() {
@@ -235,7 +236,8 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        if (requestCode == RQS_EDIT && resultCode == GroupSubmitActivity.RESULT_UPDATED) {
+        if (resultCode == GroupSubmitActivity.RESULT_UPDATED &&
+                (requestCode == RQS_CREATE || requestCode == RQS_EDIT)) {
             loadGroups();
         }
     }
