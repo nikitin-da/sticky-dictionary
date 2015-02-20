@@ -13,23 +13,32 @@
 
     <color name="common_divider">#0099CC</color>
 
-    <color name="action_button_bg_normal">@color/colorPrimary</color>
-    <color name="action_button_bg_pressed">@color/colorDarkPrimary</color>
-    <color name="save_button_bg_normal">#80cfe1</color>
-    <color name="save_button_bg_pressed">#38a0b6</color>
+    <color name="common_button_normal">#80cfe1</color>
+    <color name="common_button_pressed">#38a0b6</color>
+
+    <color name="action_button_word_bg_normal">@color/common_button_normal</color>
+    <color name="action_button_word_bg_pressed">@color/common_button_pressed</color>
+    <color name="action_button_word_bg_ripple">@color/common_background</color>
+
+    <color name="action_button_group_bg_normal">@color/colorPrimary</color>
+    <color name="action_button_group_bg_pressed">@color/colorDarkPrimary</color>
+    <color name="action_button_group_bg_ripple">#FFD333</color>
+
+    <color name="save_button_bg_normal">@color/common_button_normal</color>
+    <color name="save_button_bg_pressed">@color/common_button_pressed</color>
     <color name="save_button_bg_disabled">#425a595b</color>
 
     <color name="item_group_header_bg">#FF9800</color>
 
     <color name="fields_text_color">@android:color/black</color>
 
-    <color name="navigation_drawer_bg_normal">#80cfe1</color>
-    <color name="navigation_drawer_bg_pressed">#38a0b6</color>
+    <color name="navigation_drawer_bg_normal">@color/common_button_normal</color>
+    <color name="navigation_drawer_bg_pressed">@color/common_button_pressed</color>
     <color name="navigation_drawer_shadow">#307485</color>
     <color name="navigation_drawer_text">@color/colorPrimary</color>
 
-    <color name="item_group_bg_normal">#80cfe1</color>
-    <color name="item_group_bg_pressed">#38a0b6</color>
+    <color name="item_group_bg_normal">@color/common_button_normal</color>
+    <color name="item_group_bg_pressed">@color/common_button_pressed</color>
 
     <color name="item_group_context_bg">#66ddff00</color>
 

@@ -53,20 +53,28 @@
         <item name="android:paddingBottom">@dimen/word_list_padding</item>
     </style>
 
-    <style name="FloatActionButton" parent="Raised">
-        <item name="android:layout_width">@dimen/common_image_button_size</item>
-        <item name="android:layout_height">@dimen/common_image_button_size</item>
-        <item name="android:background">@drawable/action_button_bg</item>
-        <item name="android:layout_margin">30dp</item>
+    <style name="FloatActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom|right</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
+
+    <style name="FloatActionButton.Word">
+        <item name="android:src">@drawable/ic_add_word</item>
+        <item name="fab_colorNormal">@color/action_button_word_bg_normal</item>
+        <item name="fab_colorPressed">@color/action_button_word_bg_pressed</item>
+        <item name="fab_colorRipple">@color/action_button_word_bg_ripple</item>
+    </style>
+
+    <style name="FloatActionButton.Group">
+        <item name="android:src">@drawable/ic_add_group</item>
+        <item name="fab_colorNormal">@color/action_button_group_bg_normal</item>
+        <item name="fab_colorPressed">@color/action_button_group_bg_pressed</item>
+        <item name="fab_colorRipple">@color/action_button_group_bg_ripple</item>
     </style>
 
     <style name="Raised"/>
-
-    <style name="FloatActionButton.Add">
-        <item name="android:src">@drawable/ic_add</item>
-        <item name="android:contentDescription">@string/content_description_add</item>
-        <item name="android:layout_gravity">bottom|right</item>
-    </style>
 
     <style name="CommonEditStyle">
         <item name="android:layout_width">match_parent</item>

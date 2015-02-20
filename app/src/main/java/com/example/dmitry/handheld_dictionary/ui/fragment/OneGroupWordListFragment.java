@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.dmitry.handheld_dictionary.R;
@@ -17,6 +16,7 @@ import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.OneGroupWordListAdapter;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
+import com.melnykov.fab.FloatingActionButton;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 
 import butterknife.InjectView;
@@ -38,7 +38,7 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
     private static final String ARG_GROUP_ID = "ARG_GROUP_ID";
 
     @InjectView(R.id.one_group_word_list) ListView mListView;
-    @InjectView(R.id.one_group_word_list_add) ImageButton mAddButton;
+    @InjectView(R.id.one_group_word_list_add) FloatingActionButton mAddButton;
 
     @InjectView(R.id.one_group_word_list_error) View errorView;
     @InjectView(R.id.one_group_word_list_empty) View emptyView;
@@ -60,7 +60,6 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ViewUtil.makeCircle(mAddButton, R.dimen.common_image_button_size);
 
         AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(adapter);
         alphaInAnimationAdapter.setAbsListView(mListView);
@@ -69,6 +68,9 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
         alphaInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
 
         mListView.setAdapter(alphaInAnimationAdapter);
+
+        mAddButton.attachToListView(mListView);
+
     }
 
     @Override protected void loadWords() {

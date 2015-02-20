@@ -99,4 +99,7 @@ dependencies {
 
     // https://github.com/daimajia/AndroidSwipeLayout
     compile "com.daimajia.swipelayout:library:1.1.7@aar"
+
+    // https://github.com/makovkastar/FloatingActionButton
+    compile 'com.melnykov:floatingactionbutton:1.2.0'
 }

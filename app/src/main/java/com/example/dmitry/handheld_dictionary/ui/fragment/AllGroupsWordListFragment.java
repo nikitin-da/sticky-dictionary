@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
@@ -15,9 +14,11 @@ import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
 import com.example.dmitry.handheld_dictionary.ui.activity.GroupListForAddWordActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.AllGroupsWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
+import com.example.dmitry.handheld_dictionary.ui.view.floating_action_button.CustomFloatingActionButton;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 import com.nhaarman.listviewanimations.appearance.StickyListHeadersAdapterDecorator;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
+import com.nhaarman.listviewanimations.itemmanipulation.expandablelistitem.ExpandableListItemAdapter;
 import com.nhaarman.listviewanimations.util.StickyListHeadersListViewWrapper;
 import com.pushtorefresh.javac_warning_annotation.Warning;
 
@@ -34,7 +35,7 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
 
     @InjectView(R.id.all_groups_word_list) StickyListHeadersListView listView;
 
-    @InjectView(R.id.all_groups_word_list_add) ImageButton addButton;
+    @InjectView(R.id.all_groups_word_list_add) CustomFloatingActionButton addButton;
 
     @InjectView(R.id.all_groups_word_list_error) View errorView;
     @InjectView(R.id.all_groups_word_list_empty) View emptyView;
@@ -62,6 +63,10 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
         stickyListHeadersAdapterDecorator.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
 
         listView.setAdapter(stickyListHeadersAdapterDecorator);
+
+        adapter.setExpandCollapseListener(mExpandCollapseListener);
+
+        addButton.attachToListView(listView);
     }
 
     @Override protected void loadWords() {
@@ -143,4 +148,27 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
     @OnClick(R.id.all_groups_word_list_retry) void retry() {
         loadWords();
     }
+
+    /**
+     * Used for scroll bottom after expanding last item.
+     *
+     * By default it doesn't work
+     * with {@link se.emilsjolander.stickylistheaders.StickyListHeadersListView}.
+     */
+    private final ExpandableListItemAdapter.ExpandCollapseListener mExpandCollapseListener =
+        new ExpandableListItemAdapter.ExpandCollapseListener() {
+            @Override public void onItemExpanded(final int i) {
+                if (i == (adapter.getCount() - 1)) {
+                    listView.postDelayed(new Runnable() {
+                        @Override public void run() {
+                            listView.smoothScrollToPosition(i);
+                        }
+                    }, 400);
+                }
+            }
+
+            @Override public void onItemCollapsed(int i) {
+
+            }
+        };
 }

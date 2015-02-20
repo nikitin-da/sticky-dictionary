@@ -8,6 +8,7 @@ import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.GroupSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.GroupListAdapter;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
+import com.melnykov.fab.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +22,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     private Parcelable mListViewState;
 
     @InjectView(R.id.group_list) ListView mListView;
-    @InjectView(R.id.group_list_add) ImageButton addButton;
+    @InjectView(R.id.group_list_add) FloatingActionButton addButton;
     @InjectView(R.id.group_list_header) View mHeader;
 
     @InjectView(R.id.group_list_content) View contentView;
@@ -70,15 +70,14 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
                                        @Nullable ViewGroup container,
                                        @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_group_list, container, false);
-        addButton = (ImageButton) view.findViewById(R.id.group_list_add);
-        ViewUtil.makeCircle(addButton, R.dimen.common_image_button_size);
-        return view;
+        return inflater.inflate(R.layout.fragment_group_list, container, false);
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ViewUtil.setVisibility(mHeader, isCheckable());
+
+        addButton.attachToListView(mListView);
     }
 
     @Override public void onStart() {

@@ -43,9 +43,8 @@
 
     </LinearLayout>
 
-    <ImageButton
+    <com.example.dmitry.handheld_dictionary.ui.view.floating_action_button.CustomFloatingActionButton
         android:id="@+id/all_groups_word_list_add"
-        style="@style/FloatActionButton.Add"
-        tools:ignore="ContentDescription"/>
+        style="@style/FloatActionButton.Word"/>
 
 </FrameLayout>

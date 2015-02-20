@@ -43,9 +43,8 @@
 
     </LinearLayout>
 
-    <ImageButton
+    <com.melnykov.fab.FloatingActionButton
         android:id="@+id/one_group_word_list_add"
-        style="@style/FloatActionButton.Add"
-        tools:ignore="ContentDescription"/>
+        style="@style/FloatActionButton.Word"/>
 
 </FrameLayout>
