@@ -20,13 +20,13 @@
             android:background="@drawable/item_group_context_bg"
             android:orientation="vertical">
 
-            <ImageButton
+            <com.example.dmitry.handheld_dictionary.ui.view.DoNotPressWithParentImageButton
                 android:id="@+id/group_item_edit"
                 style="@style/GroupContextButton"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="@string/content_description_edit"/>
 
-            <ImageButton
+            <com.example.dmitry.handheld_dictionary.ui.view.DoNotPressWithParentImageButton
                 android:id="@+id/group_item_remove"
                 style="@style/GroupContextButton"
                 android:src="@drawable/ic_remove"

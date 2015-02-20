@@ -1,5 +1,8 @@
 package com.example.dmitry.handheld_dictionary.util;
 
+import com.example.dmitry.handheld_dictionary.R;
+import com.example.dmitry.handheld_dictionary.ui.anim.Anchor;
+
 import android.animation.Animator;
 import android.content.Context;
 import android.os.Build;
@@ -9,9 +12,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
-import com.example.dmitry.handheld_dictionary.R;
-import com.example.dmitry.handheld_dictionary.ui.anim.Anchor;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -114,13 +114,23 @@ public final class AnimUtil {
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.hide_alpha);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override public void onAnimationStart(Animation animation) {
+                    if (animatorListener != null) {
+                        animatorListener.onAnimationStart(null);
+                    }
                 }
 
                 @Override public void onAnimationEnd(Animation animation) {
+                    if (animatorListener != null) {
+                        animatorListener.onAnimationEnd(null);
+                    }
+
                     ViewUtil.setVisibility(view, false);
                 }
 
                 @Override public void onAnimationRepeat(Animation animation) {
+                    if (animatorListener != null) {
+                        animatorListener.onAnimationRepeat(null);
+                    }
                 }
             });
             view.startAnimation(animation);
