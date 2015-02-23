@@ -56,6 +56,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     protected GroupListAdapter adapter;
 
     private boolean mReloadOnResume = true;
+    private boolean mAddedNew = false;
 
     @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -85,9 +86,6 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
 
     @Override public void onResume() {
         super.onResume();
-        if (mListViewState == null) {
-            mListViewState = mListView.onSaveInstanceState();
-        }
         if (mGroups == null || mReloadOnResume) {
             mReloadOnResume = false;
             loadGroups();
@@ -134,6 +132,10 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     }
 
     protected void loadGroups() {
+        if (mListViewState == null) {
+            mListViewState = mListView.onSaveInstanceState();
+        }
+
         setUIStateShowContent();
         mGroupActiveModel.asyncGetAllGroups(true, mGroupsListener);
     }
@@ -154,14 +156,22 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
         }
     };
 
-    private void fillData(List<Group> groups) {
+    private void fillData(final List<Group> groups) {
         final Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
             adapter = createAdapter((BaseActivity) activity, groups);
             adapter.setGroupActionsListener(this);
             mListView.setAdapter(adapter);
 
-            if (mListViewState != null) {
+            if (mAddedNew) {
+                mListViewState = null;
+                mAddedNew = false;
+                mListView.post(new Runnable() {
+                    @Override public void run() {
+                        mListView.smoothScrollToPosition(groups.size());
+                    }
+                });
+            } else if (mListViewState != null) {
                 mListView.onRestoreInstanceState(mListViewState);
                 mListViewState = null;
             }
@@ -245,6 +255,9 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
         if (resultCode == GroupSubmitActivity.RESULT_UPDATED &&
                 (requestCode == RQS_CREATE || requestCode == RQS_EDIT)) {
             mReloadOnResume = true;
+            if (requestCode == RQS_CREATE) {
+                mAddedNew = true;
+            }
         }
     }
 }
