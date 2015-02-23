@@ -51,7 +51,7 @@ public class GroupListForAddWordFragment extends GroupListFragment {
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         final Activity activity = getActivity();
         if (requestCode == RQS_ADD_WORD
-                && resultCode == Activity.RESULT_OK
+                && resultCode == WordSubmitActivity.RESULT_UPDATED
                 && activity != null) {
             activity.finish();
         }

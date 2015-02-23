@@ -41,9 +41,15 @@ public class WordEditFieldsController extends BaseFieldsController {
 
     public void setForeign(@NonNull final String foreignText) {
         foreign.setText(foreignText);
+        if (!TextUtils.isEmpty(foreignText)) {
+            foreign.setSelection(foreignText.length());
+        }
     }
 
     public void setTranslate(@NonNull final String translateText) {
         translate.setText(translateText);
+        if (!TextUtils.isEmpty(translateText)) {
+            translate.setSelection(translateText.length());
+        }
     }
 }

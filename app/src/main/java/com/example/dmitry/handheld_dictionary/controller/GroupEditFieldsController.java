@@ -34,5 +34,8 @@ public class GroupEditFieldsController extends BaseFieldsController {
 
     public void setName(@NonNull final String nameText) {
         name.setText(nameText);
+        if (!TextUtils.isEmpty(nameText)) {
+            name.setSelection(nameText.length());
+        }
     }
 }

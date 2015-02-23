@@ -16,6 +16,8 @@ import com.example.dmitry.handheld_dictionary.ui.fragment.WordEditFragment;
  */
 public class WordSubmitActivity extends BaseActivity {
 
+    public static final int RESULT_UPDATED = 20;
+
     public static final String EXTRA_WORD = "EXTRA_WORD";
     public static final String EXTRA_GROUP_ID = "EXTRA_GROUP_ID";
 

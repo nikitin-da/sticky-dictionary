@@ -55,6 +55,8 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
 
     protected GroupListAdapter adapter;
 
+    private boolean mReloadOnResume = true;
+
     @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
         mGroupActiveModel = new GroupActiveModel(getActivity());
@@ -81,12 +83,13 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
         addButton.attachToListView(mListView);
     }
 
-    @Override public void onStart() {
-        super.onStart();
+    @Override public void onResume() {
+        super.onResume();
         if (mListViewState == null) {
             mListViewState = mListView.onSaveInstanceState();
         }
-        if (mGroups == null) {
+        if (mGroups == null || mReloadOnResume) {
+            mReloadOnResume = false;
             loadGroups();
         }
     }
@@ -181,6 +184,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     }
 
     protected void onItemClick(final int position, View itemView) {
+        mReloadOnResume = true;
         adapter.onItemClick(position, itemView);
     }
 
@@ -237,7 +241,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (resultCode == GroupSubmitActivity.RESULT_UPDATED &&
                 (requestCode == RQS_CREATE || requestCode == RQS_EDIT)) {
-            loadGroups();
+            mReloadOnResume = true;
         }
     }
 }

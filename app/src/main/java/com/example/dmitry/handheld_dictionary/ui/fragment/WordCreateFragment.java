@@ -28,9 +28,6 @@ public class WordCreateFragment extends BaseWordSubmitFragment {
                 foreign,
                 translate);
         wordActiveModel.saveWord(word);
-        final Activity activity = getActivity();
-        activity.setResult(Activity.RESULT_OK);
-        activity.finish();
     }
 
     @Override public Integer getActionBarTitle() {

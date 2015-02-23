@@ -1,5 +1,6 @@
 package com.example.dmitry.handheld_dictionary.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.controller.WordEditFieldsController;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
+import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -65,10 +67,14 @@ public abstract class BaseWordSubmitFragment extends BaseFragment {
         final String translate = wordEditFieldsController.getEnteredTranslate();
         if (!TextUtils.isEmpty(foreign) && !TextUtils.isEmpty(translate)) {
             submitWord(foreign, translate);
+
+            final Activity activity = getActivity();
+            if (activity != null) {
+                activity.setResult(WordSubmitActivity.RESULT_UPDATED);
+                activity.finish();
+            }
         }
     }
-
-
 
     protected abstract void submitWord(@NonNull final String foreign, @NonNull final String translate);
 }
