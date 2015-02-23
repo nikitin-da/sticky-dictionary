@@ -15,28 +15,46 @@ import com.example.dmitry.handheld_dictionary.ui.anim.ResizeAnimation;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.ListView;
+
+import java.util.List;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
-public abstract class BaseWordListFragment extends BaseFragment implements ForeignHolder.WordActionsListener {
+public abstract class BaseWordListFragment<RawType> extends BaseFragment implements ForeignHolder.WordActionsListener {
+
+    protected static final int RQS_CREATE = 50;
+    protected static final int RQS_EDIT = 70;
 
     protected static final int INITIAL_DELAY_MILLIS = 500;
+
+    private static final String STATE_LIST_VIEW = "STATE_LIST_VIEW";
 
     protected GroupActiveModel groupActiveModel;
     protected WordActiveModel wordActiveModel;
 
     protected BaseWordListAdapter adapter;
 
+    private List<RawType> mData;
+    private boolean mReloadOnResume = false;
+
+    protected Parcelable listViewState;
+
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         groupActiveModel = new GroupActiveModel(getActivity());
         wordActiveModel = new WordActiveModel(getActivity());
+
+        if (savedInstanceState != null) {
+            listViewState = savedInstanceState.getParcelable(STATE_LIST_VIEW);
+        }
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -45,12 +63,44 @@ public abstract class BaseWordListFragment extends BaseFragment implements Forei
         adapter.setWordActionsListener(this);
     }
 
-    @Override public void onStart() {
-        super.onStart();
+    @Override public void onResume() {
+        super.onResume();
+        if (mData == null || mReloadOnResume) {
+            mReloadOnResume = false;
+            performLoadData();
+        } else {
+            setDataToAdapter(mData);
+        }
+    }
+
+    protected void performLoadData() {
+        final ListView listView = getListView();
+        if (listView != null && listViewState == null) {
+            listViewState = listView.onSaveInstanceState();
+        }
         loadWords();
     }
 
     protected abstract void loadWords();
+
+    protected void fillData(@NonNull final List<RawType> data) {
+        mData = data;
+        setDataToAdapter(data);
+        final ListView listView = getListView();
+
+        if (listView != null) {
+            restorePosition(listView);
+        }
+    }
+
+    protected void restorePosition(@NonNull final ListView listView) {
+       if (listViewState != null) {
+            listView.onRestoreInstanceState(listViewState);
+            listViewState = null;
+        }
+    }
+
+    protected abstract void setDataToAdapter(@NonNull final List<RawType> data);
 
     protected abstract BaseWordListAdapter createAdapter();
 
@@ -63,7 +113,7 @@ public abstract class BaseWordListFragment extends BaseFragment implements Forei
         if (activity instanceof BaseActivity) {
             Intent intent = new Intent(activity, WordSubmitActivity.class);
             intent.putExtra(WordSubmitActivity.EXTRA_WORD, word);
-            ((BaseActivity) activity).slideActivity(intent);
+            ((BaseActivity) activity).slideActivityForResult(intent, RQS_EDIT);
         }
     }
 
@@ -89,7 +139,7 @@ public abstract class BaseWordListFragment extends BaseFragment implements Forei
                         if (listener != null) {
                             listener.run();
                         }
-                        loadWords();
+                        performLoadData();
                     }
                 });
 
@@ -103,4 +153,13 @@ public abstract class BaseWordListFragment extends BaseFragment implements Forei
     protected abstract void setUIStateError();
 
     protected abstract void setUIStateEmpty();
+
+    @Nullable protected abstract ListView getListView();
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == WordSubmitActivity.RESULT_UPDATED &&
+                (requestCode == RQS_CREATE || requestCode == RQS_EDIT)) {
+            mReloadOnResume = true;
+        }
+    }
 }

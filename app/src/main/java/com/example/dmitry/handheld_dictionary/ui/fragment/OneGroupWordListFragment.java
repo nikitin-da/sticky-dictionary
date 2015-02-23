@@ -3,6 +3,7 @@ package com.example.dmitry.handheld_dictionary.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
+import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
 import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
@@ -20,13 +22,15 @@ import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 import com.melnykov.fab.FloatingActionButton;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 
+import java.util.List;
+
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
-public class OneGroupWordListFragment extends BaseWordListFragment {
+public class OneGroupWordListFragment extends BaseWordListFragment<Word> {
 
     public static OneGroupWordListFragment newInstance(Long groupId) {
         Bundle arguments = new Bundle(1);
@@ -38,13 +42,15 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
 
     private static final String ARG_GROUP_ID = "ARG_GROUP_ID";
 
-    @InjectView(R.id.one_group_word_list) ListView mListView;
-    @InjectView(R.id.one_group_word_list_add) FloatingActionButton mAddButton;
+    @InjectView(R.id.one_group_word_list) ListView listView;
+    @InjectView(R.id.one_group_word_list_add) FloatingActionButton addButton;
 
     @InjectView(R.id.one_group_word_list_error) View errorView;
     @InjectView(R.id.one_group_word_list_empty) View emptyView;
 
     private Long mGroupId;
+
+    private boolean mIsAdded = false;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +69,14 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
         super.onViewCreated(view, savedInstanceState);
 
         AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(adapter);
-        alphaInAnimationAdapter.setAbsListView(mListView);
+        alphaInAnimationAdapter.setAbsListView(listView);
 
         assert alphaInAnimationAdapter.getViewAnimator() != null;
         alphaInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
 
-        mListView.setAdapter(alphaInAnimationAdapter);
+        listView.setAdapter(alphaInAnimationAdapter);
 
-        mAddButton.attachToListView(mListView);
+        addButton.attachToListView(listView);
 
     }
 
@@ -89,21 +95,35 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
                 setUIStateEmpty();
             } else {
                 setUIStateShowContent();
-                fillData(group);
+                fillData(group.getWords());
+                setActionBarTitle(group.getName());
             }
         }
     };
 
-    @Override protected BaseWordListAdapter createAdapter() {
-        return new OneGroupWordListAdapter(getActivity());
+    @Override protected void setDataToAdapter(@NonNull List<Word> data) {
+        Activity activity = getActivity();
+        if (activity != null) {
+            ((OneGroupWordListAdapter) adapter).setData(data);
+        }
     }
 
-    private void fillData(Group group) {
-        Activity activity = getActivity();
-        if (activity != null && group != null) {
-            ((OneGroupWordListAdapter) adapter).setData(group.getWords());
-            setActionBarTitle(group.getName());
+    @Override protected void restorePosition(@NonNull final ListView listView) {
+        if (mIsAdded) {
+            mIsAdded = false;
+            listViewState = null;
+            listView.post(new Runnable() {
+                @Override public void run() {
+                    listView.smoothScrollToPosition(listView.getCount());
+                }
+            });
+        } else {
+            super.restorePosition(listView);
         }
+    }
+
+    @Override protected BaseWordListAdapter createAdapter() {
+        return new OneGroupWordListAdapter(getActivity());
     }
 
     @OnClick(R.id.one_group_word_list_add) void addNew() {
@@ -111,35 +131,48 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
         if (activity instanceof BaseActivity) {
             final Intent intent = new Intent(activity, WordSubmitActivity.class);
             intent.putExtra(WordSubmitActivity.EXTRA_GROUP_ID, mGroupId);
-            ((BaseActivity) activity).slideActivity(intent);
+            ((BaseActivity) activity).slideActivityForResult(intent, RQS_CREATE);
         }
     }
 
     @Override
     protected void setUIStateShowContent() {
-        ViewUtil.setVisibility(mListView, true);
+        ViewUtil.setVisibility(listView, true);
         ViewUtil.setVisibility(errorView, false);
         ViewUtil.setVisibility(emptyView, false);
-        ViewUtil.setVisibility(mAddButton, true);
+        ViewUtil.setVisibility(addButton, true);
     }
 
     @Override
     protected void setUIStateError() {
-        ViewUtil.setVisibility(mListView, false);
+        ViewUtil.setVisibility(listView, false);
         ViewUtil.setVisibility(errorView, true);
         ViewUtil.setVisibility(emptyView, false);
-        ViewUtil.setVisibility(mAddButton, false);
+        ViewUtil.setVisibility(addButton, false);
     }
 
     @Override
     protected void setUIStateEmpty() {
-        ViewUtil.setVisibility(mListView, false);
+        ViewUtil.setVisibility(listView, false);
         ViewUtil.setVisibility(errorView, false);
         ViewUtil.setVisibility(emptyView, true);
-        ViewUtil.setVisibility(mAddButton, true);
+        ViewUtil.setVisibility(addButton, true);
+    }
+
+    @Override
+    @Nullable
+    protected ListView getListView() {
+        return listView;
     }
 
     @OnClick(R.id.one_group_word_list_retry) void retry() {
-        loadWords();
+        performLoadData();
+    }
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == WordSubmitActivity.RESULT_UPDATED && requestCode == RQS_CREATE) {
+            mIsAdded = true;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

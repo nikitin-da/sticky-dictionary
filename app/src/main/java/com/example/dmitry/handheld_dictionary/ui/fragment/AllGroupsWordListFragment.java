@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
+import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.GroupListForAddWordActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.AllGroupsWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
@@ -20,7 +22,8 @@ import com.nhaarman.listviewanimations.appearance.StickyListHeadersAdapterDecora
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.expandablelistitem.ExpandableListItemAdapter;
 import com.nhaarman.listviewanimations.util.StickyListHeadersListViewWrapper;
-import com.pushtorefresh.javac_warning_annotation.Warning;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -31,7 +34,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
  */
-public class AllGroupsWordListFragment extends BaseWordListFragment {
+public class AllGroupsWordListFragment extends BaseWordListFragment<Group> {
 
     @InjectView(R.id.all_groups_word_list) StickyListHeadersListView listView;
 
@@ -102,10 +105,9 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
         }
     };
 
-    @Warning("Add empty and error states")
-    private void fillData(List<Group> groups) {
+    protected void setDataToAdapter(@NotNull final List<Group> groups) {
         Activity activity = getActivity();
-        if (activity != null && groups != null) {
+        if (activity != null) {
             ((AllGroupsWordListAdapter) adapter).setData(groups);
         }
     }
@@ -138,15 +140,23 @@ public class AllGroupsWordListFragment extends BaseWordListFragment {
         ViewUtil.setVisibility(addButton, true);
     }
 
+    @Override
+    @Nullable
+    protected ListView getListView() {
+        return listView.getWrappedList();
+    }
+
     @OnClick(R.id.all_groups_word_list_add)
     void add() {
         final Activity activity = getActivity();
-        final Intent intent = new Intent(activity, GroupListForAddWordActivity.class);
-        activity.startActivity(intent);
+        if (activity instanceof BaseActivity) {
+            final Intent intent = new Intent(activity, GroupListForAddWordActivity.class);
+            ((BaseActivity) activity).slideActivityForResult(intent, RQS_EDIT);
+        }
     }
 
     @OnClick(R.id.all_groups_word_list_retry) void retry() {
-        loadWords();
+        performLoadData();
     }
 
     /**

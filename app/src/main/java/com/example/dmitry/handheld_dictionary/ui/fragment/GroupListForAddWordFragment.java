@@ -53,6 +53,7 @@ public class GroupListForAddWordFragment extends GroupListFragment {
         if (requestCode == RQS_ADD_WORD
                 && resultCode == WordSubmitActivity.RESULT_UPDATED
                 && activity != null) {
+            activity.setResult(WordSubmitActivity.RESULT_UPDATED);
             activity.finish();
         }
     }
