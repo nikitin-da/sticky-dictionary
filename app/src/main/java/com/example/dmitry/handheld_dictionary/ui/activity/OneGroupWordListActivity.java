@@ -26,8 +26,4 @@ public class OneGroupWordListActivity extends BaseActivity {
             ft.replace(R.id.fragment_one_group_word_list, fragment).commit();
         }
     }
-
-    @Override protected boolean finishWithAnimation() {
-        return true;
-    }
 }

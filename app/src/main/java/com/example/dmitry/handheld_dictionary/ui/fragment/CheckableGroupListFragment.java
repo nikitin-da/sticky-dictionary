@@ -1,5 +1,6 @@
 package com.example.dmitry.handheld_dictionary.ui.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,11 +51,13 @@ public class CheckableGroupListFragment extends GroupListFragment
     }
 
     @OnClick(R.id.checked_list_header_begin_button) void beginCheck() {
-        if (mAdapter != null && !mAdapter.getCheckedItems().isEmpty()) {
-            Context context = getActivity();
-            Intent intent = new Intent(context, PagerActivity.class);
+        Activity activity = getActivity();
+        if (mAdapter != null
+                && !mAdapter.getCheckedItems().isEmpty()
+                && activity instanceof BaseActivity) {
+            Intent intent = new Intent(activity, PagerActivity.class);
             intent.putExtra(PagerActivity.EXTRA_GROUPS, mAdapter.getCheckedItems());
-            context.startActivity(intent);
+            ((BaseActivity) activity).slideActivity(intent);
         }
     }
 

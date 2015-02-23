@@ -127,7 +127,10 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     }
 
     @OnClick(R.id.group_list_add) void addNew() {
-        startActivityForResult(new Intent(getActivity(), GroupSubmitActivity.class), RQS_CREATE);
+        final Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            ((BaseActivity) activity).slideActivityForResult(new Intent(getActivity(), GroupSubmitActivity.class), RQS_CREATE);
+        }
     }
 
     protected void loadGroups() {
@@ -215,10 +218,10 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     @Override
     public void editGroup(@NonNull final Group group) {
         final Activity activity = getActivity();
-        if (activity != null) {
+        if (activity instanceof BaseActivity) {
             Intent intent = new Intent(activity, GroupSubmitActivity.class);
             intent.putExtra(GroupSubmitActivity.EXTRA_GROUP, group);
-            activity.startActivityForResult(intent, RQS_EDIT);
+            ((BaseActivity) activity).slideActivityForResult(intent, RQS_EDIT);
         }
     }
 

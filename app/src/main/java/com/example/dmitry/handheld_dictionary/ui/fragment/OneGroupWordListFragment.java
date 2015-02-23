@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.example.dmitry.handheld_dictionary.R;
 import com.example.dmitry.handheld_dictionary.model.Group;
 import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
+import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.OneGroupWordListAdapter;
@@ -106,9 +107,12 @@ public class OneGroupWordListFragment extends BaseWordListFragment {
     }
 
     @OnClick(R.id.one_group_word_list_add) void addNew() {
-        final Intent intent = new Intent(getActivity(), WordSubmitActivity.class);
-        intent.putExtra(WordSubmitActivity.EXTRA_GROUP_ID, mGroupId);
-        startActivity(intent);
+        final Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            final Intent intent = new Intent(activity, WordSubmitActivity.class);
+            intent.putExtra(WordSubmitActivity.EXTRA_GROUP_ID, mGroupId);
+            ((BaseActivity) activity).slideActivity(intent);
+        }
     }
 
     @Override

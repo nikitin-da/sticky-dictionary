@@ -251,4 +251,8 @@ public class MainActivity extends BaseActivity implements NavigationDrawerFragme
     protected boolean notifyAllFragmentsAboutActivityResult() {
         return true;
     }
+
+    @Override protected boolean finishWithAnimation() {
+        return false;
+    }
 }

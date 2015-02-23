@@ -5,6 +5,7 @@ import com.example.dmitry.handheld_dictionary.model.Word;
 import com.example.dmitry.handheld_dictionary.model.active.GroupActiveModel;
 import com.example.dmitry.handheld_dictionary.model.active.TaskListener;
 import com.example.dmitry.handheld_dictionary.model.active.WordActiveModel;
+import com.example.dmitry.handheld_dictionary.ui.activity.BaseActivity;
 import com.example.dmitry.handheld_dictionary.ui.activity.WordSubmitActivity;
 import com.example.dmitry.handheld_dictionary.ui.adapters.BaseWordListAdapter;
 import com.example.dmitry.handheld_dictionary.ui.adapters.ForeignHolder;
@@ -59,10 +60,10 @@ public abstract class BaseWordListFragment extends BaseFragment implements Forei
 
     @Override public void edit(@NonNull Word word) {
         final Activity activity = getActivity();
-        if (activity != null) {
+        if (activity instanceof BaseActivity) {
             Intent intent = new Intent(activity, WordSubmitActivity.class);
             intent.putExtra(WordSubmitActivity.EXTRA_WORD, word);
-            activity.startActivity(intent);
+            ((BaseActivity) activity).slideActivity(intent);
         }
     }
 

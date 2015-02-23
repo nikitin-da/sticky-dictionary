@@ -75,7 +75,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     protected boolean finishWithAnimation() {
-        return false;
+        return true;
     }
 
     @Override public void finish() {
