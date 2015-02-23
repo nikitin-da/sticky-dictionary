@@ -40,6 +40,7 @@ public class CheckableGroupListFragment extends GroupListFragment
     }
 
     @Override public void onSaveInstanceState(Bundle outState) {
+        mSavedInstanceState = outState;
         if (mAdapter != null) {
             mAdapter.onSaveInstanceState(outState);
         }
@@ -65,7 +66,10 @@ public class CheckableGroupListFragment extends GroupListFragment
     protected GroupListAdapter createAdapter(BaseActivity baseActivity, List<Group> groups) {
         mAdapter = super.createAdapter(baseActivity, groups);
         mAdapter.setItemCheckChangeListener(this);
-        mAdapter.restoreSelectionFromSavedInstanceState(mSavedInstanceState);
+        if (mSavedInstanceState != null) {
+            mAdapter.restoreSelectionFromSavedInstanceState(mSavedInstanceState);
+            mSavedInstanceState = null;
+        }
 
         boolean hasSelected = !mAdapter.getCheckedItems().isEmpty();
         if (hasSelected) {
