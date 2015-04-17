@@ -10,8 +10,6 @@ import com.example.dmitry.handheld_dictionary.ui.adapters.GroupListAdapter;
 import com.example.dmitry.handheld_dictionary.util.ViewUtil;
 import com.melnykov.fab.FloatingActionButton;
 
-import org.jetbrains.annotations.NotNull;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -178,7 +176,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
 
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(@NotNull AdapterView<?> parent,
+                public void onItemClick(@NonNull AdapterView<?> parent,
                                         @Nullable View view,
                                         int position,
                                         long id) {

@@ -3,6 +3,7 @@ package com.example.dmitry.handheld_dictionary.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +23,6 @@ import com.nhaarman.listviewanimations.appearance.StickyListHeadersAdapterDecora
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.expandablelistitem.ExpandableListItemAdapter;
 import com.nhaarman.listviewanimations.util.StickyListHeadersListViewWrapper;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -105,7 +104,7 @@ public class AllGroupsWordListFragment extends BaseWordListFragment<Group> {
         }
     };
 
-    protected void setDataToAdapter(@NotNull final List<Group> groups) {
+    protected void setDataToAdapter(@NonNull final List<Group> groups) {
         Activity activity = getActivity();
         if (activity != null) {
             ((AllGroupsWordListAdapter) adapter).setData(groups);

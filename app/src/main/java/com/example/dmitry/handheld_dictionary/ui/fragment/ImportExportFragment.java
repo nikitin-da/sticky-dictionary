@@ -25,8 +25,6 @@ import com.example.dmitry.handheld_dictionary.util.IntentFactory;
 import com.example.dmitry.handheld_dictionary.util.Loggi;
 import com.google.common.io.Files;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 
 import javax.inject.Inject;
@@ -100,7 +98,7 @@ public class ImportExportFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private boolean isMimeTypeAllowed(@NotNull final Uri uri) {
+    private boolean isMimeTypeAllowed(@NonNull final Uri uri) {
         final String resultExtension = Files.getFileExtension(uri.getPath());
         final String resultMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(resultExtension);
         return EXPECTED_MIME_TYPE.equalsIgnoreCase(resultMimeType);
