@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="an_location_all">all</string>
+    <string name="an_target_group">group</string>
+    <string name="an_target_word">word</string>
+    <string name="an_id_save">save</string>
+    <string name="an_id_remove">remove</string>
+</resources>

@@ -8,6 +8,8 @@ import com.github.nikitin_da.sticky_dictionary.model.active.GroupActiveModel;
 import com.github.nikitin_da.sticky_dictionary.model.active.ImportExportActiveModel;
 import com.github.nikitin_da.sticky_dictionary.model.active.TypefaceActiveModel;
 import com.github.nikitin_da.sticky_dictionary.model.active.WordActiveModel;
+import com.github.nikitin_da.sticky_dictionary.ui.activity.BaseActivity;
+import com.github.nikitin_da.sticky_dictionary.ui.fragment.BaseFragment;
 import com.github.nikitin_da.sticky_dictionary.ui.fragment.ImportExportFragment;
 import com.github.nikitin_da.sticky_dictionary.util.AppNotificationManager;
 
@@ -24,7 +26,8 @@ import dagger.Provides;
                 StorageModule.class,
                 TypefaceCacheModule.class,
                 GsonModule.class,
-                AppNotificationManagerModule.class
+                AppNotificationManagerModule.class,
+                AnalyticsModule.class
         },
         injects = {
                 DictionaryActiveModel.class,
@@ -33,7 +36,9 @@ import dagger.Provides;
                 TypefaceActiveModel.class,
                 ImportExportActiveModel.class,
                 ImportExportFragment.ExportListener.class,
-                AppNotificationManager.class
+                AppNotificationManager.class,
+                BaseActivity.DIContainer.class,
+                BaseFragment.DIContainer.class
         }
 )
 public class AppModule {

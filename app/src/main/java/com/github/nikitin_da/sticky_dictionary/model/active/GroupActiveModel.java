@@ -3,6 +3,8 @@ package com.github.nikitin_da.sticky_dictionary.model.active;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.github.nikitin_da.sticky_dictionary.AnalyticsManager;
+import com.github.nikitin_da.sticky_dictionary.R;
 import com.github.nikitin_da.sticky_dictionary.model.Group;
 import com.github.nikitin_da.sticky_dictionary.model.Word;
 import com.pushtorefresh.bamboostorage.BambooStorage;
@@ -17,7 +19,10 @@ import javax.inject.Inject;
  */
 public class GroupActiveModel extends BaseActiveModel {
 
-    @Inject BambooStorage bambooStorage;
+    @Inject
+    BambooStorage bambooStorage;
+    @Inject
+    AnalyticsManager analyticsManager;
 
     private WordActiveModel mWordActiveModel;
 
@@ -129,6 +134,9 @@ public class GroupActiveModel extends BaseActiveModel {
         for (Word word : words) {
             mWordActiveModel.saveWord(word);
         }
+
+        analyticsManager.sendEvent(R.string.an_location_all, R.string.an_target_group, R.string.an_id_save);
+
     }
 
     public void asyncRemoveGroup(@NonNull final Long id, @NonNull TaskListener<Void> listener) {
@@ -155,6 +163,8 @@ public class GroupActiveModel extends BaseActiveModel {
                 Group.class,
                 Group.GROUP_WITH_ID,
                 new String[] {String.valueOf(id)});
+
+        analyticsManager.sendEvent(R.string.an_location_all, R.string.an_target_group, R.string.an_id_remove);
     }
 
     public void removeAllGroups() {

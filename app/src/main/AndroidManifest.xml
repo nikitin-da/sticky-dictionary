@@ -3,6 +3,8 @@
     package="com.github.nikitin_da.sticky_dictionary">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -10,6 +12,9 @@
         android:label="@string/app_name"
         android:name="com.github.nikitin_da.sticky_dictionary.App"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="com.google.android.gms.version"
+                   android:value="@integer/google_play_services_version"/>
 
         <activity android:name="com.github.nikitin_da.sticky_dictionary.ui.activity.MainActivity"
                   android:label="@string/app_name">

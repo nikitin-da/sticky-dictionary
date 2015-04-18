@@ -3,6 +3,8 @@ package com.github.nikitin_da.sticky_dictionary.model.active;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.github.nikitin_da.sticky_dictionary.AnalyticsManager;
+import com.github.nikitin_da.sticky_dictionary.R;
 import com.github.nikitin_da.sticky_dictionary.model.Word;
 import com.pushtorefresh.bamboostorage.BambooStorage;
 
@@ -17,6 +19,7 @@ import javax.inject.Inject;
 public class WordActiveModel extends BaseActiveModel {
     
     @Inject BambooStorage bambooStorage;
+    @Inject AnalyticsManager analyticsManager;
 
     public WordActiveModel(@NonNull Context context) {
         super(context);
@@ -93,6 +96,8 @@ public class WordActiveModel extends BaseActiveModel {
             word.setInternalId(exist.getInternalId());
         }
         bambooStorage.addOrUpdate(word);
+
+        analyticsManager.sendEvent(R.string.an_location_all, R.string.an_target_word, R.string.an_id_save);
     }
 
     public void asyncRemoveWord(@NonNull final Long id, @NonNull TaskListener<Void> listener) {
@@ -113,6 +118,8 @@ public class WordActiveModel extends BaseActiveModel {
                 Word.class,
                 Word.WORD_WITH_ID,
                 new String[] {String.valueOf(id)});
+
+        analyticsManager.sendEvent(R.string.an_location_all, R.string.an_target_word, R.string.an_id_remove);
     }
 
     public void removeAllWords() {

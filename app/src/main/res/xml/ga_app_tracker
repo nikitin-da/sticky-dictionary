@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string  name="ga_trackingId">UA-61982989-2</string>
+    <integer name="ga_sessionTimeout">300</integer>
+    <bool    name="ga_autoActivityTracking">true</bool>
+    <string  name="ga_logLevel">warning</string>
+    <integer name="ga_dispatchPeriod">300</integer>
+    <bool    name="ga_dryRun">false</bool>
+    <bool    name="ga_reportUncaughtExceptions">true</bool>
+
+    <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.MainActivity">Main screen</screenName>     <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.GroupListActivity">Group list screen</screenName>
+    <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.OneGroupWordListActivity">Word list in group screen</screenName>
+    <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.WordSubmitActivity">Word submit screen</screenName>
+    <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.GroupSubmitActivity">Group submit screen</screenName>
+    <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.PagerActivity">Pager screen</screenName>
+    <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.GroupListForAddWordActivity">Group list for add word screen</screenName>
+</resources>

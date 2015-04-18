@@ -3,6 +3,7 @@ package com.github.nikitin_da.sticky_dictionary.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.github.nikitin_da.sticky_dictionary.AnalyticsManager;
+import com.github.nikitin_da.sticky_dictionary.App;
 import com.github.nikitin_da.sticky_dictionary.R;
 import com.github.nikitin_da.sticky_dictionary.util.Loggi;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -25,9 +30,26 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     protected Toolbar toolbar;
 
+    private DIContainer diContainer;
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        diContainer = new DIContainer(this);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        diContainer.getAnalyticsManager().reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        diContainer.getAnalyticsManager().reportActivityStop(this);
+        super.onStop();
+    }
+
     @Override public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         setupActionBar();
@@ -145,5 +167,24 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     protected boolean notifyAllFragmentsAboutActivityResult() {
         return false;
+    }
+
+    public static class DIContainer {
+        @Inject AnalyticsManager analyticsManager;
+
+        public DIContainer(@NonNull Context context) {
+            App.get(context).inject(this);
+        }
+
+        public AnalyticsManager getAnalyticsManager() {
+            return analyticsManager;
+        }
+    }
+
+    public AnalyticsManager getAnalyticsManager() {
+        if (diContainer != null) {
+            return diContainer.getAnalyticsManager();
+        }
+        return null;
     }
 }
