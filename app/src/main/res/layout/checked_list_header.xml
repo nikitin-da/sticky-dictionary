@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+    <com.github.nikitin_da.sticky_dictionary.ui.view.TypefaceTextView
         android:id="@+id/checked_list_header_nothing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

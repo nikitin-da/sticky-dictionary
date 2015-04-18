@@ -18,13 +18,13 @@
             android:background="@drawable/item_group_context_bg"
             android:orientation="horizontal">
 
-            <com.example.dmitry.handheld_dictionary.ui.view.DoNotPressWithParentImageButton
+            <com.github.nikitin_da.sticky_dictionary.ui.view.DoNotPressWithParentImageButton
                 android:id="@+id/word_item_edit"
                 style="@style/GroupContextButton"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="@string/content_description_edit"/>
 
-            <com.example.dmitry.handheld_dictionary.ui.view.DoNotPressWithParentImageButton
+            <com.github.nikitin_da.sticky_dictionary.ui.view.DoNotPressWithParentImageButton
                 android:id="@+id/word_item_remove"
                 style="@style/GroupContextButton"
                 android:src="@drawable/ic_remove"

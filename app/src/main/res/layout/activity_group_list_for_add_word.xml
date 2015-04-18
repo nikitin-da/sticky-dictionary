@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/fragment_group_list_for_add_word"
-        class="com.example.dmitry.handheld_dictionary.ui.fragment.GroupListForAddWordFragment"
+        class="com.github.nikitin_da.sticky_dictionary.ui.fragment.GroupListForAddWordFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

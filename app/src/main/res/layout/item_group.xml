@@ -20,13 +20,13 @@
             android:background="@drawable/item_group_context_bg"
             android:orientation="vertical">
 
-            <com.example.dmitry.handheld_dictionary.ui.view.DoNotPressWithParentImageButton
+            <com.github.nikitin_da.sticky_dictionary.ui.view.DoNotPressWithParentImageButton
                 android:id="@+id/group_item_edit"
                 style="@style/GroupContextButton"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="@string/content_description_edit"/>
 
-            <com.example.dmitry.handheld_dictionary.ui.view.DoNotPressWithParentImageButton
+            <com.github.nikitin_da.sticky_dictionary.ui.view.DoNotPressWithParentImageButton
                 android:id="@+id/group_item_remove"
                 style="@style/GroupContextButton"
                 android:src="@drawable/ic_remove"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+                <com.github.nikitin_da.sticky_dictionary.ui.view.TypefaceTextView
                     android:id="@+id/group_date"
                     style="@style/TextShadow.Black"
                     android:layout_width="0dp"
@@ -88,7 +88,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+                    <com.github.nikitin_da.sticky_dictionary.ui.view.TypefaceTextView
                         android:id="@+id/group_name"
                         style="@style/TextShadow.Black"
                         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                         android:textSize="20sp"
                         tools:text="Group Name"/>
 
-                    <com.example.dmitry.handheld_dictionary.ui.view.EllipsizingTextView
+                    <com.github.nikitin_da.sticky_dictionary.ui.view.EllipsizingTextView
                         android:id="@+id/group_words"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

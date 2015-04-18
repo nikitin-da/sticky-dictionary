@@ -13,7 +13,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.example.dmitry.handheld_dictionary"
+        applicationId "com.github.nikitin_da.sticky_dictionary"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1

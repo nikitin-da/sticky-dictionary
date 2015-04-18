@@ -10,7 +10,7 @@
     android:padding="10dp"
     android:gravity="center_vertical">
 
-    <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+    <com.github.nikitin_da.sticky_dictionary.ui.view.TypefaceTextView
         android:id="@+id/group_header_name"
         style="@style/TextShadow.Black"
         android:layout_width="0dp"
@@ -22,7 +22,7 @@
         android:paddingRight="10dp"
         app:typefaceFromAssets="fonts/Roboto-Thin.ttf"/>
 
-    <com.example.dmitry.handheld_dictionary.ui.view.TypefaceTextView
+    <com.github.nikitin_da.sticky_dictionary.ui.view.TypefaceTextView
         android:id="@+id/group_header_date"
         style="@style/TextShadow.Black"
         android:layout_width="wrap_content"

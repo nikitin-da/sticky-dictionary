@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.dmitry.handheld_dictionary.ui.activity.PagerActivity">
+    tools:context="com.github.nikitin_da.sticky_dictionary.ui.activity.PagerActivity">
 
     <group android:id="@+id/pager_actions"
            android:visible="false">
