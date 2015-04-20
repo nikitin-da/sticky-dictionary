@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 
 import com.github.nikitin_da.sticky_dictionary.R;
@@ -124,6 +126,11 @@ public class OneGroupWordListFragment extends BaseWordListFragment<Word> {
 
     @Override protected BaseWordListAdapter createAdapter() {
         return new OneGroupWordListAdapter(getActivity());
+    }
+
+    @Override
+    protected Animation getRemoveItemAnimation(@NonNull View viewToRemove) {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.hide_alpha);
     }
 
     @OnClick(R.id.one_group_word_list_add) void addNew() {

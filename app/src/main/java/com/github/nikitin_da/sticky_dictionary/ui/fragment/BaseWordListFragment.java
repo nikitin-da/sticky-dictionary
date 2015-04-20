@@ -125,17 +125,14 @@ public abstract class BaseWordListFragment<RawType> extends BaseFragment impleme
 
             @Override public void onDataProcessed(Void aVoid) {
 
-                View view = adapter.getViewAtPosition(position);
+                final View view = adapter.getViewAtPosition(position);
 
-                ResizeAnimation animation = new ResizeAnimation(
-                        view,
-                        ResizeAnimation.ResizeType.VERTICAL,
-                        false,
-                        getResources().getInteger(android.R.integer.config_mediumAnimTime));
+                final Animation animation = getRemoveItemAnimation(view);
 
                 animation.setAnimationListener(new AnimationAdapterListener() {
                     @Override public void onAnimationEnd(Animation animation) {
                         super.onAnimationEnd(animation);
+                        view.setVisibility(View.GONE);
                         if (listener != null) {
                             listener.run();
                         }
@@ -147,6 +144,8 @@ public abstract class BaseWordListFragment<RawType> extends BaseFragment impleme
             }
         });
     }
+
+    protected abstract Animation getRemoveItemAnimation(@NonNull final View viewToRemove);
 
     protected abstract void setUIStateShowContent();
 

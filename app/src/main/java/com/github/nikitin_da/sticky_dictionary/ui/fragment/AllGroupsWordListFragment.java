@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ListView;
 
 import com.github.nikitin_da.sticky_dictionary.R;
@@ -17,6 +18,7 @@ import com.github.nikitin_da.sticky_dictionary.ui.activity.BaseActivity;
 import com.github.nikitin_da.sticky_dictionary.ui.activity.GroupListForAddWordActivity;
 import com.github.nikitin_da.sticky_dictionary.ui.adapters.AllGroupsWordListAdapter;
 import com.github.nikitin_da.sticky_dictionary.ui.adapters.BaseWordListAdapter;
+import com.github.nikitin_da.sticky_dictionary.ui.anim.ResizeAnimation;
 import com.github.nikitin_da.sticky_dictionary.ui.view.floating_action_button.CustomFloatingActionButton;
 import com.github.nikitin_da.sticky_dictionary.util.ViewUtil;
 import com.nhaarman.listviewanimations.appearance.StickyListHeadersAdapterDecorator;
@@ -113,6 +115,15 @@ public class AllGroupsWordListFragment extends BaseWordListFragment<Group> {
 
     @Override protected BaseWordListAdapter createAdapter() {
         return new AllGroupsWordListAdapter(getActivity());
+    }
+
+    @Override
+    protected Animation getRemoveItemAnimation(@NonNull View viewToRemove) {
+        return new ResizeAnimation(
+                viewToRemove,
+                ResizeAnimation.ResizeType.VERTICAL,
+                false,
+                getResources().getInteger(android.R.integer.config_mediumAnimTime));
     }
 
     @Override
