@@ -159,25 +159,37 @@ public class AllGroupsWordListFragment extends BaseWordListFragment<Group> {
     }
 
     /**
-     * Used for scroll bottom after expanding last item.
-     *
-     * By default it doesn't work
+     * Dirty hack that used to scroll listView bottom after expanding item
+     * if it does not fit to screen.
+     * Default implementation doesn't work
      * with {@link se.emilsjolander.stickylistheaders.StickyListHeadersListView}.
      */
     private final ExpandableListItemAdapter.ExpandCollapseListener mExpandCollapseListener =
         new ExpandableListItemAdapter.ExpandCollapseListener() {
-            @Override public void onItemExpanded(final int i) {
-                if (i == (adapter.getCount() - 1)) {
-                    listView.postDelayed(new Runnable() {
-                        @Override public void run() {
-                            listView.smoothScrollToPosition(i);
+            @Override
+            public void onItemExpanded(final int i) {
+
+                listView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        final int listViewHeight = listView.getHeight();
+                        final int listViewBottomPadding = listView.getPaddingBottom();
+
+                        final View view = ViewUtil.getItemFromListViewByPosition(i, listView.getWrappedList());
+                        int bottom = view.getBottom();
+                        if (bottom > listViewHeight) {
+                            int top = view.getTop();
+                            if (top > 0) {
+                                listView.smoothScrollBy(Math.min(bottom - listViewHeight + listViewBottomPadding, top), 300);
+                            }
                         }
-                    }, 400);
-                }
+                    }
+                }, 400);
             }
 
-            @Override public void onItemCollapsed(int i) {
-
+            @Override
+            public void onItemCollapsed(int i) {
             }
         };
 }

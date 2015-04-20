@@ -4,8 +4,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Outline;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.widget.ListView;
 
 /**
  * @author Dmitry Nikitin [nikitin.da.90@gmail.com]
@@ -37,6 +39,18 @@ public final class ViewUtil {
 
         if (targetVisibility != view.getVisibility()) {
             view.setVisibility(targetVisibility);
+        }
+    }
+
+    public static View getItemFromListViewByPosition(final int pos, @NonNull final ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
         }
     }
 }

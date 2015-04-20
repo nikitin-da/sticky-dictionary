@@ -186,7 +186,7 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
                     if (view != null) {
                         itemView = view;
                     } else {
-                        itemView = getViewByPosition(position, mListView);
+                        itemView = ViewUtil.getItemFromListViewByPosition(position, mListView);
                     }
                     GroupListFragment.this.onItemClick(position, itemView);
                 }
@@ -197,18 +197,6 @@ public class GroupListFragment extends BaseFragment implements GroupListAdapter.
     protected void onItemClick(final int position, View itemView) {
         mReloadOnResume = true;
         adapter.onItemClick(position, itemView);
-    }
-
-    private View getViewByPosition(int pos, ListView listView) {
-        final int firstListItemPosition = listView.getFirstVisiblePosition();
-        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
-
-        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
-            return listView.getAdapter().getView(pos, null, listView);
-        } else {
-            final int childIndex = pos - firstListItemPosition;
-            return listView.getChildAt(childIndex);
-        }
     }
 
     protected GroupListAdapter createAdapter(BaseActivity baseActivity, List<Group> groups) {
