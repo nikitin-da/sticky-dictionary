@@ -22,7 +22,7 @@ public class GroupSubmitActivity extends BaseActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_submit);
+        setContentView(R.layout.activity_common);
 
         setResult(RESULT_CANCELED);
 
@@ -41,7 +41,7 @@ public class GroupSubmitActivity extends BaseActivity {
                 fragment = new GroupCreateFragment();
             }
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_group_edit, fragment).commit();
+            ft.replace(R.id.fragment_container, fragment).commit();
         }
     }
 }

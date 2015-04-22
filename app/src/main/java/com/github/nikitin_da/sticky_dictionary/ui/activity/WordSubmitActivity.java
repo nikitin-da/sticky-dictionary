@@ -23,7 +23,7 @@ public class WordSubmitActivity extends BaseActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_word_submit);
+        setContentView(R.layout.activity_common);
 
         setResult(RESULT_CANCELED);
 
@@ -45,7 +45,7 @@ public class WordSubmitActivity extends BaseActivity {
 
             }
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_word_edit, fragment).commit();
+            ft.replace(R.id.fragment_container, fragment).commit();
         }
     }
 }

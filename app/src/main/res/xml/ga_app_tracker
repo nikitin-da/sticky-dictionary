@@ -9,7 +9,7 @@
     <bool    name="ga_dryRun">false</bool>
     <bool    name="ga_reportUncaughtExceptions">true</bool>
 
-    <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.MainActivity">Main screen</screenName>     <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.GroupListActivity">Group list screen</screenName>
+    <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.MainActivity">Main screen</screenName>
     <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.OneGroupWordListActivity">Word list in group screen</screenName>
     <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.WordSubmitActivity">Word submit screen</screenName>
     <screenName name="com.github.nikitin_da.sticky_dictionary.ui.activity.GroupSubmitActivity">Group submit screen</screenName>

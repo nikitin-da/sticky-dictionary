@@ -11,7 +11,7 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
 
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/common_background</item>
     </style>
 
     <style name="TranslucentStatusAppTheme" parent="BaseTheme"/>
