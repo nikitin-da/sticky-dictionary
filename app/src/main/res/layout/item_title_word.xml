@@ -38,7 +38,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:background="@color/common_background">
 
         <TextView
             android:id="@+id/title"
