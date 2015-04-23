@@ -242,10 +242,10 @@ public class GroupListAdapter extends BaseMultiChoiceAdapter
     };
 
     public interface GroupActionsListener {
-        public void editGroup(@NonNull final Group group);
-        public void removeGroup(Long id, final Runnable listener);
+        void editGroup(@NonNull final Group group);
+        void removeGroup(Long id, final Runnable listener);
 
-        public void update();
+        void update();
     }
 
     public void setGroupActionsListener(GroupActionsListener groupActionsListener) {

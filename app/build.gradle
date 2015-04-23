@@ -28,10 +28,8 @@ android {
     }
 
     productFlavors {
-        flavorTest {
-        }
-        flavorProd {
-        }
+        flavorTest {}
+        flavorProd {}
     }
 
     packagingOptions {
@@ -73,7 +71,6 @@ dependencies {
     // https://github.com/JakeWharton/Android-ViewPagerIndicator
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     // endregion
-
 
     // region Artem's
 

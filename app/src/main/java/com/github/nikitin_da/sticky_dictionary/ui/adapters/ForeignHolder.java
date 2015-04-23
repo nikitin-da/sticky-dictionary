@@ -57,7 +57,7 @@ public class ForeignHolder {
     }
 
     public interface WordActionsListener {
-        public void edit(@NonNull final Word word);
-        public void remove(final long id, final int position, @Nullable final Runnable listener);
+        void edit(@NonNull final Word word);
+        void remove(final long id, final int position, @Nullable final Runnable listener);
     }
 }
