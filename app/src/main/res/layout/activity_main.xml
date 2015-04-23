@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <com.github.nikitin_da.sticky_dictionary.ui.view.CustomInsetsLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:fitsSystemWindows="true">
+
+        <include layout="@layout/view_for_status_bar_color"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/activity_toolbar_common"
@@ -21,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-    </LinearLayout>
+    </com.github.nikitin_da.sticky_dictionary.ui.view.CustomInsetsLinearLayout>
 
     <FrameLayout
         android:id="@+id/navigation_drawer_container"

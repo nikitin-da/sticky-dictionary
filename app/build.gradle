@@ -72,7 +72,6 @@ dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     // endregion
 
-
     // region Artem's
 
     // https://github.com/pushtorefresh/bamboo-storage

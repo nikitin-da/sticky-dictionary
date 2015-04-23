@@ -16,7 +16,7 @@ public class PagerActivity extends BaseActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pager);
+        setContentView(R.layout.activity_common);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -32,7 +32,7 @@ public class PagerActivity extends BaseActivity {
                 fragment.setArguments(arguments);
             }
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_pager_container, fragment).commit();
+            ft.replace(R.id.fragment_container, fragment).commit();
         }
     }
 }

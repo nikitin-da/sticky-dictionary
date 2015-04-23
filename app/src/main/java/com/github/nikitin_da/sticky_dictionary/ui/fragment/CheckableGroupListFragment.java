@@ -51,10 +51,11 @@ public class CheckableGroupListFragment extends GroupListFragment
         return true;
     }
 
-    @OnClick(R.id.checked_list_header_begin_button) void beginCheck() {
+    @OnClick(R.id.checked_list_header_begin_button)
+    void beginCheck() {
         Activity activity = getActivity();
         if (mAdapter != null
-                && !mAdapter.getCheckedItems().isEmpty()
+                && mAdapter.hasNotEmptyCheckedItems()
                 && activity instanceof BaseActivity) {
             Intent intent = new Intent(activity, PagerActivity.class);
             intent.putExtra(PagerActivity.EXTRA_GROUPS, mAdapter.getCheckedItems());
@@ -71,8 +72,7 @@ public class CheckableGroupListFragment extends GroupListFragment
             mSavedInstanceState = null;
         }
 
-        boolean hasSelected = !mAdapter.getCheckedItems().isEmpty();
-        if (hasSelected) {
+        if (mAdapter.hasNotEmptyCheckedItems()) {
             setUIStateHasChecked();
         } else {
             setUIStateNothingChecked();
@@ -81,7 +81,8 @@ public class CheckableGroupListFragment extends GroupListFragment
         return mAdapter;
     }
 
-    @Override public void setUIStateNothingChecked() {
+    @Override
+    public void setUIStateNothingChecked() {
         if (mBeginButton.getVisibility() == View.VISIBLE) {
             Context context = getActivity();
             AnimUtil.showWithAlphaAnim(context, mNothingSelectedView);
@@ -89,7 +90,8 @@ public class CheckableGroupListFragment extends GroupListFragment
         }
     }
 
-    @Override public void setUIStateHasChecked() {
+    @Override
+    public void setUIStateHasChecked() {
         if (mBeginButton.getVisibility() == View.GONE) {
             Context context = getActivity();
             AnimUtil.hideWithAlphaAnim(context, mNothingSelectedView);

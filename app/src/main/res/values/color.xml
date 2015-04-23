@@ -28,7 +28,7 @@
     <color name="save_button_bg_pressed">@color/common_button_pressed</color>
     <color name="save_button_bg_disabled">#425a595b</color>
 
-    <color name="item_group_header_bg">#FF9800</color>
+    <color name="item_group_header_bg">#80cfe1</color>
 
     <color name="fields_text_color">@android:color/black</color>
 

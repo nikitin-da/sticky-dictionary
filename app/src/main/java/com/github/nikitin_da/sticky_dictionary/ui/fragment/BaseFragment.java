@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.github.nikitin_da.sticky_dictionary.AnalyticsManager;
 import com.github.nikitin_da.sticky_dictionary.App;
-import com.github.nikitin_da.sticky_dictionary.R;
 import com.github.nikitin_da.sticky_dictionary.ui.activity.BaseActivity;
 
 import javax.inject.Inject;
@@ -37,7 +36,6 @@ public abstract class BaseFragment extends Fragment {
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
-        view.setBackgroundResource(R.color.common_background);
     }
 
     @Override public void onStart() {

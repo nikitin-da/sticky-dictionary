@@ -61,6 +61,11 @@ public abstract class BaseMultiChoiceAdapter extends BaseAdapter {
         return new HashSet<Long>(mCheckedItems);
     }
 
+    public boolean hasNotEmptyCheckedItems() {
+        final Set<Long> checkedItems = getCheckedItems();
+        return isSomethingChecked(checkedItems);
+    }
+
     protected abstract boolean isSomethingChecked(Set<Long> checkedItems);
 
     public boolean isChecked(long id) {

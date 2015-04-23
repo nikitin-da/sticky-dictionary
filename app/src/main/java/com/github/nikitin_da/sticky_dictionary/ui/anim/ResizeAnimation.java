@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class ResizeAnimation extends Animation {
 
-    public static enum ResizeType {
+    public enum ResizeType {
         VERTICAL,
         HORIZONTAL,
         BOTH

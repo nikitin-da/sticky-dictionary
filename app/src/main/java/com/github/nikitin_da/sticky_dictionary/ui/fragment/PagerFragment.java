@@ -150,7 +150,14 @@ public class PagerFragment extends BaseFragment {
     private void fillData(final List<Word> words) {
         invalidateOptionsMenu();
         updateAdapter(words);
-        mPagerIndicator.setViewPager(mViewPager);
+
+        final boolean indicatorVisible = words != null && words.size() > 1;
+        if (indicatorVisible) {
+            mPagerIndicator.setViewPager(mViewPager);
+            mPagerIndicator.setVisibility(View.VISIBLE);
+        } else {
+            mPagerIndicator.setVisibility(View.GONE);
+        }
     }
 
     private void updateAdapter(@Nullable final List<Word> words) {

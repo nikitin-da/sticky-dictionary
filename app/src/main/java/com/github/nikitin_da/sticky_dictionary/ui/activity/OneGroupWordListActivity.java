@@ -16,14 +16,14 @@ public class OneGroupWordListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_word_list);
+        setContentView(R.layout.activity_common);
 
         final Intent intent = getIntent();
         if (savedInstanceState == null && intent.hasExtra(EXTRA_GROUP_ID)) {
             final Long groupId = intent.getLongExtra(EXTRA_GROUP_ID, -1);
             final Fragment fragment = OneGroupWordListFragment.newInstance(groupId);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_one_group_word_list, fragment).commit();
+            ft.replace(R.id.fragment_container, fragment).commit();
         }
     }
 
