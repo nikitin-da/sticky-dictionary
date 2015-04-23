@@ -31,4 +31,4 @@ but will be thoroughly reviewed and discussed.
 
 ## License
 
-* [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+[Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
